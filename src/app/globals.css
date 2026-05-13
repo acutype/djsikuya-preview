@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ember-950: #130f0d;
+  --color-ember-900: #1d1713;
+  --color-ember-800: #2a1e18;
+  --color-ember-700: #3b281f;
+  --color-clay-500: #a86445;
+  --color-clay-400: #c47c57;
+  --color-gold-300: #d7b56d;
+  --color-gold-200: #ead19a;
+  --color-warm-white: #f4eadc;
+  --color-smoke-300: #cbbdaf;
+}
+
+:root {
+  --background: #130f0d;
+  --foreground: #f4eadc;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+::selection {
+  background: #d7b56d;
+  color: #130f0d;
+}
+
+.button-primary {
+  display: inline-flex;
+  min-height: 2.875rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #d7b56d;
+  padding: 0.8rem 1.25rem;
+  color: #130f0d;
+  font-weight: 700;
+  transition: transform 160ms ease, background 160ms ease;
+}
+
+.button-primary:hover {
+  background: #ead19a;
+  transform: translateY(-1px);
+}
+
+.button-primary:disabled {
+  cursor: wait;
+  opacity: 0.68;
+  transform: none;
+}
+
+.button-secondary {
+  display: inline-flex;
+  min-height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(244 234 220 / 0.18);
+  border-radius: 999px;
+  padding: 0.66rem 1rem;
+  color: #f4eadc;
+  font-weight: 650;
+  transition: border-color 160ms ease, color 160ms ease;
+}
+
+.button-secondary:hover {
+  border-color: rgb(215 181 109 / 0.75);
+  color: #ead19a;
+}
+
+.field-label {
+  display: grid;
+  gap: 0.55rem;
+  color: rgb(244 234 220 / 0.72);
+  font-size: 0.86rem;
+  font-weight: 650;
+}
+
+.field-input {
+  width: 100%;
+  border: 1px solid rgb(244 234 220 / 0.14);
+  border-radius: 0.75rem;
+  background: rgb(19 15 13 / 0.82);
+  padding: 0.9rem 1rem;
+  color: #f4eadc;
+  outline: none;
+}
+
+.field-input:focus {
+  border-color: rgb(215 181 109 / 0.8);
+  box-shadow: 0 0 0 3px rgb(215 181 109 / 0.14);
+}
+
+.surface {
+  border: 1px solid rgb(244 234 220 / 0.1);
+  background: rgb(42 30 24 / 0.62);
+  box-shadow: 0 24px 80px rgb(0 0 0 / 0.24);
+}
+
+.hero-image {
+  background:
+    linear-gradient(90deg, rgb(19 15 13 / 0.96), rgb(19 15 13 / 0.44) 54%, rgb(19 15 13 / 0.92)),
+    linear-gradient(180deg, rgb(19 15 13 / 0.1), rgb(19 15 13 / 0.88)),
+    url("https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=1800&q=85");
+  background-position: center;
+  background-size: cover;
+}
