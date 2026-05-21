@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>sikuya | perth open-format dj</title>
-  <meta name="description" content="perth dj. open-format. opm + r&b + house in the same set. events, bars, parties." />
+  <title>Sikuya | Perth</title>
+  <meta name="description" content="Sikuya. perth. events, bars, parties. send the date." />
   <meta name="theme-color" content="#0E0E0E" />
 
-  <meta property="og:title" content="sikuya | perth open-format dj" />
-  <meta property="og:description" content="perth dj. open-format. opm + r&b + house in the same set." />
+  <meta property="og:title" content="Sikuya | Perth" />
+  <meta property="og:description" content="Sikuya. perth. events, bars, parties. send the date." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://djsikuya.com" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -207,6 +207,64 @@
       color: var(--accent-hot);
       border-bottom: 1px solid currentColor;
       padding-bottom: 1px;
+    }
+
+    /* "Still cooking" — equalizer animation for in-development sections */
+    .cooking {
+      padding: clamp(64px, 12vw, 120px) 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      display: flex; flex-direction: column; align-items: flex-start; gap: 24px;
+    }
+    .cooking .eq {
+      display: flex; align-items: flex-end; gap: 6px;
+      height: 56px;
+    }
+    .cooking .eq span {
+      display: block;
+      width: 6px;
+      background: linear-gradient(180deg, var(--accent-hot) 0%, var(--accent) 100%);
+      border-radius: 3px;
+      box-shadow: 0 0 12px rgba(255,77,58,0.45);
+      animation: eqBar 1.1s cubic-bezier(.45, .05, .55, .95) infinite;
+      transform-origin: bottom;
+    }
+    .cooking .eq span:nth-child(1) { animation-delay:  0s;  height: 60%; }
+    .cooking .eq span:nth-child(2) { animation-delay: .12s; height: 80%; }
+    .cooking .eq span:nth-child(3) { animation-delay: .24s; height: 40%; }
+    .cooking .eq span:nth-child(4) { animation-delay: .36s; height: 95%; }
+    .cooking .eq span:nth-child(5) { animation-delay: .48s; height: 55%; }
+    .cooking .eq span:nth-child(6) { animation-delay: .60s; height: 75%; }
+    .cooking .eq span:nth-child(7) { animation-delay: .72s; height: 35%; }
+    .cooking .eq span:nth-child(8) { animation-delay: .84s; height: 85%; }
+    @keyframes eqBar {
+      0%, 100% { transform: scaleY(0.35); opacity: 0.55; }
+      50%      { transform: scaleY(1);    opacity: 1; }
+    }
+    .cooking .label {
+      font-family: var(--serif); font-style: italic;
+      font-size: clamp(34px, 5vw, 56px);
+      line-height: 1.1; letter-spacing: -0.01em;
+      color: var(--paper);
+    }
+    .cooking .label .ember-dot {
+      display: inline-block;
+      width: 14px; height: 14px; border-radius: 999px;
+      margin-left: 4px;
+      background: var(--ember-grad);
+      box-shadow: 0 0 24px var(--accent-cast);
+      animation: cookingPulse 1.4s ease-in-out infinite;
+    }
+    .cooking .note {
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(245,241,232,0.5);
+      max-width: 560px;
+      line-height: 1.6;
+    }
+    @keyframes cookingPulse {
+      0%, 100% { transform: scale(0.85); opacity: 0.7; }
+      50%      { transform: scale(1.15); opacity: 1; }
     }
 
     /* ── HERO ──────────────────────────────────────────────────────── */
@@ -1417,15 +1475,11 @@
     <div class="video-layer"></div>
     <div class="grain"></div>
 
-    <div class="video-badge">
-      <span class="rec"></span>
-      trap queen · birthday room
-    </div>
 
     <div class="frame">
       <nav class="hero-nav">
         <div class="left">
-          <span class="wordmark" data-magnet="wordmark">sikuya</span>
+          <span class="wordmark" data-magnet="wordmark">Sikuya</span>
           <span class="nav-dot"></span>
         </div>
         <nav class="links">
@@ -1439,9 +1493,9 @@
 
       <div class="hero-center">
         <div class="tiny-tag">00 — perth, wa</div>
-        <h1 aria-label="Sikuya."><span class="letter" aria-hidden="true">S</span><span class="letter" aria-hidden="true">i</span><span class="letter" aria-hidden="true">k</span><span class="letter" aria-hidden="true">u</span><span class="letter" aria-hidden="true">y</span><span class="letter" aria-hidden="true">a</span><span class="ember letter ember-period" aria-hidden="true" data-ember-period title="tap me">.</span></h1>
-        <div class="category">perth open-format dj</div>
-        <p class="subtitle">sikuya plays open-format crossover for perth crowds who want their roots in the same set as the bangers.</p>
+        <h1 aria-label="Sikuya."><span class="letter" aria-hidden="true">S</span><span class="letter" aria-hidden="true">i</span><span class="letter" aria-hidden="true">k</span><span class="letter" aria-hidden="true">u</span><span class="letter" aria-hidden="true">y</span><span class="letter" aria-hidden="true">a</span><span class="ember letter ember-period" aria-hidden="true" data-ember-period>.</span></h1>
+        <div class="category">perth · au</div>
+        <p class="subtitle">Sikuya plays for perth crowds who want their roots in the same set as the bangers.</p>
       </div>
 
       <div class="hero-bottom">
@@ -1531,18 +1585,22 @@
           <h2 class="section-title">mixes<span class="ember">.</span></h2>
         </div>
         <div class="section-meta">
-          <div>long-form + live cuts</div>
-          <div class="dim">incoming · follow ig for drops</div>
+          <div>mixes + live cuts</div>
+          <div class="dim">first upload soon</div>
         </div>
       </div>
 
-      <div class="wip-banner">
-        <span class="wip-dot"></span>
-        wip · mixes recording and getting uploaded. titles + thumbs are placeholders.
+      <div class="cooking">
+        <div class="eq" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="label">still cooking<span class="ember-dot"></span></div>
+        <div class="note">first mix uploads land here when they're real. dm to be the first to hear them.</div>
       </div>
 
-      <div class="subhead-tag">long-form sets</div>
-      <div class="mix-rows" id="mixRows">
+      <!-- mix-rows hidden until real mixes wire in. preserved in source for codex to swap later. -->
+      <div class="subhead-tag" style="display:none;">long-form sets</div>
+      <div class="mix-rows" id="mixRows" style="display:none;">
         <div class="mix-row active" data-mix>
           <div class="mix-row-head">
             <div>
@@ -1689,7 +1747,8 @@
         </div>
       </div>
 
-      <div style="margin-top: 96px;">
+      <!-- live cuts hidden until real clips wire in -->
+      <div style="margin-top: 96px; display: none;">
         <div class="reel-head">
           <div class="subhead-tag" style="margin-bottom: 0;">live cuts · <span class="wip-badge">soon</span></div>
           <div class="hint">scroll →</div>
@@ -1704,7 +1763,7 @@
         </div>
       </div>
 
-      <p class="voice-line">tap a clip. that's the room when i'm in it.</p>
+      <p class="voice-line">first one drops soon. that's the room when i'm in it.</p>
     </div>
   </section>
 
@@ -1731,7 +1790,7 @@
 
         <div class="manifesto" id="manifesto">
           <div class="lead">what i do, plain</div>
-          <div class="line">perth dj. open-format.</div>
+          <div class="line">perth.</div>
           <div class="line">opm sits next to top 40, house, hip-hop.</div>
           <div class="line">if it fits the room i play it.</div>
         </div>
@@ -1750,16 +1809,20 @@
         </div>
         <div class="section-meta">
           <div>what they say</div>
-          <div class="dim">screenshots wiring in — placeholders for now</div>
+          <div class="dim">coming soon from the room</div>
         </div>
       </div>
 
-      <div class="wip-banner">
-        <span class="wip-dot"></span>
-        wip · real dms + comments dropping in soon. layout shown with placeholder text.
+      <div class="cooking">
+        <div class="eq" aria-hidden="true">
+          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <div class="label">still in development<span class="ember-dot"></span></div>
+        <div class="note">real dms, comments, and gig recaps from the room land here when they're in.</div>
       </div>
 
-      <div class="quote-grid">
+      <!-- quote-grid hidden until real screenshots wire in -->
+      <div class="quote-grid" style="display:none;">
         <article class="quote-card featured">
           <div class="qmark">"</div>
           <blockquote>bro this is a vibe. when's the next set?</blockquote>
@@ -1810,7 +1873,8 @@
         </article>
       </div>
 
-      <div class="video-strip">
+      <!-- video reviews hidden until real recordings wire in -->
+      <div class="video-strip" style="display:none;">
         <div class="reel-head">
           <div class="subhead-tag" style="margin-bottom: 0;">word from the room · on tape · <span class="wip-badge">soon</span></div>
           <div class="hint">tap to play</div>
@@ -1933,8 +1997,8 @@
 
       <footer class="footer">
         <div>
-          <div class="wm">sikuya<span class="dot"></span></div>
-          <div class="tag">perth open-format dj</div>
+          <div class="wm">Sikuya<span class="dot"></span></div>
+          <div class="tag">perth · au</div>
         </div>
         <div>
           <h5>follow</h5>
@@ -2116,7 +2180,7 @@
       const section = document.querySelector('[data-brand]');
       if (!section) return;
 
-      const sentence = "sikuya plays open-format crossover for perth crowds who want their roots in the same set as the bangers.";
+      const sentence = "Sikuya plays for perth crowds who want their roots in the same set as the bangers.";
       const words = sentence.split(' ');
       const wrap = document.getElementById('wordReveal');
       words.forEach(w => {
