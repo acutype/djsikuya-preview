@@ -13,6 +13,8 @@
   <meta property="og:url" content="https://djsikuya.com" />
   <meta name="twitter:card" content="summary_large_image" />
 
+  <link rel="icon" type="image/svg+xml" href="./public/favicon.svg" />
+  <link rel="alternate icon" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
@@ -504,8 +506,11 @@
       margin-top: 96px;
     }
     .past-log .grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
       margin-top: 18px;
+    }
+    @media (max-width: 1024px) {
+      .past-log .grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
     }
     .past-log h4 {
       font-family: var(--serif); font-style: italic;
@@ -1538,8 +1543,14 @@
       </div>
 
       <div class="past-log">
-        <div class="marker">selected past</div>
+        <div class="marker">years...</div>
         <div class="grid">
+          <div>
+            <h4>2026</h4>
+            <ul>
+              <li style="color: rgba(245,241,232,0.5); font-style: italic;">wiring in from streamline · soon</li>
+            </ul>
+          </div>
           <div>
             <h4>2025</h4>
             <ul>
@@ -2040,6 +2051,21 @@
   </div>
 
   <script>
+    // Path-based routing: visit /book, /live, /mixes, /brand, /press → scroll to that section on load
+    (function initPathRouting() {
+      const validSections = ['live', 'mixes', 'brand', 'voices', 'press', 'book'];
+      const pathSegment = window.location.pathname.replace(/^\/+|\/+$/g, '').toLowerCase();
+      // Also catch /press → voices (since we renamed proof → voices but old links might persist)
+      const target = pathSegment === 'press' ? 'voices' : pathSegment;
+      if (validSections.includes(target)) {
+        // Defer until after the page has laid out so heights are real
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          const el = document.getElementById(target);
+          if (el) el.scrollIntoView({ behavior: 'auto', block: 'start' });
+        }));
+      }
+    })();
+
     // Smooth-scroll for elements with data-scroll-to, with View Transitions where supported
     const supportsViewTransitions = typeof document.startViewTransition === 'function';
     function scrollWithTransition(targetId) {
