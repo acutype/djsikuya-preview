@@ -5,6 +5,9 @@
   "outputDirectory": ".",
   "rewrites": [
     {"source": "/live", "destination": "/index.html"},
+    {"source": "/clips", "destination": "/index.html"},
+    {"source": "/taste", "destination": "/index.html"},
+    {"source": "/portfolio", "destination": "/index.html"},
     {"source": "/mixes", "destination": "/index.html"},
     {"source": "/brand", "destination": "/index.html"},
     {"source": "/voices", "destination": "/index.html"},

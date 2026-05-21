@@ -24,10 +24,13 @@
     "@context": "https://schema.org",
     "@type": "MusicGroup",
     "name": "Sikuya",
-    "alternateName": "DJ Sikuya",
     "genre": ["OPM", "R&B", "House", "Hip-hop"],
     "url": "https://djsikuya.com",
     "email": "bookings@djsikuya.com",
+    "sameAs": [
+      "https://www.youtube.com/@djsikuya",
+      "https://www.facebook.com/ObsessedWithProjectX/"
+    ],
     "location": {"@type": "Place", "name": "Perth, WA, Australia"}
   }
   </script>
@@ -274,17 +277,18 @@
       height: 100vh; min-height: 640px;
       padding: 0;
       isolation: isolate;
+      background: #080406;
     }
     .hero .video-layer {
-      position: absolute; inset: 0; z-index: 0;
+      position: absolute; inset: 0; z-index: 1;
+      pointer-events: none;
       background:
         radial-gradient(55% 40% at 80% 22%, rgba(255,77,58,0.28), transparent 60%),
         radial-gradient(70% 50% at 78% 28%, rgba(206,17,38,0.22), transparent 70%),
         radial-gradient(80% 60% at 75% 35%, rgba(60,5,18,0.55), transparent 75%),
         radial-gradient(50% 40% at 18% 80%, rgba(245,241,232,0.08), transparent 70%),
         radial-gradient(60% 45% at 95% 95%, rgba(160,22,60,0.18), transparent 70%),
-        linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0) 70%, rgba(14,14,14,0.4) 100%),
-        #080406;
+        linear-gradient(180deg, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.12) 34%, rgba(0,0,0,0.18) 68%, rgba(14,14,14,0.74) 100%);
       transform: scale(1.05);
       animation: heroDrift 22s ease-in-out infinite alternate;
     }
@@ -292,10 +296,12 @@
       position: absolute; inset: 0; z-index: 0;
       width: 100%; height: 100%;
       object-fit: cover;
-      opacity: 0.55;
+      object-position: 50% 42%;
+      opacity: 0.82;
+      filter: saturate(1.06) contrast(1.08) brightness(0.72);
     }
     .hero .grain {
-      position: absolute; inset: -10%; z-index: 1; pointer-events: none;
+      position: absolute; inset: -10%; z-index: 2; pointer-events: none;
       background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.55 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
       background-size: 240px 240px;
       opacity: 0.18;
@@ -318,7 +324,7 @@
     }
 
     .hero .frame {
-      position: relative; z-index: 2;
+      position: relative; z-index: 3;
       width: 100%; height: 100%;
       padding: 56px;
       display: flex; flex-direction: column;
@@ -700,6 +706,330 @@
       color: rgba(245,241,232,0.5);
       margin-top: 4px;
     }
+
+    .clip-intro {
+      max-width: 740px;
+      color: rgba(245,241,232,0.74);
+      font-size: 17px;
+      line-height: 1.65;
+      margin: -8px 0 40px;
+    }
+    .cut-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+      margin-top: 32px;
+    }
+    .cut-card {
+      display: grid;
+      grid-template-columns: minmax(0, 0.86fr) minmax(220px, 0.5fr);
+      min-height: 560px;
+      border: 1px solid rgba(245,241,232,0.12);
+      background: rgba(16,11,9,0.72);
+      overflow: hidden;
+    }
+    .cut-media {
+      position: relative;
+      min-height: 560px;
+      background: #050303;
+      overflow: hidden;
+    }
+    .cut-media video,
+    .ambient-video video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      background: #050303;
+    }
+    .cut-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 14px;
+      padding: 24px;
+    }
+    .cut-copy .label,
+    .ambient-copy .label,
+    .portfolio-card figcaption {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .cut-copy h3 {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(32px, 4vw, 52px);
+      line-height: 0.96;
+      margin: 0;
+      color: var(--paper);
+    }
+    .cut-copy p,
+    .ambient-copy p,
+    .portfolio-heading p {
+      color: rgba(245,241,232,0.66);
+      font-size: 15px;
+      line-height: 1.6;
+      margin: 0;
+    }
+    .cut-copy a {
+      width: fit-content;
+      margin-top: 8px;
+      border-bottom: 1px solid var(--accent);
+      color: var(--accent);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    .ambient-cut {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.55fr);
+      gap: 28px;
+      align-items: stretch;
+      margin-top: 34px;
+      border: 1px solid rgba(245,241,232,0.12);
+      background: rgba(245,241,232,0.035);
+    }
+    .ambient-video {
+      position: relative;
+      min-height: 520px;
+      overflow: hidden;
+      background: #050303;
+    }
+    .ambient-video::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.48));
+      pointer-events: none;
+    }
+    .ambient-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 16px;
+      padding: 28px;
+    }
+    .ambient-copy h3 {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(34px, 5vw, 68px);
+      line-height: 0.94;
+      margin: 0;
+      color: var(--paper);
+    }
+
+    .taste {
+      background: #0b0807;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .taste-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.82fr) minmax(0, 1fr);
+      gap: clamp(28px, 6vw, 72px);
+      align-items: start;
+      margin-top: 34px;
+    }
+    .soundcloud-panel {
+      border: 1px solid rgba(245,241,232,0.12);
+      background: rgba(245,241,232,0.035);
+      padding: 18px;
+    }
+    .soundcloud-panel iframe {
+      display: block;
+      width: 100%;
+      min-height: 352px;
+      border: 0;
+      background: #050303;
+    }
+    .soundcloud-empty {
+      min-height: 352px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 14px;
+      padding: 22px;
+      border: 1px dashed rgba(245,241,232,0.18);
+      background:
+        radial-gradient(60% 45% at 20% 10%, rgba(206,17,38,0.18), transparent 65%),
+        linear-gradient(135deg, rgba(245,241,232,0.05), rgba(206,17,38,0.05));
+    }
+    .soundcloud-empty .label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .soundcloud-empty h3 {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(34px, 5vw, 64px);
+      line-height: 0.94;
+      margin: 0;
+      color: var(--paper);
+    }
+    .soundcloud-empty p {
+      color: rgba(245,241,232,0.62);
+      font-size: 15px;
+      line-height: 1.55;
+      margin: 0;
+    }
+    .friendster-player {
+      position: fixed;
+      left: 18px;
+      bottom: 18px;
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      max-width: min(420px, calc(100vw - 36px));
+      padding: 12px 14px;
+      border: 1px solid rgba(245,241,232,0.14);
+      background: rgba(8,5,4,0.78);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.38);
+    }
+    .friendster-player button {
+      width: 38px;
+      height: 38px;
+      flex: 0 0 38px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--pill-grad);
+      color: #090504;
+      font-family: var(--mono);
+      font-size: 12px;
+      cursor: pointer;
+      box-shadow: var(--pill-shadow);
+    }
+    .friendster-player .track {
+      min-width: 0;
+      display: grid;
+      gap: 3px;
+    }
+    .friendster-player .now {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .friendster-player .title {
+      color: var(--paper);
+      font-size: 13px;
+      line-height: 1.25;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .friendster-player .hint {
+      color: rgba(245,241,232,0.42);
+      font-size: 11px;
+      line-height: 1.25;
+    }
+    .moodboard {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1px;
+      border: 1px solid rgba(245,241,232,0.12);
+      background: rgba(245,241,232,0.12);
+    }
+    .mood-card {
+      min-height: 150px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background:
+        radial-gradient(80% 70% at 100% 0%, rgba(206,17,38,0.12), transparent 70%),
+        rgba(12,9,8,0.94);
+    }
+    .mood-card .count {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      color: rgba(245,241,232,0.38);
+    }
+    .mood-card strong {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(24px, 3vw, 38px);
+      line-height: 0.96;
+      color: var(--paper);
+      font-weight: 400;
+    }
+    .mood-card span {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(245,241,232,0.5);
+    }
+
+    .portfolio {
+      background: var(--bg);
+      border-top: 1px solid var(--line);
+    }
+    .portfolio-heading {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(240px, 0.48fr);
+      gap: clamp(28px, 6vw, 72px);
+      align-items: end;
+      margin-bottom: 44px;
+    }
+    .portfolio-heading .section-title {
+      margin-top: 14px;
+    }
+    .portfolio-rail {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: clamp(220px, 27vw, 390px);
+      gap: 16px;
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+      padding: 0 0 14px;
+      scroll-snap-type: x proximity;
+      scrollbar-color: rgba(232,148,90,0.55) rgba(245,241,232,0.08);
+    }
+    .portfolio-card {
+      position: relative;
+      scroll-snap-align: center;
+      min-height: 360px;
+      margin: 0;
+      border: 1px solid rgba(245,241,232,0.12);
+      background: #080504;
+      overflow: hidden;
+    }
+    .portfolio-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(1.02) contrast(1.04);
+      transition: transform 700ms var(--ease), filter 700ms var(--ease);
+    }
+    .portfolio-card:hover img {
+      transform: scale(1.045);
+      filter: saturate(1.12) contrast(1.08);
+    }
+    .portfolio-card::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 58%, rgba(0,0,0,0.72) 100%);
+      pointer-events: none;
+    }
+    .portfolio-card figcaption {
+      position: absolute;
+      left: 14px; bottom: 14px; z-index: 2;
+      color: rgba(245,241,232,0.9);
+    }
+    .portfolio-card.p-tall { aspect-ratio: 4 / 5; }
+    .portfolio-card.p-portrait { aspect-ratio: 3 / 4; }
+    .portfolio-card.p-wide { aspect-ratio: 16 / 11; }
 
     .reel-head {
       display: flex; justify-content: space-between; align-items: baseline;
@@ -1406,6 +1736,24 @@
         letter-spacing: 0.22em; text-transform: uppercase;
         color: rgba(245,241,232,0.45); margin-top: 6px;
       }
+      .cut-grid { grid-template-columns: 1fr; gap: 16px; }
+      .cut-card {
+        grid-template-columns: 1fr;
+        min-height: 0;
+      }
+      .cut-media { min-height: 520px; }
+      .cut-copy { padding: 20px; }
+      .ambient-cut {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+      .ambient-video { min-height: 520px; }
+      .taste-grid { grid-template-columns: 1fr; gap: 22px; }
+      .moodboard { grid-template-columns: 1fr; }
+      .mood-card { min-height: 128px; }
+      .portfolio-heading { grid-template-columns: 1fr; gap: 18px; }
+      .portfolio-rail { grid-auto-columns: 82vw; }
+      .portfolio-card { min-height: 360px; }
 
       .voice-line { font-size: 22px; }
 
@@ -1439,10 +1787,16 @@
       .footer { grid-template-columns: 1fr; gap: 28px; padding: 32px 0 48px; }
 
       .mobile-book-bar {
-        display: flex;
+        display: none;
         position: fixed; left: 16px; right: 16px; bottom: 16px;
         z-index: 30;
         gap: 10px; align-items: center;
+      }
+      .friendster-player {
+        left: 12px;
+        right: 12px;
+        bottom: 12px;
+        max-width: none;
       }
       .mobile-book-bar .book-pill {
         flex: 1; padding: 14px 18px; font-size: 15px;
@@ -1459,6 +1813,17 @@
 
 <body>
   <a class="skip-link" href="#book">skip to book</a>
+  <div class="friendster-player" data-site-player>
+    <button type="button" data-site-audio-toggle aria-label="play site soundtrack">play</button>
+    <div class="track">
+      <div class="now">site soundtrack</div>
+      <div class="title">Sikuya room loop</div>
+      <div class="hint">old-school profile music · tap to start</div>
+    </div>
+    <audio data-site-audio preload="metadata" loop>
+      <source src="./public/video/trap-queen-room.mp4" type="audio/mp4" />
+    </audio>
+  </div>
 
   <!-- 00 HERO -->
   <section class="hero" id="top" data-hero>
@@ -1489,9 +1854,10 @@
         </div>
         <nav class="links">
           <a href="#live">live</a>
-          <a href="#mixes">mixes</a>
+          <a href="#clips">tape</a>
+          <a href="#taste">taste</a>
+          <a href="#portfolio">portfolio</a>
           <a href="#brand">brand</a>
-          <a href="#press">press</a>
         </nav>
         <button class="book-pill" data-magnet="pill" data-scroll-to="book">book</button>
       </nav>
@@ -1531,24 +1897,25 @@
           <h2 class="section-title">upcoming<span class="ember">.</span></h2>
         </div>
         <div class="section-meta">
-          <div>sync wiring soon</div>
-          <div class="dim">google calendar · deputy</div>
+          <div>public dates</div>
+          <div class="dim">project x · direct bookings</div>
         </div>
       </div>
 
       <div class="empty-state">
         <div class="lead">next public dates</div>
-        <div class="body">dropping soon. agency schedule + private bookings syncing in.</div>
-        <div class="footer">dm to book · or <a href="mailto:bookings@djsikuya.com">email me direct</a></div>
+        <div class="body">posting soon. private dates stay private.</div>
+        <div class="footer"><a href="https://www.facebook.com/ObsessedWithProjectX/" target="_blank" rel="noopener">project x updates</a> · or <a href="mailto:bookings@djsikuya.com">email me direct</a></div>
       </div>
 
+      <!-- Gig source v1: Project X public updates plus manually approved public dates. Private bookings stay off the public site. -->
       <div class="past-log">
         <div class="marker">years...</div>
         <div class="grid">
           <div>
             <h4>2026</h4>
             <ul>
-              <li style="color: rgba(245,241,232,0.5); font-style: italic;">wiring in from streamline · soon</li>
+              <li style="color: rgba(245,241,232,0.5); font-style: italic;">public venues · posting soon</li>
             </ul>
           </div>
           <div>
@@ -1586,27 +1953,62 @@
     </div>
   </section>
 
-  <!-- 02 MIXES -->
-  <section class="mixes" id="mixes">
+  <!-- 02 CLIPS -->
+  <section class="mixes clips" id="clips">
     <div class="atmosphere"></div>
     <div class="content">
       <div class="section-head">
         <div>
-          <div class="marker">02_mixes</div>
-          <h2 class="section-title">mixes<span class="ember">.</span></h2>
+          <div class="marker">02_room tape</div>
+          <h2 class="section-title">room tape<span class="ember">.</span></h2>
         </div>
         <div class="section-meta">
-          <div>mixes + live cuts</div>
-          <div class="dim">first upload soon</div>
+          <div>google drive</div>
+          <div class="dim">tap for sound</div>
         </div>
       </div>
 
-      <div class="cooking">
-        <div class="eq" aria-hidden="true">
-          <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+      <p class="clip-intro">Motion from the room. Tap when you want sound.</p>
+
+      <div class="cut-grid" aria-label="Sikuya live clips">
+        <article class="cut-card">
+          <div class="cut-media">
+            <video controls playsinline preload="metadata" poster="./public/video/trap-queen-poster.webp">
+              <source src="./public/video/trap-queen-room.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="cut-copy">
+            <div class="label">cut 01</div>
+            <h3>room pressure</h3>
+            <a href="#book">book this room</a>
+          </div>
+        </article>
+
+        <article class="cut-card">
+          <div class="cut-media">
+            <video controls playsinline preload="metadata" poster="./public/video/dilemma-poster.webp">
+              <source src="./public/video/dilemma-singalong.mp4" type="video/mp4" />
+            </video>
+          </div>
+          <div class="cut-copy">
+            <div class="label">cut 02</div>
+            <h3>chorus pocket</h3>
+            <a href="#book">book this room</a>
+          </div>
+        </article>
+      </div>
+
+      <div class="ambient-cut" aria-label="One shot room preview">
+        <div class="ambient-video">
+          <video autoplay muted loop playsinline preload="metadata" poster="./public/video/one-shot-poster.webp">
+            <source src="./public/video/one-shot-loop.mp4" type="video/mp4" />
+          </video>
         </div>
-        <div class="label">still cooking<span class="ember-dot"></span></div>
-        <div class="note">first mix uploads land here when they're real. dm to be the first to hear them.</div>
+        <div class="ambient-copy">
+          <div class="label">room preview</div>
+          <h3>one shot.</h3>
+          <p>Silent by default. It moves while the page breathes.</p>
+        </div>
       </div>
 
       <!-- mix-rows hidden until real mixes wire in. preserved in source for codex to swap later. -->
@@ -1774,17 +2176,74 @@
         </div>
       </div>
 
-      <p class="voice-line">first one drops soon. that's the room when i'm in it.</p>
+      <p class="voice-line">that is the room when i'm in it.</p>
     </div>
   </section>
 
-  <!-- 03 BRAND -->
+  <!-- 03 TASTE -->
+  <section class="taste" id="taste">
+    <div class="content">
+      <div class="section-head">
+        <div>
+          <div class="marker">03_taste</div>
+          <h2 class="section-title">taste<span class="ember">.</span></h2>
+        </div>
+        <div class="section-meta">
+          <div>moodboard</div>
+          <div class="dim">site soundtrack · room taste</div>
+        </div>
+      </div>
+
+      <div class="moodboard" aria-label="Sikuya taste moodboard">
+        <div class="mood-card"><span class="count">01</span><strong>r&amp;b edits</strong><span>slow burn</span></div>
+        <div class="mood-card"><span class="count">02</span><strong>afrobeats</strong><span>warm lift</span></div>
+        <div class="mood-card"><span class="count">03</span><strong>opm memory</strong><span>roots inside the set</span></div>
+        <div class="mood-card"><span class="count">04</span><strong>dancehall</strong><span>waistline pocket</span></div>
+        <div class="mood-card"><span class="count">05</span><strong>house</strong><span>late motion</span></div>
+        <div class="mood-card"><span class="count">06</span><strong>hip-hop</strong><span>crowd lock</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 PORTFOLIO -->
+  <section class="portfolio" id="portfolio">
+    <div class="content">
+      <div class="portfolio-heading">
+        <div>
+          <div class="marker">04_portfolio</div>
+          <h2 class="section-title">photos from the room<span class="ember">.</span></h2>
+        </div>
+        <p>A running frame of sets, fits, lights, and the crowd energy around the booth.</p>
+      </div>
+
+      <div class="portfolio-rail" aria-label="Sikuya room photos">
+        <figure class="portfolio-card p-tall"><img src="./public/assets/dj-kuya-01.webp" alt="Sikuya at a room set 01" loading="lazy"><figcaption>01</figcaption></figure>
+        <figure class="portfolio-card p-portrait"><img src="./public/assets/dj-kuya-02.webp" alt="Sikuya at a room set 02" loading="lazy"><figcaption>02</figcaption></figure>
+        <figure class="portfolio-card p-wide"><img src="./public/assets/dj-kuya-03.webp" alt="Sikuya at a room set 03" loading="lazy"><figcaption>03</figcaption></figure>
+        <figure class="portfolio-card p-tall"><img src="./public/assets/dj-kuya-04.webp" alt="Sikuya at a room set 04" loading="lazy"><figcaption>04</figcaption></figure>
+        <figure class="portfolio-card p-wide"><img src="./public/assets/dj-kuya-05.webp" alt="Sikuya at a room set 05" loading="lazy"><figcaption>05</figcaption></figure>
+        <figure class="portfolio-card p-tall"><img src="./public/assets/dj-kuya-06.webp" alt="Sikuya at a room set 06" loading="lazy"><figcaption>06</figcaption></figure>
+        <figure class="portfolio-card p-portrait"><img src="./public/assets/dj-kuya-07.webp" alt="Sikuya at a room set 07" loading="lazy"><figcaption>07</figcaption></figure>
+        <figure class="portfolio-card p-wide"><img src="./public/assets/dj-kuya-08.webp" alt="Sikuya at a room set 08" loading="lazy"><figcaption>08</figcaption></figure>
+        <figure class="portfolio-card p-tall"><img src="./public/assets/dj-kuya-09.webp" alt="Sikuya at a room set 09" loading="lazy"><figcaption>09</figcaption></figure>
+        <figure class="portfolio-card p-portrait"><img src="./public/assets/dj-kuya-10.webp" alt="Sikuya at a room set 10" loading="lazy"><figcaption>10</figcaption></figure>
+        <figure class="portfolio-card p-wide"><img src="./public/assets/dj-kuya-11.webp" alt="Sikuya at a room set 11" loading="lazy"><figcaption>11</figcaption></figure>
+        <figure class="portfolio-card p-tall"><img src="./public/assets/dj-kuya-12.webp" alt="Sikuya at a room set 12" loading="lazy"><figcaption>12</figcaption></figure>
+        <figure class="portfolio-card p-wide"><img src="./public/assets/dj-kuya-13.webp" alt="Sikuya at a room set 13" loading="lazy"><figcaption>13</figcaption></figure>
+        <figure class="portfolio-card p-portrait"><img src="./public/assets/dj-kuya-14.webp" alt="Sikuya at a room set 14" loading="lazy"><figcaption>14</figcaption></figure>
+        <figure class="portfolio-card p-tall"><img src="./public/assets/dj-kuya-15.webp" alt="Sikuya at a room set 15" loading="lazy"><figcaption>15</figcaption></figure>
+        <figure class="portfolio-card p-wide"><img src="./public/assets/dj-kuya-16.webp" alt="Sikuya at a room set 16" loading="lazy"><figcaption>16</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 BRAND -->
   <section class="brand" id="brand" data-brand data-css-scroll>
     <div class="pin-wrap">
       <div class="atmosphere"></div>
       <div class="content" style="display: flex; flex-direction: column; gap: 56px; position: relative; z-index: 1;">
         <div>
-          <div class="marker">03_brand</div>
+          <div class="marker">05_brand</div>
           <h2 class="section-title" style="font-size: 110px; margin-top: 14px;">thesis<span class="ember">.</span></h2>
         </div>
 
@@ -1815,7 +2274,7 @@
     <div class="content">
       <div class="section-head">
         <div>
-          <div class="marker">04_voices</div>
+          <div class="marker">06_voices</div>
           <h2 class="section-title" style="font-size: 110px;">voices<span class="ember">.</span></h2>
         </div>
         <div class="section-meta">
@@ -2014,10 +2473,9 @@
         <div>
           <h5>follow</h5>
           <ul>
-            <li><a href="#" aria-label="instagram">instagram →</a></li>
-            <li><a href="#" aria-label="tiktok">tiktok →</a></li>
-            <li><a href="#" aria-label="youtube">youtube →</a></li>
-            <li><a href="#" aria-label="soundcloud">soundcloud →</a></li>
+            <li><a href="https://www.youtube.com/@djsikuya" target="_blank" rel="noopener" aria-label="youtube">youtube →</a></li>
+            <li><a href="https://www.facebook.com/ObsessedWithProjectX/" target="_blank" rel="noopener" aria-label="facebook">project x →</a></li>
+            <li><a href="mailto:bookings@djsikuya.com" aria-label="email">email →</a></li>
           </ul>
         </div>
         <div>
@@ -2027,10 +2485,10 @@
         <div>
           <h5>built</h5>
           <div class="credit">
-            design + build · <strong>[your name here]</strong><br />
-            photography · <strong>[photographer credit]</strong>
+            room archive · <strong>Sikuya</strong><br />
+            site motion · <strong>Codex Operator</strong>
           </div>
-          <div class="copyright">© sikuya · 2025</div>
+          <div class="copyright">© Sikuya · 2026</div>
         </div>
       </footer>
     </div>
@@ -2051,9 +2509,9 @@
   </div>
 
   <script>
-    // Path-based routing: visit /book, /live, /mixes, /brand, /press → scroll to that section on load
+    // Path-based routing: visit /book, /live, /clips, /portfolio, /brand, /press to scroll to that section on load
     (function initPathRouting() {
-      const validSections = ['live', 'mixes', 'brand', 'voices', 'press', 'book'];
+      const validSections = ['live', 'clips', 'taste', 'portfolio', 'mixes', 'brand', 'voices', 'press', 'book'];
       const pathSegment = window.location.pathname.replace(/^\/+|\/+$/g, '').toLowerCase();
       // Also catch /press → voices (since we renamed proof → voices but old links might persist)
       const target = pathSegment === 'press' ? 'voices' : pathSegment;
@@ -2198,6 +2656,31 @@
           rows.forEach(r => r.classList.remove('active'));
           if (!wasActive) row.classList.add('active');
         });
+      });
+    })();
+
+    // Site soundtrack: old-school profile music, but only after a visitor taps play.
+    (function initSitePlayer() {
+      const audio = document.querySelector('[data-site-audio]');
+      const toggle = document.querySelector('[data-site-audio-toggle]');
+      const player = document.querySelector('[data-site-player]');
+      if (!audio || !toggle || !player) return;
+
+      toggle.addEventListener('click', async () => {
+        if (audio.paused) {
+          try {
+            await audio.play();
+            toggle.textContent = 'pause';
+            player.classList.add('playing');
+          } catch {
+            toggle.textContent = 'play';
+            player.classList.remove('playing');
+          }
+        } else {
+          audio.pause();
+          toggle.textContent = 'play';
+          player.classList.remove('playing');
+        }
       });
     })();
 
