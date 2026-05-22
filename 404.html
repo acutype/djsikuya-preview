@@ -1290,6 +1290,27 @@
       text-transform: uppercase;
       color: rgba(245,241,232,0.5);
     }
+    .genre-section .section-head {
+      margin-bottom: 34px;
+    }
+    .genre-section .moodboard {
+      max-width: min(980px, 86vw);
+      margin: 0 auto;
+    }
+    .genre-section .mood-card {
+      position: relative;
+      min-height: 128px;
+      justify-content: center;
+      padding: 24px 18px 20px;
+    }
+    .genre-section .mood-card .count {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+    }
+    .genre-section .mood-card strong {
+      margin-top: 22px;
+    }
 
     .portfolio {
       background: var(--bg);
@@ -3260,6 +3281,7 @@
         <nav class="links">
           <a href="#gigs">gigs</a>
           <a href="#clips">tape</a>
+          <a href="#taste">taste</a>
           <a href="#portfolio">photos</a>
           <a href="#brand">brand</a>
         </nav>
@@ -3600,12 +3622,33 @@
     </div>
   </section>
 
-  <!-- 03 PORTFOLIO -->
+  <!-- 03 TASTE -->
+  <section class="taste genre-section" id="taste">
+    <div class="content">
+      <div class="section-head">
+        <div>
+          <div class="marker">03_taste</div>
+          <h2 class="section-title">taste<span class="ember">.</span></h2>
+        </div>
+      </div>
+
+      <div class="moodboard" aria-label="Sikuya genre taste">
+        <div class="mood-card"><span class="count">01</span><strong>r&amp;b edits</strong></div>
+        <div class="mood-card"><span class="count">02</span><strong>afrobeats</strong></div>
+        <div class="mood-card"><span class="count">03</span><strong>opm memory</strong></div>
+        <div class="mood-card"><span class="count">04</span><strong>dancehall</strong></div>
+        <div class="mood-card"><span class="count">05</span><strong>house</strong></div>
+        <div class="mood-card"><span class="count">06</span><strong>hip-hop</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 PORTFOLIO -->
   <section class="portfolio" id="portfolio">
     <div class="content">
       <div class="portfolio-heading">
         <div>
-          <div class="marker">03_room fragments</div>
+          <div class="marker">04_room fragments</div>
           <h2 class="section-title">room fragments<span class="ember">.</span></h2>
         </div>
         <p>sets, fits, lights.</p>
@@ -3638,7 +3681,7 @@
       <div class="atmosphere"></div>
       <div class="content" style="display: flex; flex-direction: column; gap: 56px; position: relative; z-index: 1;">
         <div class="thesis-stub">
-          <div class="marker">04_thesis</div>
+          <div class="marker">05_thesis</div>
           <div class="construction-line">under construction<span class="ember">.</span></div>
         </div>
 
@@ -3663,13 +3706,13 @@
     </div>
   </section>
 
-  <!-- 04 PRESS -->
+  <!-- 06 PRESS -->
   <section class="press" id="press">
     <div class="atmosphere"></div>
     <div class="content">
       <div class="section-head">
         <div>
-          <div class="marker">05_voices</div>
+          <div class="marker">06_voices</div>
           <h2 class="section-title" style="font-size: 110px;">voices<span class="ember">.</span></h2>
         </div>
         <div class="section-meta">
@@ -3795,13 +3838,13 @@
     </div>
   </section>
 
-  <!-- 05 BOOK -->
+  <!-- 07 BOOK -->
   <section class="book" id="book">
     <div class="atmosphere"></div>
     <div class="content">
       <div class="section-head">
         <div>
-          <div class="marker">06_book</div>
+          <div class="marker">07_book</div>
           <h2 class="section-title" style="font-size: 110px;">book<span class="ember">.</span></h2>
         </div>
         <div class="section-meta">
