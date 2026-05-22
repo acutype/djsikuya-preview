@@ -1396,7 +1396,6 @@
       list-style: none;
       padding: 30px 0 0;
       margin: 0;
-      counter-reset: movement;
     }
     .movement-rail::before {
       content: '';
@@ -4119,8 +4118,8 @@
     (function initPathRouting() {
       const validSections = ['gigs', 'clips', 'taste', 'the-movement', 'portfolio', 'mixes', 'brand', 'voices', 'press', 'book'];
       const pathSegment = window.location.pathname.replace(/^\/+|\/+$/g, '').toLowerCase();
-      // Also catch /press → voices (since we renamed proof → voices but old links might persist)
-      const aliases = { live: 'gigs', movement: 'the-movement', chill: 'taste', press: 'voices' };
+      // Also catch /voices for older links using the section marker language.
+      const aliases = { live: 'gigs', movement: 'the-movement', chill: 'taste', voices: 'press' };
       const target = aliases[pathSegment] || pathSegment;
       if (validSections.includes(target)) {
         // Defer until after the page has laid out so heights are real
@@ -4671,7 +4670,7 @@
 
       async function trySubmit(payload) {
         try {
-          await fetch('/api/inbox', {
+          const response = await fetch('/api/inbox', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -4681,6 +4680,8 @@
               submittedAt: new Date().toISOString(),
             }),
           });
+          if (!response.ok) throw new Error('Inbox submit failed');
+          return true;
         } catch (err) {
           const subject = encodeURIComponent('booking — ' + (payload.name || 'enquiry'));
           const body = encodeURIComponent(
@@ -4692,12 +4693,12 @@
           document.body.appendChild(a);
           a.click();
           a.remove();
+          return false;
         }
       }
 
-      form.addEventListener('submit', (e) => {
+      form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        trackSikuyaEvent('form_submit');
         const payload = {
           name: form.querySelector('[name="name"]').value.trim(),
           email: form.querySelector('[name="email"]').value.trim(),
@@ -4709,11 +4710,12 @@
           form.reportValidity();
           return;
         }
-        trackSikuyaEvent('form_success');
+        trackSikuyaEvent('form_submit');
+        const submitted = await trySubmit(payload);
+        if (!submitted) return;
         salamat.classList.add('visible');
-        trySubmit(payload).finally(() => {
-          form.reset();
-        });
+        trackSikuyaEvent('form_success');
+        form.reset();
       });
 
       let formStarted = false;
