@@ -2817,18 +2817,17 @@
     .sound-switch {
       position: fixed;
       right: 18px;
-      top: 50%;
+      bottom: 116px;
       z-index: 48;
-      transform: translateY(-50%);
       pointer-events: auto;
     }
     .sound-switch button {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      min-width: 172px;
+      gap: 14px;
+      min-width: 246px;
       justify-content: flex-start;
-      padding: 7px 12px 7px 7px;
+      padding: 9px 16px 9px 9px;
       border: 1px solid rgba(245,241,232,0.18);
       background: rgba(8,5,4,0.68);
       color: rgba(245,241,232,0.84);
@@ -2876,9 +2875,9 @@
     }
     .sound-dog {
       position: relative;
-      width: 42px;
-      height: 42px;
-      flex: 0 0 42px;
+      width: 108px;
+      height: 108px;
+      flex: 0 0 108px;
       overflow: hidden;
       border-radius: 999px;
       background: #0b0706;
@@ -2889,8 +2888,8 @@
       display: block;
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      transform: scale(1.36);
+      object-fit: contain;
+      object-position: center center;
       filter: saturate(1.05) contrast(1.05);
     }
     .sound-switch.playing .sound-dog,
@@ -2911,6 +2910,10 @@
     }
     .sound-switch.dragged {
       transform: none;
+    }
+    .sound-switch.footer-aware:not(.dragged) {
+      bottom: auto;
+      top: 18px;
     }
     html[data-theme="light"] .sound-switch button {
       background: rgba(18,9,7,0.70);
@@ -3038,19 +3041,19 @@
       .sound-switch {
         right: 10px;
         top: auto;
-        bottom: 78px;
+        bottom: 84px;
         transform: none;
       }
       .sound-switch button {
-        min-width: 148px;
-        padding: 6px 10px 6px 6px;
+        min-width: 190px;
+        padding: 7px 12px 7px 7px;
         gap: 8px;
         font-size: 8px;
       }
       .sound-dog {
-        width: 34px;
-        height: 28px;
-        flex-basis: 34px;
+        width: 86px;
+        height: 86px;
+        flex-basis: 86px;
       }
 
       .section-head { grid-template-columns: 1fr; gap: 14px; margin-bottom: 32px; }
@@ -3246,7 +3249,6 @@
         <nav class="links">
           <a href="#gigs">gigs</a>
           <a href="#clips">tape</a>
-          <a href="#chill">chill</a>
           <a href="#portfolio">photos</a>
           <a href="#brand">brand</a>
         </nav>
@@ -3587,45 +3589,12 @@
     </div>
   </section>
 
-  <!-- 03 CHILL -->
-  <section class="taste" id="chill">
-    <div class="content">
-      <div class="section-head">
-        <div>
-          <div class="marker">03_chill here</div>
-          <h2 class="section-title">chill here<span class="ember">.</span></h2>
-        </div>
-        <div class="section-meta">
-          <div>soundtrack</div>
-          <div class="dim">suno loops · room taste</div>
-        </div>
-      </div>
-
-      <div class="chill-zone" data-chill-zone>
-        <button class="dance-pet" type="button" data-dance-pet aria-label="make the dancing dog move faster">
-          <video class="dance-gif" autoplay muted loop playsinline preload="metadata" src="./public/assets/brazil-dog-dance.mp4"></video>
-          <span class="dance-pet-label">brazil dog</span>
-        </button>
-        <div>
-          <div class="moodboard" aria-label="Sikuya taste moodboard">
-            <div class="mood-card"><span class="count">01</span><strong>r&amp;b edits</strong><span>slow burn</span></div>
-            <div class="mood-card"><span class="count">02</span><strong>afrobeats</strong><span>warm lift</span></div>
-            <div class="mood-card"><span class="count">03</span><strong>opm memory</strong><span>roots inside the set</span></div>
-            <div class="mood-card"><span class="count">04</span><strong>dancehall</strong><span>waistline pocket</span></div>
-            <div class="mood-card"><span class="count">05</span><strong>house</strong><span>late motion</span></div>
-            <div class="mood-card"><span class="count">06</span><strong>hip-hop</strong><span>crowd lock</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 04 PORTFOLIO -->
+  <!-- 03 PORTFOLIO -->
   <section class="portfolio" id="portfolio">
     <div class="content">
       <div class="portfolio-heading">
         <div>
-          <div class="marker">04_room fragments</div>
+          <div class="marker">03_room fragments</div>
           <h2 class="section-title">room fragments<span class="ember">.</span></h2>
         </div>
         <p>sets, fits, lights.</p>
@@ -3658,7 +3627,7 @@
       <div class="atmosphere"></div>
       <div class="content" style="display: flex; flex-direction: column; gap: 56px; position: relative; z-index: 1;">
         <div class="thesis-stub">
-          <div class="marker">05_thesis</div>
+          <div class="marker">04_thesis</div>
           <div class="construction-line">under construction<span class="ember">.</span></div>
         </div>
 
@@ -3689,7 +3658,7 @@
     <div class="content">
       <div class="section-head">
         <div>
-          <div class="marker">06_voices</div>
+          <div class="marker">05_voices</div>
           <h2 class="section-title" style="font-size: 110px;">voices<span class="ember">.</span></h2>
         </div>
         <div class="section-meta">
@@ -3821,7 +3790,7 @@
     <div class="content">
       <div class="section-head">
         <div>
-          <div class="marker">07_book</div>
+          <div class="marker">06_book</div>
           <h2 class="section-title" style="font-size: 110px;">book<span class="ember">.</span></h2>
         </div>
         <div class="section-meta">
@@ -3925,10 +3894,10 @@
   <script>
     // Path-based routing: visit /book, /gigs, /clips, /portfolio, /brand, /press to scroll to that section on load
     (function initPathRouting() {
-      const validSections = ['gigs', 'clips', 'chill', 'portfolio', 'mixes', 'brand', 'voices', 'press', 'book'];
+      const validSections = ['gigs', 'clips', 'portfolio', 'mixes', 'brand', 'voices', 'press', 'book'];
       const pathSegment = window.location.pathname.replace(/^\/+|\/+$/g, '').toLowerCase();
       // Also catch /press → voices (since we renamed proof → voices but old links might persist)
-      const aliases = { live: 'gigs', taste: 'chill', press: 'voices' };
+      const aliases = { live: 'gigs', taste: 'portfolio', chill: 'portfolio', press: 'voices' };
       const target = aliases[pathSegment] || pathSegment;
       if (validSections.includes(target)) {
         // Defer until after the page has laid out so heights are real
@@ -4259,34 +4228,6 @@
           player.classList.toggle('footer-aware', entries.some(entry => entry.isIntersecting));
         }, { threshold: 0.18 }).observe(footer);
       }
-    })();
-
-    // Chill section: avatar interaction + light smoke trail.
-    (function initChillPet() {
-      const pet = document.querySelector('[data-dance-pet]');
-      const zone = document.querySelector('[data-chill-zone]');
-      if (!pet || !zone) return;
-      let lastSmokeAt = 0;
-      pet.addEventListener('click', () => {
-        pet.classList.add('hyped');
-        setTimeout(() => pet.classList.remove('hyped'), 900);
-      });
-      zone.addEventListener('pointermove', (event) => {
-        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-        const now = performance.now();
-        if (now - lastSmokeAt < 92) return;
-        lastSmokeAt = now;
-        for (let i = 0; i < 2; i += 1) {
-          const puff = document.createElement('span');
-          puff.className = 'player-smoke-puff';
-          puff.style.left = (event.clientX + Math.random() * 26 - 13) + 'px';
-          puff.style.top = (event.clientY + Math.random() * 20 - 10) + 'px';
-          puff.style.setProperty('--drift-x', (Math.random() * 58 - 29).toFixed(1) + 'px');
-          puff.style.setProperty('--drift-y', (-34 - Math.random() * 44).toFixed(1) + 'px');
-          document.body.appendChild(puff);
-          setTimeout(() => puff.remove(), 1350);
-        }
-      });
     })();
 
     // Section-wide 3D headline tilt for the big display type.
