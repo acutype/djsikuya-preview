@@ -18,6 +18,11 @@
   <link rel="preload" as="image" href="./public/video/hero-loop-poster.webp" fetchpriority="high" />
 
   <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+
+  <script>
     (function () {
       try {
         const savedTheme = localStorage.getItem('sikuya-theme-v3');
@@ -1312,6 +1317,121 @@
       margin-top: 22px;
     }
 
+    .movement {
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(58% 48% at 20% 12%, rgba(206,17,38,0.18), transparent 68%),
+        radial-gradient(54% 48% at 88% 76%, rgba(255,116,64,0.12), transparent 72%),
+        linear-gradient(145deg, #120807 0%, #090605 54%, #1a0b08 100%);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .movement .atmosphere {
+      background:
+        linear-gradient(90deg, rgba(245,241,232,0.04), transparent 24%, transparent 76%, rgba(206,17,38,0.08)),
+        radial-gradient(42% 34% at 50% 50%, rgba(255,77,58,0.10), transparent 72%);
+    }
+    .movement-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: clamp(32px, 6vw, 76px);
+      align-items: stretch;
+    }
+    .movement-card {
+      min-height: 460px;
+      border: 1px solid rgba(245,241,232,0.12);
+      background:
+        linear-gradient(145deg, rgba(255,116,64,0.16), transparent 34%),
+        radial-gradient(78% 62% at 36% 18%, rgba(206,17,38,0.26), transparent 68%),
+        linear-gradient(180deg, rgba(245,241,232,0.055), rgba(245,241,232,0.018));
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: clamp(24px, 4vw, 42px);
+    }
+    .movement-kicker {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--accent-hot);
+    }
+    .movement-card .city-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(42px, 6vw, 76px);
+      line-height: 0.92;
+      color: rgba(245,241,232,0.92);
+    }
+    .movement-card .city-stack span:nth-child(even) {
+      color: rgba(255,116,64,0.82);
+    }
+    .movement-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 36px;
+    }
+    .movement-copy .section-title {
+      margin: 14px 0 0;
+    }
+    .movement-copy p {
+      max-width: 720px;
+      margin: 0;
+      color: rgba(245,241,232,0.74);
+      font-size: clamp(20px, 2.5vw, 34px);
+      line-height: 1.28;
+      text-wrap: pretty;
+    }
+    .movement-rail {
+      --rail-line: rgba(245,241,232,0.18);
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      list-style: none;
+      padding: 30px 0 0;
+      margin: 0;
+      counter-reset: movement;
+    }
+    .movement-rail::before {
+      content: '';
+      position: absolute;
+      left: 10px;
+      right: 10px;
+      top: 10px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent-hot), var(--rail-line));
+    }
+    .movement-rail li {
+      position: relative;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(245,241,232,0.66);
+    }
+    .movement-rail li::before {
+      content: '';
+      position: absolute;
+      top: -25px;
+      left: 0;
+      width: 19px;
+      height: 19px;
+      border-radius: 999px;
+      border: 1px solid rgba(245,241,232,0.28);
+      background: #140706;
+      box-shadow: 0 0 0 5px rgba(206,17,38,0.08);
+    }
+    .movement-rail li:first-child::before {
+      background: var(--accent-hot);
+      border-color: rgba(255,241,223,0.64);
+    }
+
     .portfolio {
       background: var(--bg);
       border-top: 1px solid var(--line);
@@ -2122,6 +2242,12 @@
     }
     html[data-theme="light"] .taste {
       background: rgba(24, 11, 8, 0.88);
+    }
+    html[data-theme="light"] .movement {
+      background:
+        radial-gradient(58% 48% at 20% 12%, rgba(255,116,64,0.20), transparent 68%),
+        radial-gradient(54% 48% at 88% 76%, rgba(206,17,38,0.14), transparent 72%),
+        linear-gradient(145deg, #1b0d08 0%, #2a120c 54%, #100806 100%);
     }
     html[data-theme="light"] .cut-card,
     html[data-theme="light"] .ambient-cut,
@@ -3147,6 +3273,10 @@
       .flow-note { min-height: 180px; gap: 28px; }
       .flow-card { min-height: 280px; }
       .taste-grid { grid-template-columns: 1fr; gap: 22px; }
+      .movement-layout { grid-template-columns: 1fr; gap: 28px; }
+      .movement-card { min-height: 320px; }
+      .movement-rail { grid-template-columns: 1fr 1fr; row-gap: 34px; }
+      .movement-rail::before { display: none; }
       .chill-zone { grid-template-columns: 1fr; gap: 18px; }
       .dance-pet { min-height: 240px; }
       .moodboard { grid-template-columns: 1fr; }
@@ -3675,6 +3805,37 @@
     </div>
   </section>
 
+  <!-- 04B MOVEMENT -->
+  <section class="movement section--movement" id="the-movement">
+    <div class="atmosphere"></div>
+    <div class="content">
+      <div class="movement-layout">
+        <div class="movement-card" aria-hidden="true">
+          <div class="movement-kicker">building from perth</div>
+          <div class="city-stack">
+            <span>Perth</span>
+            <span>Melbourne</span>
+            <span>Manila</span>
+            <span>International</span>
+          </div>
+        </div>
+        <div class="movement-copy">
+          <div>
+            <div class="marker">04b_the movement</div>
+            <h2 class="section-title">movement<span class="ember">.</span></h2>
+          </div>
+          <p>Filipino-Australian. Born between two sounds. DJ Sikuya blends R&amp;B soul, Afrobeats energy, and UKG rhythm into a room that's equal parts chill and alive - from Perth house parties to Manila nightclubs and everywhere in between.</p>
+          <ol class="movement-rail" aria-label="Journey">
+            <li>Perth</li>
+            <li>Melbourne</li>
+            <li>Manila</li>
+            <li>International</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- 05 BRAND -->
   <section class="brand thesis-construction" id="brand" data-brand data-css-scroll>
     <div class="pin-wrap">
@@ -3945,12 +4106,21 @@
   </div>
 
   <script>
-    // Path-based routing: visit /book, /gigs, /clips, /portfolio, /brand, /press to scroll to that section on load
+    function trackSikuyaEvent(name) {
+      if (typeof window.va !== 'function') return;
+      window.va('event', { name: name });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      trackSikuyaEvent('page_view_landing');
+    });
+
+    // Path-based routing: visit /book, /gigs, /clips, /taste, /movement, /portfolio, /brand, /press to scroll to that section on load
     (function initPathRouting() {
-      const validSections = ['gigs', 'clips', 'portfolio', 'mixes', 'brand', 'voices', 'press', 'book'];
+      const validSections = ['gigs', 'clips', 'taste', 'the-movement', 'portfolio', 'mixes', 'brand', 'voices', 'press', 'book'];
       const pathSegment = window.location.pathname.replace(/^\/+|\/+$/g, '').toLowerCase();
       // Also catch /press → voices (since we renamed proof → voices but old links might persist)
-      const aliases = { live: 'gigs', taste: 'portfolio', chill: 'portfolio', press: 'voices' };
+      const aliases = { live: 'gigs', movement: 'the-movement', chill: 'taste', press: 'voices' };
       const target = aliases[pathSegment] || pathSegment;
       if (validSections.includes(target)) {
         // Defer until after the page has laid out so heights are real
@@ -4527,6 +4697,7 @@
 
       form.addEventListener('submit', (e) => {
         e.preventDefault();
+        trackSikuyaEvent('form_submit');
         const payload = {
           name: form.querySelector('[name="name"]').value.trim(),
           email: form.querySelector('[name="email"]').value.trim(),
@@ -4538,11 +4709,33 @@
           form.reportValidity();
           return;
         }
+        trackSikuyaEvent('form_success');
         salamat.classList.add('visible');
         trySubmit(payload).finally(() => {
           form.reset();
         });
       });
+
+      let formStarted = false;
+      const trackFormStart = () => {
+        if (formStarted) return;
+        formStarted = true;
+        trackSikuyaEvent('form_start');
+      };
+      form.addEventListener('focusin', trackFormStart, { once: true });
+      form.addEventListener('input', trackFormStart, { once: true });
+
+      if ('IntersectionObserver' in window) {
+        const bookSection = document.getElementById('book');
+        if (bookSection) {
+          const bookObserver = new IntersectionObserver((entries) => {
+            if (!entries.some(entry => entry.isIntersecting)) return;
+            trackSikuyaEvent('section_book_visible');
+            bookObserver.disconnect();
+          }, { threshold: 0.28 });
+          bookObserver.observe(bookSection);
+        }
+      }
 
       salamat.addEventListener('click', () => {
         salamat.classList.remove('visible');
