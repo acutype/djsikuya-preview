@@ -68,6 +68,21 @@
       --pill-grad: linear-gradient(135deg, #FF4D3A 0%, #CE1126 45%, #8A0D1A 100%);
       --pill-shadow: 0 10px 30px rgba(206,17,38,0.35), inset 0 1px 0 rgba(255,180,160,0.4);
       --ember-grad: radial-gradient(circle at 35% 30%, #FF6347 0%, #FF3526 25%, #CE1126 55%, #4A0810 100%);
+      --orb-heat: 0.18;
+      --orb-glow-alpha: 0.19;
+      --orb-border-alpha: 0.17;
+      --orb-ring-alpha: 0.42;
+      --orb-ring-soft-alpha: 0.26;
+      --orb-glow-size: 16px;
+      --orb-play-glow-size: 30px;
+      --orb-core-scale: 0.92;
+      --orb-core-beat-low: 0.92;
+      --orb-core-beat-high: 1.12;
+      --orb-ring-speed: 6.6s;
+      --orb-sat: 1.13;
+      --orb-bright: 0.94;
+      --creep-x: 0px;
+      --creep-y: 0px;
 
       --line: rgba(245, 241, 232, 0.10);
     }
@@ -510,6 +525,16 @@
       grid-template-columns: minmax(90px, 1fr) auto minmax(140px, 1fr);
       align-items: center;
       gap: 16px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 56;
+      padding: 18px 56px;
+      background:
+        linear-gradient(180deg, rgba(7,4,4,0.84), rgba(7,4,4,0.42) 62%, transparent);
+      backdrop-filter: blur(14px) saturate(1.08);
+      transition: opacity 220ms var(--ease), transform 220ms var(--ease), background 220ms var(--ease);
     }
     .hero-nav .left { display: flex; align-items: center; gap: 10px; }
     .hero-spacer { min-height: 1px; }
@@ -526,8 +551,34 @@
       color: rgba(245,241,232,0.65);
       justify-self: center;
     }
-    .hero-nav nav.links a { transition: color 0.18s; }
+    .hero-nav nav.links a {
+      position: relative;
+      transition: color 0.18s, opacity 0.18s;
+    }
     .hero-nav nav.links a:hover { color: var(--paper); }
+    .hero-nav nav.links a[aria-current="true"] {
+      color: var(--accent-hot);
+      opacity: 0.48;
+      pointer-events: none;
+      cursor: default;
+    }
+    .hero-nav nav.links a[aria-current="true"]::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: -8px;
+      width: 4px;
+      height: 4px;
+      border-radius: 999px;
+      background: currentColor;
+      box-shadow: 0 0 12px rgba(255,116,64,0.76);
+      transform: translateX(-50%);
+    }
+    body.in-book-section .hero-nav {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-18px);
+    }
 
     .hero-actions {
       display: flex;
@@ -1153,6 +1204,16 @@
       background: #0b0807;
       border-top: 1px solid var(--line);
       border-bottom: 1px solid var(--line);
+    }
+    .live,
+    .mixes,
+    .portfolio,
+    .movement,
+    .brand,
+    .press,
+    .book {
+      content-visibility: auto;
+      contain-intrinsic-size: 880px;
     }
     .taste-grid {
       display: grid;
@@ -2940,6 +3001,8 @@
       z-index: 48;
       pointer-events: auto;
       perspective: 720px;
+      transform: translate3d(var(--creep-x), var(--creep-y), 0);
+      transition: transform 280ms var(--ease);
     }
     .sound-switch button {
       display: inline-flex;
@@ -3007,42 +3070,36 @@
       overflow: hidden;
       border-radius: 999px;
       background:
-        radial-gradient(circle at 30% 24%, rgba(255,255,255,0.38) 0 7%, transparent 18%),
-        radial-gradient(circle at 52% 54%, rgba(255,96,48,0.66) 0 10%, rgba(101,22,16,0.72) 22%, transparent 42%),
-        radial-gradient(circle at 50% 58%, rgba(8,12,14,0.96) 0 44%, rgba(39,50,55,0.72) 65%, rgba(7,8,9,1) 100%);
+        radial-gradient(circle at 37% 28%, rgba(255,236,190,0.46) 0 6%, transparent 17%),
+        radial-gradient(circle at 48% 52%, rgba(255,80,24,0.70) 0 13%, rgba(118,18,8,0.86) 32%, rgba(6,5,5,0.98) 67%);
       box-shadow:
-        inset -11px -14px 22px rgba(0,0,0,0.72),
-        inset 8px 9px 14px rgba(181,218,222,0.12),
-        0 0 0 1px rgba(210,242,248,0.16),
-        0 12px 26px rgba(0,0,0,0.42);
-      transform: rotateX(10deg) rotateY(-17deg);
+        inset -12px -16px 24px rgba(0,0,0,0.78),
+        inset 8px 9px 15px rgba(255,205,152,0.14),
+        0 0 0 1px rgba(255,126,52,var(--orb-border-alpha)),
+        0 0 var(--orb-glow-size) rgba(255,91,22,var(--orb-glow-alpha)),
+        0 16px 30px rgba(0,0,0,0.48);
+      transform: rotateX(9deg) rotateY(-16deg);
       transform-style: preserve-3d;
       isolation: isolate;
       animation: orbFloat 4.4s ease-in-out infinite;
+      filter: saturate(var(--orb-sat)) brightness(var(--orb-bright));
+      contain: paint;
     }
-    .sound-orb::before,
-    .sound-orb::after {
-      content: '';
+    .orb-fire-canvas {
       position: absolute;
-      inset: 8px;
+      inset: -3px;
+      width: calc(100% + 6px);
+      height: calc(100% + 6px);
+      display: block;
       border-radius: inherit;
-      pointer-events: none;
-    }
-    .sound-orb::before {
-      border: 1px solid rgba(193,235,242,0.28);
-      border-left-color: rgba(255,116,64,0.46);
-      border-bottom-color: rgba(255,116,64,0.22);
-      transform: rotate(-18deg) translateZ(12px);
-      box-shadow: inset 0 0 18px rgba(135,196,207,0.12);
-      animation: orbRing 7s linear infinite;
-    }
-    .sound-orb::after {
-      inset: 4px;
-      background:
-        linear-gradient(135deg, rgba(255,255,255,0.16), transparent 31%),
-        radial-gradient(80% 40% at 30% 12%, rgba(187,228,234,0.18), transparent 62%);
+      opacity: 0;
+      transform: translateZ(8px);
+      transition: opacity 260ms ease;
       mix-blend-mode: screen;
     }
+    .sound-orb.canvas-ready .orb-fire-canvas { opacity: 0.96; }
+    .sound-orb::before,
+    .sound-orb::after,
     .orb-core,
     .orb-ring,
     .orb-spark {
@@ -3051,28 +3108,56 @@
       border-radius: inherit;
       pointer-events: none;
     }
+    .sound-orb::before,
+    .sound-orb::after {
+      content: '';
+      inset: 0;
+    }
+    .sound-orb::before {
+      inset: 7px;
+      border: 1px solid rgba(255,225,178,0.24);
+      border-left-color: rgba(255,92,28,var(--orb-ring-alpha));
+      border-bottom-color: rgba(255,190,96,var(--orb-ring-soft-alpha));
+      box-shadow:
+        inset 0 0 18px rgba(255,124,54,var(--orb-ring-soft-alpha)),
+        0 0 18px rgba(255,82,22,var(--orb-glow-alpha));
+      transform: rotate(-18deg) translateZ(18px);
+      animation: orbRing var(--orb-ring-speed) linear infinite;
+      z-index: 3;
+    }
+    .sound-orb::after {
+      inset: 2px;
+      background:
+        radial-gradient(circle at 33% 20%, rgba(255,255,255,0.32), transparent 16%),
+        radial-gradient(80% 48% at 26% 16%, rgba(255,226,180,0.18), transparent 58%),
+        radial-gradient(120% 62% at 72% 74%, rgba(0,0,0,0.34), transparent 56%);
+      mix-blend-mode: screen;
+      z-index: 4;
+    }
     .orb-core {
-      width: 16px;
-      height: 16px;
+      width: 18px;
+      height: 18px;
       left: 50%;
       top: 50%;
-      margin-left: -8px;
-      margin-top: -8px;
+      margin-left: -9px;
+      margin-top: -9px;
       background: var(--ember-grad);
-      filter: blur(0.2px);
       box-shadow:
-        0 0 18px rgba(255,92,42,0.72),
-        0 0 38px rgba(206,17,38,0.30);
-      transform: translateZ(20px);
+        0 0 18px rgba(255,92,42,0.78),
+        0 0 42px rgba(206,17,38,0.34);
+      transform: translateZ(20px) scale(var(--orb-core-scale));
+      z-index: 2;
     }
+    .sound-orb.canvas-ready .orb-core { opacity: 0.18; }
     .orb-ring {
       inset: 12px;
-      border: 1px solid rgba(255,241,223,0.22);
+      border: 1px solid rgba(255,241,223,0.18);
       transform: rotateX(68deg) rotateZ(12deg);
+      z-index: 3;
     }
     .orb-ring.secondary {
       inset: 16px 10px;
-      border-color: rgba(134,180,190,0.24);
+      border-color: rgba(255,143,74,0.20);
       transform: rotateX(76deg) rotateY(50deg) rotateZ(-24deg);
     }
     .orb-spark {
@@ -3080,9 +3165,10 @@
       height: 4px;
       left: 38px;
       top: 18px;
-      background: rgba(255,116,64,0.78);
-      box-shadow: 0 0 12px rgba(255,116,64,0.68);
+      background: rgba(255,152,64,0.80);
+      box-shadow: 0 0 12px rgba(255,116,64,0.74);
       animation: orbSpark 2.8s ease-in-out infinite;
+      z-index: 5;
     }
     .orb-spark.two {
       left: 18px;
@@ -3094,11 +3180,11 @@
     .sound-switch.playing .sound-orb,
     .sound-switch.primed .sound-orb {
       box-shadow:
-        inset -11px -14px 22px rgba(0,0,0,0.70),
-        inset 8px 9px 14px rgba(255,214,178,0.12),
-        0 0 0 1px rgba(255,116,64,0.42),
-        0 0 28px rgba(255,116,64,0.22),
-        0 14px 30px rgba(0,0,0,0.46);
+        inset -12px -16px 24px rgba(0,0,0,0.74),
+        inset 8px 9px 15px rgba(255,214,178,0.14),
+        0 0 0 1px rgba(255,126,52,var(--orb-ring-alpha)),
+        0 0 var(--orb-play-glow-size) rgba(255,91,22,var(--orb-glow-alpha)),
+        0 15px 32px rgba(0,0,0,0.48);
     }
     .sound-switch.playing .orb-core {
       animation: orbCore 1.1s ease-in-out infinite;
@@ -3137,14 +3223,13 @@
       to { transform: rotate(342deg) translateZ(12px); }
     }
     @keyframes orbCore {
-      0%, 100% { transform: translateZ(20px) scale(0.9); opacity: 0.78; }
-      50% { transform: translateZ(20px) scale(1.16); opacity: 1; }
+      0%, 100% { transform: translateZ(20px) scale(var(--orb-core-beat-low)); opacity: 0.78; }
+      50% { transform: translateZ(20px) scale(var(--orb-core-beat-high)); opacity: 1; }
     }
     @keyframes orbSpark {
       0%, 100% { opacity: 0.12; transform: translate3d(0, 0, 0) scale(0.7); }
       50% { opacity: 1; transform: translate3d(-4px, 5px, 8px) scale(1.15); }
     }
-
     /* Kinetic hero name entrance */
     .hero h1 .letter {
       display: inline-block;
@@ -3276,9 +3361,26 @@
         text-shadow: 0 10px 28px rgba(0,0,0,0.42);
       }
       .hero .frame { padding: 20px; }
-      .hero-nav nav.links { display: none; }
+      .hero-nav {
+        grid-template-columns: minmax(0, 1fr) auto;
+        padding: 9px 10px;
+        gap: 8px;
+      }
+      .hero-spacer { display: none; }
+      .hero-nav nav.links {
+        display: flex;
+        justify-self: stretch;
+        gap: 16px;
+        overflow-x: auto;
+        padding: 8px 4px;
+        font-size: 10px;
+        white-space: nowrap;
+        scrollbar-width: none;
+      }
+      .hero-nav nav.links::-webkit-scrollbar { display: none; }
       .hero-actions { gap: 8px; }
-      .theme-toggle { min-width: 54px; padding: 9px 10px; }
+      .theme-toggle { min-width: 50px; padding: 9px 10px; font-size: 9px; }
+      .book-pill { padding: 9px 14px; font-size: 12px; }
       .video-badge { display: none; }
       .wordmark { font-size: 22px; }
       .flag-copy,
@@ -3294,7 +3396,7 @@
         right: 10px;
         top: auto;
         bottom: 18px;
-        transform: none;
+        transform: translate3d(var(--creep-x), var(--creep-y), 0);
       }
       .sound-switch button {
         min-width: 134px;
@@ -3478,6 +3580,7 @@
   <div class="sound-switch" data-site-player>
     <button type="button" data-site-audio-toggle aria-label="turn sound on">
       <span class="sound-orb" aria-hidden="true">
+        <canvas class="orb-fire-canvas" data-fire-orb width="72" height="72"></canvas>
         <span class="orb-core"></span>
         <span class="orb-ring"></span>
         <span class="orb-ring secondary"></span>
@@ -3522,9 +3625,9 @@
         <div class="hero-spacer" aria-hidden="true"></div>
         <nav class="links">
           <a href="#gigs">gigs</a>
-          <a href="#clips">tape</a>
-          <a href="#portfolio">photos</a>
-          <a href="#movement">au.ph</a>
+          <a href="#clips">tapes</a>
+          <a href="#portfolio">vibes</a>
+          <a href="#movement">roots</a>
           <a href="#brand">brand</a>
         </nav>
         <div class="hero-actions">
@@ -3685,9 +3788,9 @@
           <div class="k">through the room</div>
           <div class="v">clips, smoke, stills.</div>
         </div>
-        <figure class="flow-card"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="./public/assets/dj-kuya-01.webp" alt="Sikuya DJing in the room" loading="lazy" decoding="async"><figcaption>still 01</figcaption></figure>
-        <figure class="flow-card"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="./public/assets/dj-kuya-03.webp" alt="Sikuya room setup from above" loading="lazy" decoding="async"><figcaption>still 02</figcaption></figure>
-        <figure class="flow-card"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="./public/assets/dj-kuya-06.webp" alt="Sikuya booth moment" loading="lazy" decoding="async"><figcaption>still 03</figcaption></figure>
+        <figure class="flow-card"><img src="./public/assets/dj-kuya-01.webp" alt="Sikuya DJing in the room" loading="lazy" decoding="async"><figcaption>still 01</figcaption></figure>
+        <figure class="flow-card"><img src="./public/assets/dj-kuya-03.webp" alt="Sikuya room setup from above" loading="lazy" decoding="async"><figcaption>still 02</figcaption></figure>
+        <figure class="flow-card"><img src="./public/assets/dj-kuya-06.webp" alt="Sikuya booth moment" loading="lazy" decoding="async"><figcaption>still 03</figcaption></figure>
       </div>
 
       <!-- mix-rows hidden until real mixes wire in. preserved in source for codex to swap later. -->
@@ -3869,22 +3972,22 @@
       </div>
 
       <div class="portfolio-scatter" aria-label="Sikuya room photos">
-        <figure class="portfolio-card p-tall"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="./public/assets/dj-kuya-01.webp" alt="Sikuya at a room set 01" loading="lazy" decoding="async"><figcaption>01</figcaption></figure>
-        <figure class="portfolio-card p-portrait"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="./public/assets/dj-kuya-02.webp" alt="Sikuya at a room set 02" loading="lazy" decoding="async"><figcaption>02</figcaption></figure>
-        <figure class="portfolio-card p-wide"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="./public/assets/dj-kuya-03.webp" alt="Sikuya at a room set 03" loading="lazy" decoding="async"><figcaption>03</figcaption></figure>
-        <figure class="portfolio-card p-tall"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="./public/assets/dj-kuya-04.webp" alt="Sikuya at a room set 04" loading="lazy" decoding="async"><figcaption>04</figcaption></figure>
-        <figure class="portfolio-card p-wide"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="./public/assets/dj-kuya-05.webp" alt="Sikuya at a room set 05" loading="lazy" decoding="async"><figcaption>05</figcaption></figure>
-        <figure class="portfolio-card p-tall"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="./public/assets/dj-kuya-06.webp" alt="Sikuya at a room set 06" loading="lazy" decoding="async"><figcaption>06</figcaption></figure>
-        <figure class="portfolio-card p-portrait"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="./public/assets/dj-kuya-07.webp" alt="Sikuya at a room set 07" loading="lazy" decoding="async"><figcaption>07</figcaption></figure>
-        <figure class="portfolio-card p-wide"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="./public/assets/dj-kuya-08.webp" alt="Sikuya at a room set 08" loading="lazy" decoding="async"><figcaption>08</figcaption></figure>
-        <figure class="portfolio-card p-tall"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="./public/assets/dj-kuya-09.webp" alt="Sikuya at a room set 09" loading="lazy" decoding="async"><figcaption>09</figcaption></figure>
-        <figure class="portfolio-card p-portrait"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="./public/assets/dj-kuya-10.webp" alt="Sikuya at a room set 10" loading="lazy" decoding="async"><figcaption>10</figcaption></figure>
-        <figure class="portfolio-card p-wide"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="./public/assets/dj-kuya-11.webp" alt="Sikuya at a room set 11" loading="lazy" decoding="async"><figcaption>11</figcaption></figure>
-        <figure class="portfolio-card p-tall"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="./public/assets/dj-kuya-12.webp" alt="Sikuya at a room set 12" loading="lazy" decoding="async"><figcaption>12</figcaption></figure>
-        <figure class="portfolio-card p-wide"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="./public/assets/dj-kuya-13.webp" alt="Sikuya at a room set 13" loading="lazy" decoding="async"><figcaption>13</figcaption></figure>
-        <figure class="portfolio-card p-portrait"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="./public/assets/dj-kuya-14.webp" alt="Sikuya at a room set 14" loading="lazy" decoding="async"><figcaption>14</figcaption></figure>
-        <figure class="portfolio-card p-tall"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="./public/assets/dj-kuya-15.webp" alt="Sikuya at a room set 15" loading="lazy" decoding="async"><figcaption>15</figcaption></figure>
-        <figure class="portfolio-card p-wide"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" data-src="./public/assets/dj-kuya-16.webp" alt="Sikuya at a room set 16" loading="lazy" decoding="async"><figcaption>16</figcaption></figure>
+        <figure class="portfolio-card p-tall"><img src="./public/assets/dj-kuya-01.webp" alt="Sikuya at a room set 01" loading="lazy" decoding="async"><figcaption>01</figcaption></figure>
+        <figure class="portfolio-card p-portrait"><img src="./public/assets/dj-kuya-02.webp" alt="Sikuya at a room set 02" loading="lazy" decoding="async"><figcaption>02</figcaption></figure>
+        <figure class="portfolio-card p-wide"><img src="./public/assets/dj-kuya-03.webp" alt="Sikuya at a room set 03" loading="lazy" decoding="async"><figcaption>03</figcaption></figure>
+        <figure class="portfolio-card p-tall"><img src="./public/assets/dj-kuya-04.webp" alt="Sikuya at a room set 04" loading="lazy" decoding="async"><figcaption>04</figcaption></figure>
+        <figure class="portfolio-card p-wide"><img src="./public/assets/dj-kuya-05.webp" alt="Sikuya at a room set 05" loading="lazy" decoding="async"><figcaption>05</figcaption></figure>
+        <figure class="portfolio-card p-tall"><img src="./public/assets/dj-kuya-06.webp" alt="Sikuya at a room set 06" loading="lazy" decoding="async"><figcaption>06</figcaption></figure>
+        <figure class="portfolio-card p-portrait"><img src="./public/assets/dj-kuya-07.webp" alt="Sikuya at a room set 07" loading="lazy" decoding="async"><figcaption>07</figcaption></figure>
+        <figure class="portfolio-card p-tall"><img src="./public/assets/dj-kuya-09.webp" alt="Sikuya at a room set 09" loading="lazy" decoding="async"><figcaption>09</figcaption></figure>
+        <figure class="portfolio-card p-wide"><img src="./public/assets/dj-kuya-08.webp" alt="Sikuya at a room set 08" loading="lazy" decoding="async"><figcaption>08</figcaption></figure>
+        <figure class="portfolio-card p-portrait"><img src="./public/assets/dj-kuya-10.webp" alt="Sikuya at a room set 10" loading="lazy" decoding="async"><figcaption>10</figcaption></figure>
+        <figure class="portfolio-card p-wide"><img src="./public/assets/dj-kuya-11.webp" alt="Sikuya at a room set 11" loading="lazy" decoding="async"><figcaption>11</figcaption></figure>
+        <figure class="portfolio-card p-tall"><img src="./public/assets/dj-kuya-12.webp" alt="Sikuya at a room set 12" loading="lazy" decoding="async"><figcaption>12</figcaption></figure>
+        <figure class="portfolio-card p-wide"><img src="./public/assets/dj-kuya-13.webp" alt="Sikuya at a room set 13" loading="lazy" decoding="async"><figcaption>13</figcaption></figure>
+        <figure class="portfolio-card p-portrait"><img src="./public/assets/dj-kuya-14.webp" alt="Sikuya at a room set 14" loading="lazy" decoding="async"><figcaption>14</figcaption></figure>
+        <figure class="portfolio-card p-tall"><img src="./public/assets/dj-kuya-15.webp" alt="Sikuya at a room set 15" loading="lazy" decoding="async"><figcaption>15</figcaption></figure>
+        <figure class="portfolio-card p-wide"><img src="./public/assets/dj-kuya-16.webp" alt="Sikuya at a room set 16" loading="lazy" decoding="async"><figcaption>16</figcaption></figure>
       </div>
     </div>
   </section>
@@ -3897,7 +4000,7 @@
         <div class="movement-copy">
           <div>
             <div class="marker">04_roots</div>
-            <h2 class="section-title">au.ph</h2>
+            <h2 class="section-title">roots<span class="ember">.</span></h2>
           </div>
           <p>for crowds who want roots in the same set as the bangers.</p>
           <div class="flags" aria-label="AU PH signal">
@@ -4281,19 +4384,32 @@
         });
     })();
 
+    // Lift fixed nav out of the hero stacking context so it stays visible over later sections.
+    (function liftHeroNav() {
+      const nav = document.querySelector('.hero-nav');
+      if (nav && nav.parentElement !== document.body) document.body.appendChild(nav);
+    })();
+
     // Path-based routing: visit /book, /gigs, /clips, /portfolio, /brand, /press to scroll to that section on load
     (function initPathRouting() {
       const validSections = ['gigs', 'clips', 'portfolio', 'mixes', 'movement', 'brand', 'voices', 'press', 'book'];
       const pathSegment = window.location.pathname.replace(/^\/+|\/+$/g, '').toLowerCase();
+      const hashSegment = window.location.hash.replace(/^#/, '').toLowerCase();
       // Keep old paths landing on the current visible sections.
-      const aliases = { live: 'gigs', taste: 'movement', chill: 'portfolio', roots: 'movement', voices: 'press' };
-      const target = aliases[pathSegment] || pathSegment;
+      const aliases = { live: 'gigs', tape: 'clips', tapes: 'clips', taste: 'movement', chill: 'portfolio', vibes: 'portfolio', roots: 'movement', voices: 'press' };
+      const routeSegment = pathSegment || hashSegment;
+      const target = aliases[routeSegment] || routeSegment;
       if (validSections.includes(target)) {
-        // Defer until after the page has laid out so heights are real
-        requestAnimationFrame(() => requestAnimationFrame(() => {
+        const jumpToTarget = () => {
           const el = document.getElementById(target);
           if (el) el.scrollIntoView({ behavior: 'auto', block: 'start' });
-        }));
+          window.dispatchEvent(new Event('scroll'));
+        };
+        // Defer until after the page has laid out, then retry once media/fonts settle.
+        requestAnimationFrame(() => requestAnimationFrame(jumpToTarget));
+        window.setTimeout(jumpToTarget, 450);
+        window.setTimeout(jumpToTarget, 1200);
+        window.setTimeout(jumpToTarget, 2400);
       }
     })();
 
@@ -4319,11 +4435,293 @@
         const id = a.getAttribute('href')?.replace('#', '');
         if (!id) return;
         e.preventDefault();
+        if (a.getAttribute('aria-current') === 'true') return;
         scrollWithTransition(id);
       });
     });
 
     // Easter egg — click the ember period mark to fire a full-screen ember flash
+    // Persistent nav: keep the current section visible without making it feel clickable.
+    (function initPersistentNav() {
+      const nav = document.querySelector('.hero-nav');
+      if (!nav) return;
+      const links = Array.from(nav.querySelectorAll('a[href^="#"]'));
+      const sections = links
+        .map(link => ({ link, section: document.getElementById(link.getAttribute('href').slice(1)) }))
+        .filter(item => item.section);
+      const book = document.getElementById('book');
+
+      function syncNav() {
+        const probe = Math.min(window.innerHeight * 0.42, 340);
+        let active = sections[0];
+        sections.forEach(item => {
+          const rect = item.section.getBoundingClientRect();
+          if (rect.top <= probe && rect.bottom > probe * 0.55) active = item;
+        });
+
+        links.forEach(link => {
+          const isActive = active && link === active.link;
+          if (isActive) link.setAttribute('aria-current', 'true');
+          else link.removeAttribute('aria-current');
+        });
+
+        if (book) {
+          const bookRect = book.getBoundingClientRect();
+          document.body.classList.toggle(
+            'in-book-section',
+            bookRect.top < window.innerHeight * 0.28 && bookRect.bottom > window.innerHeight * 0.22
+          );
+        }
+      }
+
+      window.addEventListener('scroll', syncNav, { passive: true });
+      window.addEventListener('resize', syncNav);
+      syncNav();
+    })();
+
+    // GPU fire orb: scroll and taps feed heat without importing a heavy 3D library.
+    (function initFireOrb() {
+      const root = document.documentElement;
+      const canvas = document.querySelector('[data-fire-orb]');
+      const orb = canvas?.closest('.sound-orb');
+      if (!canvas || !orb) return;
+
+      const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+      const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const coarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+      const gl = canvas.getContext('webgl', {
+        alpha: true,
+        antialias: false,
+        depth: false,
+        stencil: false,
+        preserveDrawingBuffer: false,
+        powerPreference: 'low-power',
+      }) || canvas.getContext('experimental-webgl');
+
+      let burst = 0;
+      let heat = 0.20;
+      let lastY = window.scrollY;
+      let lastCssHeat = -1;
+      let pointer = { x: 0.08, y: -0.10 };
+      let pointerPulse = 0;
+      let lastFrame = 0;
+      const frameGap = reduceMotion ? 1000 : (coarsePointer ? 1000 / 24 : 1000 / 30);
+
+      function addBurst(amount, x, y) {
+        burst = clamp(burst + amount, 0, 0.58);
+        if (typeof x === 'number' && typeof y === 'number') {
+          const rect = canvas.getBoundingClientRect();
+          const nx = ((x - rect.left) / Math.max(1, rect.width)) * 2 - 1;
+          const ny = (1 - ((y - rect.top) / Math.max(1, rect.height))) * 2 - 1;
+          pointer = { x: clamp(nx, -1, 1), y: clamp(ny, -1, 1) };
+          pointerPulse = 1;
+        }
+      }
+
+      function syncCssHeat(value) {
+        if (Math.abs(value - lastCssHeat) < 0.012) return;
+        lastCssHeat = value;
+        root.style.setProperty('--orb-heat', value.toFixed(3));
+        root.style.setProperty('--orb-glow-alpha', (0.14 + value * 0.45).toFixed(3));
+        root.style.setProperty('--orb-border-alpha', (0.14 + value * 0.34).toFixed(3));
+        root.style.setProperty('--orb-ring-alpha', (0.32 + value * 0.52).toFixed(3));
+        root.style.setProperty('--orb-ring-soft-alpha', (0.18 + value * 0.44).toFixed(3));
+        root.style.setProperty('--orb-glow-size', (12 + value * 42).toFixed(1) + 'px');
+        root.style.setProperty('--orb-play-glow-size', (24 + value * 54).toFixed(1) + 'px');
+        root.style.setProperty('--orb-core-scale', (0.78 + value * 0.46).toFixed(3));
+        root.style.setProperty('--orb-core-beat-low', (0.84 + value * 0.30).toFixed(3));
+        root.style.setProperty('--orb-core-beat-high', (1.02 + value * 0.44).toFixed(3));
+        root.style.setProperty('--orb-ring-speed', Math.max(2.8, 7 - value * 3.7).toFixed(2) + 's');
+        root.style.setProperty('--orb-sat', (1.06 + value * 0.78).toFixed(3));
+        root.style.setProperty('--orb-bright', (0.90 + value * 0.22).toFixed(3));
+      }
+
+      window.addEventListener('scroll', () => {
+        const delta = Math.abs(window.scrollY - lastY);
+        lastY = window.scrollY;
+        addBurst(Math.min(delta / 1600, 0.14));
+      }, { passive: true });
+      window.addEventListener('pointerdown', (event) => addBurst(0.18, event.clientX, event.clientY), { passive: true });
+      window.addEventListener('touchstart', (event) => {
+        const touch = event.touches && event.touches[0];
+        if (touch) addBurst(0.18, touch.clientX, touch.clientY);
+      }, { passive: true });
+      window.addEventListener('pointermove', (event) => {
+        const rect = canvas.getBoundingClientRect();
+        if (event.clientX < rect.left - 80 || event.clientX > rect.right + 80 || event.clientY < rect.top - 80 || event.clientY > rect.bottom + 80) return;
+        addBurst(0.025, event.clientX, event.clientY);
+      }, { passive: true });
+
+      if (!gl) {
+        syncCssHeat(0.58);
+        return;
+      }
+
+      const vertexSource = `
+        attribute vec2 aPosition;
+        varying vec2 vUv;
+        void main() {
+          vUv = aPosition * 0.5 + 0.5;
+          gl_Position = vec4(aPosition, 0.0, 1.0);
+        }
+      `;
+      const fragmentSource = `
+        precision mediump float;
+        varying vec2 vUv;
+        uniform float uTime;
+        uniform float uHeat;
+        uniform float uPlaying;
+        uniform vec2 uPointer;
+
+        float hash(vec2 p) {
+          p = fract(p * vec2(123.34, 456.21));
+          p += dot(p, p + 45.32);
+          return fract(p.x * p.y);
+        }
+        float noise(vec2 p) {
+          vec2 i = floor(p);
+          vec2 f = fract(p);
+          f = f * f * (3.0 - 2.0 * f);
+          float a = hash(i);
+          float b = hash(i + vec2(1.0, 0.0));
+          float c = hash(i + vec2(0.0, 1.0));
+          float d = hash(i + vec2(1.0, 1.0));
+          return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+        }
+        float fbm(vec2 p) {
+          float v = 0.0;
+          float a = 0.5;
+          for (int i = 0; i < 4; i++) {
+            v += a * noise(p);
+            p *= 2.03;
+            a *= 0.52;
+          }
+          return v;
+        }
+
+        void main() {
+          vec2 uv = vUv * 2.0 - 1.0;
+          uv.x *= 1.02;
+          float r = length(uv);
+          float mask = smoothstep(1.0, 0.935, r);
+          if (mask <= 0.0) discard;
+
+          float z = sqrt(max(0.0, 1.0 - r * r));
+          float angle = atan(uv.y, uv.x);
+          float spin = uTime * (0.25 + uHeat * 0.28);
+          vec2 flow = vec2(angle * 1.62 + spin, r * 4.15 - uTime * (0.54 + uHeat * 0.95));
+          float boil = fbm(flow * 1.65 + vec2(fbm(uv * 2.7 + uTime * 0.18), 0.0));
+          float cracks = smoothstep(0.54, 0.96, boil + uHeat * 0.20 - r * 0.10);
+          float core = smoothstep(0.72, 0.06, r) * (0.40 + uHeat * 0.65);
+          float flame = fbm(vec2(uv.x * 3.5 + sin(uTime) * 0.25, uv.y * 4.8 - uTime * (1.24 + uHeat * 1.18)));
+          float lick = smoothstep(0.46, 0.92, flame + (0.28 - uv.y) * 0.18) * smoothstep(0.98, 0.14, r);
+          float pointerHot = (1.0 - smoothstep(0.0, 0.72, length(uv - uPointer))) * uHeat;
+          float rim = pow(max(0.0, 1.0 - z), 2.15);
+
+          vec3 black = vec3(0.015, 0.006, 0.003);
+          vec3 coal = vec3(0.13, 0.028, 0.012);
+          vec3 red = vec3(0.82, 0.08, 0.02);
+          vec3 orange = vec3(1.0, 0.31, 0.05);
+          vec3 gold = vec3(1.0, 0.70, 0.20);
+          vec3 white = vec3(1.0, 0.92, 0.70);
+
+          vec3 color = mix(black, coal, smoothstep(0.98, 0.18, r));
+          color = mix(color, red, clamp(core + cracks * 0.34, 0.0, 1.0));
+          color = mix(color, orange, clamp(lick * (0.42 + uHeat * 0.50), 0.0, 1.0));
+          color = mix(color, gold, smoothstep(0.72, 1.05, lick + boil * 0.34 + uHeat * 0.14));
+          color = mix(color, white, smoothstep(1.04, 1.32, lick + core + pointerHot * 0.28) * (0.18 + uPlaying * 0.12));
+          color += vec3(1.0, 0.18, 0.035) * rim * (0.25 + uHeat * 0.65);
+          color += vec3(1.0, 0.30, 0.05) * pointerHot * 0.22;
+
+          float alpha = mask * (0.87 + uHeat * 0.13);
+          gl_FragColor = vec4(color, alpha);
+        }
+      `;
+
+      function compile(type, source) {
+        const shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+          gl.deleteShader(shader);
+          return null;
+        }
+        return shader;
+      }
+
+      const vertex = compile(gl.VERTEX_SHADER, vertexSource);
+      const fragment = compile(gl.FRAGMENT_SHADER, fragmentSource);
+      if (!vertex || !fragment) {
+        syncCssHeat(0.58);
+        return;
+      }
+      const program = gl.createProgram();
+      gl.attachShader(program, vertex);
+      gl.attachShader(program, fragment);
+      gl.linkProgram(program);
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        syncCssHeat(0.58);
+        return;
+      }
+
+      const buffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+      gl.useProgram(program);
+      const position = gl.getAttribLocation(program, 'aPosition');
+      gl.enableVertexAttribArray(position);
+      gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
+      const uniforms = {
+        time: gl.getUniformLocation(program, 'uTime'),
+        heat: gl.getUniformLocation(program, 'uHeat'),
+        playing: gl.getUniformLocation(program, 'uPlaying'),
+        pointer: gl.getUniformLocation(program, 'uPointer'),
+      };
+
+      function resizeCanvas() {
+        const rect = canvas.getBoundingClientRect();
+        const dpr = Math.min(window.devicePixelRatio || 1, coarsePointer ? 1.15 : 1.45);
+        const width = Math.max(48, Math.round(rect.width * dpr));
+        const height = Math.max(48, Math.round(rect.height * dpr));
+        if (canvas.width !== width || canvas.height !== height) {
+          canvas.width = width;
+          canvas.height = height;
+          gl.viewport(0, 0, width, height);
+        }
+      }
+
+      function draw(now) {
+        requestAnimationFrame(draw);
+        if (document.hidden) return;
+        if (now - lastFrame < frameGap) return;
+        lastFrame = now;
+
+        const range = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+        const progressHeat = clamp(window.scrollY / range, 0, 1) * 0.58;
+        const target = clamp(0.20 + progressHeat + burst, 0.20, 1);
+        heat += (target - heat) * 0.075;
+        burst *= 0.975;
+        pointerPulse *= 0.94;
+        syncCssHeat(heat);
+
+        resizeCanvas();
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.useProgram(program);
+        gl.uniform1f(uniforms.time, now * 0.001);
+        gl.uniform1f(uniforms.heat, heat);
+        gl.uniform1f(uniforms.playing, document.querySelector('[data-site-player]')?.classList.contains('playing') ? 1 : 0);
+        gl.uniform2f(uniforms.pointer, pointer.x + pointerPulse * 0.04, pointer.y);
+        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      }
+
+      resizeCanvas();
+      syncCssHeat(heat);
+      orb.classList.add('canvas-ready');
+      requestAnimationFrame(draw);
+      window.addEventListener('resize', resizeCanvas);
+    })();
+
     (function initEmberEasterEgg() {
       const period = document.querySelector('[data-ember-period]');
       if (!period) return;
@@ -4525,15 +4923,62 @@
       loadTrack(0);
       syncState();
 
+      const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+      const coarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+      let lastPointer = { x: window.innerWidth - 96, y: window.innerHeight - 96 };
+      let creepTimer = null;
+      let nudgeFrame = 0;
+      let pendingNudge = null;
+      function nudgeToward(x, y, strength = 1) {
+        if (player.classList.contains('dragged') || player.classList.contains('dragging')) return;
+        lastPointer = { x, y };
+        const rect = player.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = clamp((x - cx) * 0.07 * strength, -14, 14);
+        const dy = clamp((y - cy) * 0.07 * strength, -14, 14);
+        player.style.setProperty('--creep-x', dx.toFixed(1) + 'px');
+        player.style.setProperty('--creep-y', dy.toFixed(1) + 'px');
+        clearTimeout(creepTimer);
+        creepTimer = window.setTimeout(() => {
+          player.style.setProperty('--creep-x', '0px');
+          player.style.setProperty('--creep-y', '0px');
+        }, 780);
+      }
+      function scheduleNudge(x, y, strength = 1) {
+        pendingNudge = { x, y, strength };
+        if (nudgeFrame) return;
+        nudgeFrame = requestAnimationFrame(() => {
+          nudgeFrame = 0;
+          if (!pendingNudge) return;
+          const next = pendingNudge;
+          pendingNudge = null;
+          nudgeToward(next.x, next.y, next.strength);
+        });
+      }
+
+      window.addEventListener('pointermove', (event) => {
+        scheduleNudge(event.clientX, event.clientY, 0.55);
+      }, { passive: true });
+      window.addEventListener('pointerdown', (event) => {
+        scheduleNudge(event.clientX, event.clientY, 1);
+      }, { passive: true });
+      window.addEventListener('touchstart', (event) => {
+        const touch = event.touches && event.touches[0];
+        if (touch) scheduleNudge(touch.clientX, touch.clientY, 1);
+      }, { passive: true });
+      window.addEventListener('scroll', () => {
+        scheduleNudge(lastPointer.x, lastPointer.y, 0.72);
+      }, { passive: true });
+
       let drag = null;
       let lastPuffAt = 0;
       const isSoundSwitch = player.classList.contains('sound-switch');
-      const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
       const emitPuff = (x, y) => {
         const now = performance.now();
-        if (now - lastPuffAt < 24) return;
+        if (now - lastPuffAt < 70) return;
         lastPuffAt = now;
-        for (let i = 0; i < 6; i += 1) {
+        for (let i = 0; i < (coarsePointer ? 2 : 3); i += 1) {
           const puff = document.createElement('span');
           puff.className = 'player-smoke-puff';
           puff.style.left = (x + Math.random() * 38 - 19) + 'px';
@@ -4541,7 +4986,7 @@
           puff.style.setProperty('--drift-x', (Math.random() * 118 - 59).toFixed(1) + 'px');
           puff.style.setProperty('--drift-y', (-52 - Math.random() * 94).toFixed(1) + 'px');
           document.body.appendChild(puff);
-          setTimeout(() => puff.remove(), 1500);
+          setTimeout(() => puff.remove(), 1100);
         }
       };
 
@@ -4670,17 +5115,26 @@
       heads.forEach(head => {
         const section = head.closest('section') || head.parentElement;
         if (!section) return;
+        let tiltFrame = 0;
+        let pendingTilt = null;
 
         section.addEventListener('pointermove', (event) => {
-          const rect = section.getBoundingClientRect();
-          const x = (event.clientX - rect.left) / rect.width - 0.5;
-          const y = (event.clientY - rect.top) / rect.height - 0.5;
-          head.style.setProperty('--tilt-y', (x * 16).toFixed(2) + 'deg');
-          head.style.setProperty('--tilt-x', (-y * 11).toFixed(2) + 'deg');
-          head.style.setProperty('--tilt-dx', (x * 14).toFixed(1) + 'px');
-          head.style.setProperty('--tilt-dy', (y * 8).toFixed(1) + 'px');
+          pendingTilt = { x: event.clientX, y: event.clientY };
+          if (tiltFrame) return;
+          tiltFrame = requestAnimationFrame(() => {
+            tiltFrame = 0;
+            if (!pendingTilt) return;
+            const rect = section.getBoundingClientRect();
+            const x = (pendingTilt.x - rect.left) / rect.width - 0.5;
+            const y = (pendingTilt.y - rect.top) / rect.height - 0.5;
+            head.style.setProperty('--tilt-y', (x * 16).toFixed(2) + 'deg');
+            head.style.setProperty('--tilt-x', (-y * 11).toFixed(2) + 'deg');
+            head.style.setProperty('--tilt-dx', (x * 14).toFixed(1) + 'px');
+            head.style.setProperty('--tilt-dy', (y * 8).toFixed(1) + 'px');
+          });
         });
         section.addEventListener('pointerleave', () => {
+          pendingTilt = null;
           head.style.setProperty('--tilt-y', '0deg');
           head.style.setProperty('--tilt-x', '0deg');
           head.style.setProperty('--tilt-dx', '0px');
