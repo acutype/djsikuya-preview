@@ -27,6 +27,10 @@
       } catch {}
     })();
   </script>
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
 
   <script type="application/ld+json">
   {
@@ -249,6 +253,51 @@
       color: var(--accent-hot);
       border-bottom: 1px solid currentColor;
       padding-bottom: 1px;
+    }
+    .public-gig-list {
+      display: grid;
+      gap: 1px;
+      margin-top: 22px;
+      border: 1px solid var(--line);
+      background: rgba(245,241,232,0.12);
+    }
+    .public-gig-list[hidden] { display: none; }
+    .public-gig-row {
+      display: grid;
+      grid-template-columns: minmax(86px, 0.18fr) minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+      min-height: 104px;
+      padding: 18px;
+      background:
+        radial-gradient(80% 120% at 100% 0%, rgba(206,17,38,0.12), transparent 70%),
+        rgba(12,9,8,0.94);
+    }
+    .public-gig-row .date {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent-hot);
+    }
+    .public-gig-row .venue {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(28px, 4vw, 48px);
+      line-height: 0.95;
+      color: var(--paper);
+    }
+    .public-gig-row .meta,
+    .public-gig-row .status {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(245,241,232,0.5);
+    }
+    .public-gig-row .status {
+      color: rgba(245,241,232,0.72);
+      text-align: right;
     }
     .source-ribbon {
       margin-top: 22px;
@@ -1291,6 +1340,110 @@
       color: rgba(245,241,232,0.5);
     }
 
+    .movement {
+      position: relative;
+      overflow: hidden;
+      background: #0b0807;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .movement .atmosphere {
+      background:
+        radial-gradient(42% 32% at 8% 10%, rgba(206,17,38,0.14), transparent 68%),
+        radial-gradient(48% 44% at 88% 72%, rgba(255,116,64,0.08), transparent 70%),
+        linear-gradient(90deg, rgba(245,241,232,0.04), transparent 28%, rgba(206,17,38,0.05));
+    }
+    .movement-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 0.86fr) minmax(0, 1fr);
+      gap: clamp(30px, 6vw, 76px);
+      align-items: start;
+    }
+    .movement-copy {
+      position: sticky;
+      top: 96px;
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 44px;
+    }
+    .movement-copy p {
+      max-width: 620px;
+      margin: 0;
+      color: rgba(245,241,232,0.72);
+      font-size: clamp(22px, 3vw, 38px);
+      line-height: 1.24;
+      text-wrap: pretty;
+    }
+    .movement-copy .flags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(245,241,232,0.48);
+    }
+    .movement-copy .flags span {
+      border: 1px solid rgba(245,241,232,0.14);
+      border-radius: 999px;
+      padding: 9px 12px;
+      background: rgba(245,241,232,0.04);
+    }
+    .movement-board {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .movement-board .moodboard {
+      border-color: rgba(245,241,232,0.16);
+    }
+    .movement-board .mood-card {
+      min-height: 142px;
+      justify-content: center;
+      position: relative;
+      padding: 24px 18px 20px;
+    }
+    .movement-board .mood-card .count {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+    }
+    .movement-rail {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1px;
+      border: 1px solid rgba(245,241,232,0.12);
+      background: rgba(245,241,232,0.12);
+    }
+    .movement-rail div {
+      min-height: 108px;
+      padding: 16px;
+      background:
+        radial-gradient(80% 70% at 100% 0%, rgba(206,17,38,0.10), transparent 72%),
+        rgba(12,9,8,0.94);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 14px;
+    }
+    .movement-rail b {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent-hot);
+      font-weight: 400;
+    }
+    .movement-rail span {
+      font-size: 14px;
+      line-height: 1.45;
+      color: rgba(245,241,232,0.62);
+    }
+
     .portfolio {
       background: var(--bg);
       border-top: 1px solid var(--line);
@@ -2214,7 +2367,7 @@
     }
 
     .source-ribbon { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .source-ribbon.timeslot-ribbon { grid-template-columns: 1fr; }
+    .source-ribbon.timeslot-ribbon { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .known-venues {
       color: rgba(245,241,232,0.78);
       font-style: normal;
@@ -3047,19 +3200,19 @@
       .sound-switch {
         right: 10px;
         top: auto;
-        bottom: 84px;
+        bottom: 18px;
         transform: none;
       }
       .sound-switch button {
-        min-width: 176px;
-        padding: 7px 12px 7px 7px;
-        gap: 8px;
+        min-width: 132px;
+        padding: 6px 10px 6px 6px;
+        gap: 7px;
         font-size: 8px;
       }
       .sound-dog {
-        width: 76px;
-        height: 76px;
-        flex-basis: 76px;
+        width: 44px;
+        height: 44px;
+        flex-basis: 44px;
       }
 
       .section-head { grid-template-columns: 1fr; gap: 14px; margin-bottom: 32px; }
@@ -3072,6 +3225,9 @@
         border-bottom: 1px solid var(--line);
       }
       .source-ribbon > *:last-child { border-bottom: 0; }
+
+      .public-gig-row { grid-template-columns: 1fr; gap: 10px; }
+      .public-gig-row .status { text-align: left; }
 
       .gig-row { grid-template-columns: auto 1fr auto; gap: 16px; padding: 20px 0; }
       .gig-row .date { font-size: 44px; }
@@ -3128,6 +3284,13 @@
       .taste-grid { grid-template-columns: 1fr; gap: 22px; }
       .chill-zone { grid-template-columns: 1fr; gap: 18px; }
       .dance-pet { min-height: 240px; }
+      .movement-layout { grid-template-columns: 1fr; }
+      .movement-copy {
+        position: relative;
+        top: auto;
+        min-height: 0;
+      }
+      .movement-rail { grid-template-columns: 1fr 1fr; }
       .moodboard { grid-template-columns: 1fr; }
       .mood-card { min-height: 128px; }
       .portfolio-heading { grid-template-columns: 1fr; gap: 18px; }
@@ -3261,6 +3424,7 @@
           <a href="#gigs">gigs</a>
           <a href="#clips">tape</a>
           <a href="#portfolio">photos</a>
+          <a href="#movement">au.ph</a>
           <a href="#brand">brand</a>
         </nav>
         <div class="hero-actions">
@@ -3301,24 +3465,29 @@
         </div>
         <div class="section-meta">
           <div>public dates</div>
-          <div class="dim">facebook · direct bookings</div>
+          <div class="dim">calendar · public only</div>
         </div>
       </div>
 
-      <div class="empty-state">
+      <div class="empty-state" data-gig-empty>
         <div class="lead">next public dates</div>
-        <div class="body">posting soon. private dates stay private.</div>
+        <div class="body">public dates appear here when confirmed. private dates stay private.</div>
         <div class="footer"><a href="https://www.facebook.com/ObsessedWithProjectX/" target="_blank" rel="noopener">facebook</a> · <a href="mailto:bookings@djsikuya.com">email direct</a></div>
       </div>
+      <div class="public-gig-list" data-public-gigs hidden></div>
 
       <div class="source-ribbon timeslot-ribbon" aria-label="booked timeslots">
         <div>
-          <span class="k">availability</span>
-          <span class="v">booked timeslots</span>
+          <span class="k">source</span>
+          <span class="v" data-gig-source-status>calendar checked</span>
+        </div>
+        <div>
+          <span class="k">rule</span>
+          <span class="v">public dates only</span>
         </div>
       </div>
 
-      <!-- Gig source v1: public Facebook page plus manually approved public dates. Private bookings stay off the public site. -->
+      <!-- Public gigs render from /public-gigs.json. Private bookings stay off the public site. -->
       <div class="past-log">
         <div class="marker">years...</div>
         <div class="grid">
@@ -3632,13 +3801,53 @@
     </div>
   </section>
 
+  <!-- 04 MOVEMENT -->
+  <section class="movement" id="movement">
+    <div class="atmosphere"></div>
+    <div class="content">
+      <div class="movement-layout">
+        <div class="movement-copy">
+          <div>
+            <div class="marker">04_au.ph</div>
+            <h2 class="section-title">two flags<span class="ember">.</span></h2>
+          </div>
+          <p>for crowds who want roots in the same set as the bangers.</p>
+          <div class="flags" aria-label="AU PH signal">
+            <span>AU</span>
+            <span>PH</span>
+            <span>warm rooms</span>
+            <span>opm memory</span>
+          </div>
+        </div>
+
+        <div class="movement-board">
+          <div class="moodboard" aria-label="Sikuya genre taste">
+            <div class="mood-card"><span class="count">01</span><strong>r&amp;b edits</strong></div>
+            <div class="mood-card"><span class="count">02</span><strong>afrobeats</strong></div>
+            <div class="mood-card"><span class="count">03</span><strong>opm memory</strong></div>
+            <div class="mood-card"><span class="count">04</span><strong>dancehall</strong></div>
+            <div class="mood-card"><span class="count">05</span><strong>house</strong></div>
+            <div class="mood-card"><span class="count">06</span><strong>hip-hop</strong></div>
+          </div>
+
+          <div class="movement-rail" aria-label="AU PH movement notes">
+            <div><b>roots</b><span>filipino memory in the set.</span></div>
+            <div><b>rooms</b><span>learnt here, roots there.</span></div>
+            <div><b>energy</b><span>warm start, late lift.</span></div>
+            <div><b>bookings</b><span>bars, parties, private rooms.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- 05 BRAND -->
   <section class="brand thesis-construction" id="brand" data-brand data-css-scroll>
     <div class="pin-wrap">
       <div class="atmosphere"></div>
       <div class="content" style="display: flex; flex-direction: column; gap: 56px; position: relative; z-index: 1;">
         <div class="thesis-stub">
-          <div class="marker">04_thesis</div>
+          <div class="marker">05_thesis</div>
           <div class="construction-line">under construction<span class="ember">.</span></div>
         </div>
 
@@ -3663,13 +3872,13 @@
     </div>
   </section>
 
-  <!-- 04 PRESS -->
+  <!-- 06 PRESS -->
   <section class="press" id="press">
     <div class="atmosphere"></div>
     <div class="content">
       <div class="section-head">
         <div>
-          <div class="marker">05_voices</div>
+          <div class="marker">06_voices</div>
           <h2 class="section-title" style="font-size: 110px;">voices<span class="ember">.</span></h2>
         </div>
         <div class="section-meta">
@@ -3795,13 +4004,13 @@
     </div>
   </section>
 
-  <!-- 05 BOOK -->
+  <!-- 07 BOOK -->
   <section class="book" id="book">
     <div class="atmosphere"></div>
     <div class="content">
       <div class="section-head">
         <div>
-          <div class="marker">06_book</div>
+          <div class="marker">07_book</div>
           <h2 class="section-title" style="font-size: 110px;">book<span class="ember">.</span></h2>
         </div>
         <div class="section-meta">
@@ -3902,12 +4111,91 @@
   </div>
 
   <script>
+    function trackSikuyaEvent(name) {
+      if (typeof window.va !== 'function') return;
+      window.va('event', { name: name });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      trackSikuyaEvent('page_view_landing');
+
+      const bookSection = document.getElementById('book');
+      if (bookSection && 'IntersectionObserver' in window) {
+        let trackedBook = false;
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (!trackedBook && entry.isIntersecting) {
+              trackedBook = true;
+              trackSikuyaEvent('section_book_visible');
+              observer.disconnect();
+            }
+          });
+        }, { threshold: 0.35 });
+        observer.observe(bookSection);
+      }
+    });
+
+    (function initPublicGigs() {
+      const list = document.querySelector('[data-public-gigs]');
+      const empty = document.querySelector('[data-gig-empty]');
+      const sourceStatus = document.querySelector('[data-gig-source-status]');
+      if (!list) return;
+
+      function formatDate(value) {
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return '';
+        return date.toLocaleDateString('en-AU', {
+          weekday: 'short',
+          day: '2-digit',
+          month: 'short',
+          timeZone: 'Australia/Perth'
+        }).toLowerCase();
+      }
+      function escapeHtml(value) {
+        return String(value).replace(/[&<>"']/g, char => ({
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;'
+        }[char]));
+      }
+
+      fetch('/public-gigs.json', { cache: 'no-store' })
+        .then(response => response.ok ? response.json() : null)
+        .then(data => {
+          const dates = Array.isArray(data && data.publicDates)
+            ? data.publicDates.filter(item => item && item.public !== false)
+            : [];
+          if (sourceStatus && data && data.sourceLabel) {
+            sourceStatus.textContent = data.sourceLabel;
+          }
+          if (!dates.length) return;
+          list.innerHTML = dates.map(item => {
+            const date = escapeHtml(formatDate(item.date));
+            const venue = escapeHtml(item.venue || 'venue tba');
+            const city = escapeHtml(item.city || 'perth');
+            const status = escapeHtml(item.status || 'public');
+            return '<article class="public-gig-row">' +
+              '<div class="date">' + date + '</div>' +
+              '<div><div class="venue">' + venue + '</div><div class="meta">' + city + '</div></div>' +
+              '<div class="status">' + status + '</div>' +
+            '</article>';
+          }).join('');
+          list.hidden = false;
+          if (empty) empty.hidden = true;
+        })
+        .catch(() => {
+          if (sourceStatus) sourceStatus.textContent = 'calendar pending';
+        });
+    })();
+
     // Path-based routing: visit /book, /gigs, /clips, /portfolio, /brand, /press to scroll to that section on load
     (function initPathRouting() {
-      const validSections = ['gigs', 'clips', 'portfolio', 'mixes', 'brand', 'voices', 'press', 'book'];
+      const validSections = ['gigs', 'clips', 'portfolio', 'mixes', 'movement', 'brand', 'voices', 'press', 'book'];
       const pathSegment = window.location.pathname.replace(/^\/+|\/+$/g, '').toLowerCase();
       // Also catch /press → voices (since we renamed proof → voices but old links might persist)
-      const aliases = { live: 'gigs', taste: 'portfolio', chill: 'portfolio', press: 'voices' };
+      const aliases = { live: 'gigs', taste: 'movement', chill: 'portfolio', roots: 'movement', press: 'voices' };
       const target = aliases[pathSegment] || pathSegment;
       if (validSections.includes(target)) {
         // Defer until after the page has laid out so heights are real
@@ -4455,6 +4743,13 @@
       const form = document.getElementById('bookForm');
       const salamat = document.getElementById('salamat');
       if (!form || !salamat) return;
+      let formStarted = false;
+
+      form.addEventListener('focusin', () => {
+        if (formStarted) return;
+        formStarted = true;
+        trackSikuyaEvent('form_start');
+      });
 
       async function trySubmit(payload) {
         try {
@@ -4484,6 +4779,7 @@
 
       form.addEventListener('submit', (e) => {
         e.preventDefault();
+        trackSikuyaEvent('form_submit');
         const payload = {
           name: form.querySelector('[name="name"]').value.trim(),
           email: form.querySelector('[name="email"]').value.trim(),
@@ -4496,6 +4792,7 @@
           return;
         }
         salamat.classList.add('visible');
+        trackSikuyaEvent('form_success');
         trySubmit(payload).finally(() => {
           form.reset();
         });

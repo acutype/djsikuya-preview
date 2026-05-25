@@ -8,6 +8,8 @@
     {"source": "/clips", "destination": "/index.html"},
     {"source": "/portfolio", "destination": "/index.html"},
     {"source": "/mixes", "destination": "/index.html"},
+    {"source": "/movement", "destination": "/index.html"},
+    {"source": "/roots", "destination": "/index.html"},
     {"source": "/brand", "destination": "/index.html"},
     {"source": "/voices", "destination": "/index.html"},
     {"source": "/press", "destination": "/index.html"},
