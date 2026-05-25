@@ -4162,7 +4162,10 @@
       }
 
       fetch('/public-gigs.json', { cache: 'no-store' })
-        .then(response => response.ok ? response.json() : null)
+        .then(response => {
+          if (!response.ok) throw new Error('public gigs fetch failed: ' + response.status);
+          return response.json();
+        })
         .then(data => {
           const dates = Array.isArray(data && data.publicDates)
             ? data.publicDates.filter(item => item && item.public !== false)
@@ -4194,8 +4197,8 @@
     (function initPathRouting() {
       const validSections = ['gigs', 'clips', 'portfolio', 'mixes', 'movement', 'brand', 'voices', 'press', 'book'];
       const pathSegment = window.location.pathname.replace(/^\/+|\/+$/g, '').toLowerCase();
-      // Also catch /press → voices (since we renamed proof → voices but old links might persist)
-      const aliases = { live: 'gigs', taste: 'movement', chill: 'portfolio', roots: 'movement', press: 'voices' };
+      // Keep old paths landing on the current visible sections.
+      const aliases = { live: 'gigs', taste: 'movement', chill: 'portfolio', roots: 'movement', voices: 'press' };
       const target = aliases[pathSegment] || pathSegment;
       if (validSections.includes(target)) {
         // Defer until after the page has laid out so heights are real
