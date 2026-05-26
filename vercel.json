@@ -3,6 +3,11 @@
   "cleanUrls": false,
   "trailingSlash": false,
   "outputDirectory": ".",
+  "functions": {
+    "api/inbox.js": {
+      "maxDuration": 10
+    }
+  },
   "rewrites": [
     {"source": "/live", "destination": "/index.html"},
     {"source": "/clips", "destination": "/index.html"},

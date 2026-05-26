@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://djsikuya.com/lead-pipeline.schema.json",
+  "title": "djsikuya.com public booking lead",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["source", "attribution"],
+  "properties": {
+    "type": {
+      "type": "string",
+      "const": "InboxItem"
+    },
+    "source": {
+      "type": "string",
+      "description": "Public site surface that created the lead, for example djsikuya.com/book or djsikuya.com/booth-line."
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 140
+    },
+    "email": {
+      "type": "string",
+      "maxLength": 180
+    },
+    "phoneOrIg": {
+      "type": "string",
+      "maxLength": 160
+    },
+    "contact": {
+      "type": "string",
+      "maxLength": 160
+    },
+    "eventDate": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "venue": {
+      "type": "string",
+      "maxLength": 180
+    },
+    "message": {
+      "type": "string",
+      "maxLength": 2400
+    },
+    "submittedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "website": {
+      "type": "object",
+      "properties": {
+        "honeypot": {
+          "type": "string",
+          "maxLength": 200
+        }
+      }
+    },
+    "attribution": {
+      "type": "object",
+      "required": ["sourcePlatform", "landingPath"],
+      "properties": {
+        "sourcePlatform": {
+          "type": "string",
+          "examples": ["tiktok", "instagram", "youtube", "facebook", "soundcloud", "direct"]
+        },
+        "sourceCampaign": {
+          "type": "string",
+          "examples": ["room-loop", "birthday-room", "booth-line"]
+        },
+        "sourceMedium": {
+          "type": "string",
+          "examples": ["social", "bio", "shorts"]
+        },
+        "landingPath": {
+          "type": "string"
+        },
+        "sourceUrl": {
+          "type": "string"
+        },
+        "referrer": {
+          "type": "string"
+        },
+        "firstTouchAt": {
+          "type": "string"
+        },
+        "lastTouchAt": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
