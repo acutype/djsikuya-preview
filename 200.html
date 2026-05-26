@@ -748,6 +748,71 @@
     .hero-bottom {
       display: flex; align-items: flex-end; justify-content: space-between; gap: 16px;
     }
+    .hero-signal-rail {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(104px, 1fr));
+      width: min(720px, 64vw);
+      border: 1px solid rgba(255,116,64,0.18);
+      background:
+        linear-gradient(90deg, rgba(8,5,4,0.78), rgba(24,9,7,0.52)),
+        radial-gradient(60% 160% at calc(var(--signal-x, 0) * 25%) 50%, rgba(255,77,58,0.16), transparent 68%);
+      box-shadow: 0 22px 80px rgba(0,0,0,0.28), inset 0 1px 0 rgba(245,241,232,0.08);
+      backdrop-filter: blur(14px) saturate(1.12);
+      overflow: hidden;
+    }
+    .hero-signal-rail button {
+      position: relative;
+      display: grid;
+      gap: 4px;
+      min-height: 68px;
+      border: 0;
+      border-right: 1px solid rgba(245,241,232,0.08);
+      background: transparent;
+      color: rgba(245,241,232,0.72);
+      text-align: left;
+      padding: 14px 16px;
+      transition: color 180ms var(--ease), background 180ms var(--ease), transform 180ms var(--ease);
+    }
+    .hero-signal-rail button:last-child { border-right: 0; }
+    .hero-signal-rail button::before {
+      content: '';
+      position: absolute;
+      left: 14px;
+      top: 14px;
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(255,116,64,0.64);
+      box-shadow: 0 0 14px rgba(255,116,64,0.36);
+      opacity: 0;
+      transition: opacity 180ms var(--ease), transform 180ms var(--ease);
+    }
+    .hero-signal-rail button:hover,
+    .hero-signal-rail button.active {
+      color: var(--paper);
+      background: rgba(255,77,58,0.08);
+      transform: translateY(-1px);
+    }
+    .hero-signal-rail button:hover::before,
+    .hero-signal-rail button.active::before {
+      opacity: 1;
+      transform: translateY(-8px);
+    }
+    .hero-signal-rail .k {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+      color: var(--accent-hot);
+    }
+    .hero-signal-rail .v {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 24px;
+      line-height: 1;
+      color: var(--paper);
+      white-space: nowrap;
+    }
     .hero-bottom .meta {
       font-family: var(--mono); font-size: 11px;
       letter-spacing: 0.18em; text-transform: uppercase;
@@ -1255,6 +1320,278 @@
     .flow-card:nth-of-type(4) {
       grid-column: 3 / span 1;
       grid-row: 2 / span 1;
+    }
+
+    .sound-desk {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 0.42fr);
+      gap: 14px;
+      align-items: stretch;
+      --desk-tilt: 0deg;
+    }
+    .console-face {
+      position: relative;
+      min-height: 360px;
+      overflow: hidden;
+      border: 1px solid rgba(255,116,64,0.20);
+      background:
+        linear-gradient(180deg, rgba(245,241,232,0.07), rgba(245,241,232,0.025)),
+        radial-gradient(52% 72% at 20% 10%, rgba(255,77,58,0.16), transparent 68%),
+        #080504;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 26px 80px rgba(0,0,0,0.34);
+      transform: perspective(900px) rotateX(var(--desk-tilt));
+      transform-origin: 50% 100%;
+      transition: transform 420ms var(--ease), border-color 240ms var(--ease);
+    }
+    .console-face::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(90deg, rgba(245,241,232,0.055) 0 1px, transparent 1px 9.4%),
+        linear-gradient(180deg, transparent 0 18%, rgba(255,116,64,0.08) 18.2% 18.8%, transparent 19% 100%);
+      opacity: 0.54;
+      pointer-events: none;
+    }
+    .console-face::after {
+      content: '';
+      position: absolute;
+      inset: auto 20px 22px;
+      height: 12px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(255,77,58,0.16), rgba(245,241,232,0.68), rgba(255,77,58,0.16));
+      filter: blur(16px);
+      opacity: 0.42;
+      pointer-events: none;
+    }
+    .console-copy {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 0.85fr) minmax(230px, 0.55fr);
+      gap: 22px;
+      height: 100%;
+      padding: clamp(20px, 4vw, 34px);
+    }
+    .console-kicker,
+    .console-status,
+    .taste-card .k,
+    .cue-chip {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+    .console-kicker { color: var(--accent-hot); }
+    .console-title {
+      margin: 18px 0 0;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(52px, 8vw, 120px);
+      line-height: 0.82;
+      letter-spacing: 0;
+      color: var(--paper);
+      text-wrap: balance;
+      text-shadow: 0 28px 80px rgba(0,0,0,0.58), 0 0 28px rgba(255,80,28,0.18);
+    }
+    .console-sub {
+      max-width: 520px;
+      margin: 22px 0 0;
+      color: rgba(245,241,232,0.68);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+    .console-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .cue-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 38px;
+      border: 1px solid rgba(245,241,232,0.14);
+      border-radius: 999px;
+      background: rgba(245,241,232,0.045);
+      color: rgba(245,241,232,0.82);
+      padding: 0 14px;
+      transition: transform 180ms var(--ease), border-color 180ms var(--ease), background 180ms var(--ease);
+    }
+    .cue-chip::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(255,116,64,0.68);
+      box-shadow: 0 0 16px rgba(255,116,64,0.34);
+    }
+    .cue-chip:hover,
+    .cue-chip.active {
+      transform: translateY(-2px);
+      border-color: rgba(255,116,64,0.42);
+      background: rgba(255,77,58,0.10);
+    }
+    .console-strips {
+      align-self: stretch;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(26px, 1fr));
+      gap: 12px;
+      padding: 5px 0;
+    }
+    .desk-channel {
+      display: grid;
+      grid-template-rows: 1fr auto auto;
+      gap: 12px;
+      align-items: end;
+    }
+    .desk-channel .rail {
+      position: relative;
+      min-height: 190px;
+      border: 1px solid rgba(245,241,232,0.10);
+      background:
+        linear-gradient(180deg, transparent 0 9%, rgba(245,241,232,0.08) 9.2% 9.8%, transparent 10% 100%),
+        repeating-linear-gradient(180deg, transparent 0 22px, rgba(245,241,232,0.055) 23px 24px);
+    }
+    .desk-channel .rail::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: var(--level);
+      width: 30px;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #2b1712, var(--accent-hot), #2b1712);
+      box-shadow: 0 0 18px rgba(255,80,28,0.30);
+      transform: translate(-50%, 50%);
+    }
+    .desk-channel .knob {
+      width: 34px;
+      aspect-ratio: 1;
+      justify-self: center;
+      border-radius: 999px;
+      border: 1px solid rgba(245,241,232,0.16);
+      background:
+        radial-gradient(circle at 35% 30%, rgba(245,241,232,0.34), transparent 18%),
+        conic-gradient(from 30deg, rgba(255,116,64,0.80), rgba(245,241,232,0.14), rgba(255,116,64,0.34), rgba(255,116,64,0.80));
+      box-shadow: inset 0 0 14px rgba(0,0,0,0.48);
+    }
+    .desk-channel span {
+      justify-self: center;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+      color: rgba(245,241,232,0.46);
+    }
+    .taste-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 22px;
+      min-height: 360px;
+      border: 1px solid rgba(245,241,232,0.12);
+      background:
+        radial-gradient(70% 60% at 20% 0%, rgba(206,17,38,0.16), transparent 68%),
+        rgba(245,241,232,0.035);
+      padding: clamp(18px, 3vw, 24px);
+    }
+    .taste-card .k { color: var(--accent-hot); }
+    .taste-card p {
+      margin: 0;
+      color: rgba(245,241,232,0.64);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+    .taste-stack {
+      display: grid;
+      gap: 1px;
+      border: 1px solid rgba(245,241,232,0.10);
+      background: rgba(245,241,232,0.10);
+    }
+    .taste-stack button {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 12px;
+      min-height: 52px;
+      border: 0;
+      background: rgba(8,5,4,0.86);
+      color: var(--paper);
+      padding: 12px;
+      text-align: left;
+    }
+    .taste-stack button:hover,
+    .taste-stack button.active {
+      background: rgba(255,77,58,0.12);
+    }
+    .taste-stack .num,
+    .taste-stack .bpm {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(245,241,232,0.42);
+    }
+    .taste-stack strong {
+      font-family: var(--serif);
+      font-size: 24px;
+      font-style: italic;
+      font-weight: 400;
+      line-height: 1;
+    }
+    .route-board {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border: 1px solid rgba(255,116,64,0.18);
+      background:
+        linear-gradient(180deg, rgba(245,241,232,0.045), rgba(245,241,232,0.018)),
+        radial-gradient(42% 160% at var(--route-x, 18%) 0%, rgba(255,77,58,0.14), transparent 68%);
+      box-shadow: inset 0 1px 0 rgba(245,241,232,0.07), 0 22px 70px rgba(0,0,0,0.24);
+      overflow: hidden;
+    }
+    .route-card {
+      min-height: 128px;
+      border: 0;
+      border-right: 1px solid rgba(245,241,232,0.08);
+      background: transparent;
+      color: rgba(245,241,232,0.68);
+      text-align: left;
+      padding: 18px;
+      display: grid;
+      align-content: space-between;
+      gap: 18px;
+      transition: color 180ms var(--ease), background 180ms var(--ease), transform 180ms var(--ease);
+    }
+    .route-card:last-child { border-right: 0; }
+    .route-card:hover,
+    .route-card.active {
+      color: var(--paper);
+      background: rgba(255,77,58,0.08);
+      transform: translateY(-2px);
+    }
+    .route-card .num,
+    .route-card .hint {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    .route-card .num { color: var(--accent-hot); }
+    .route-card strong {
+      display: block;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(28px, 4vw, 46px);
+      line-height: 0.96;
+      font-weight: 400;
+      color: var(--paper);
+      text-shadow: 0 18px 54px rgba(0,0,0,0.44);
     }
 
     .taste {
@@ -2002,6 +2339,45 @@
       color: rgba(245,241,232,0.85);
     }
     .book-section-block .where .dim { color: rgba(245,241,232,0.55); }
+    .resident-card {
+      margin-top: 34px;
+      border: 1px solid rgba(255,116,64,0.18);
+      background:
+        repeating-linear-gradient(90deg, rgba(245,241,232,0.035) 0 1px, transparent 1px 42px),
+        radial-gradient(80% 60% at 100% 0%, rgba(206,17,38,0.12), transparent 68%),
+        rgba(245,241,232,0.035);
+      padding: 18px;
+    }
+    .resident-card .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+      color: var(--accent-hot);
+    }
+    .resident-card .lights {
+      display: inline-flex;
+      gap: 5px;
+    }
+    .resident-card .lights span {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(255,116,64,0.92);
+      box-shadow: 0 0 14px rgba(255,80,28,0.42);
+    }
+    .resident-card .lights span:nth-child(2) { opacity: 0.48; }
+    .resident-card .lights span:nth-child(3) { opacity: 0.24; }
+    .resident-card p {
+      margin: 16px 0 0;
+      color: rgba(245,241,232,0.68);
+      font-size: 14px;
+      line-height: 1.62;
+    }
 
     .book-form {
       display: flex; flex-direction: column; gap: 24px;
@@ -2265,11 +2641,13 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      border: 1px solid rgba(255,116,64,0.24);
-      border-radius: 999px;
-      background: rgba(9,5,4,0.70);
+      border: 1px solid rgba(255,116,64,0.30);
+      border-radius: 3px;
+      background:
+        linear-gradient(180deg, rgba(245,241,232,0.08), rgba(245,241,232,0.02)),
+        rgba(9,5,4,0.78);
       color: var(--paper);
-      padding: 11px 15px;
+      padding: 12px 14px;
       box-shadow: 0 18px 46px rgba(0,0,0,0.38), 0 0 28px rgba(255,80,28,0.10);
       backdrop-filter: blur(16px) saturate(1.12);
       font-family: var(--mono);
@@ -2286,10 +2664,28 @@
       background: var(--accent-hot);
       box-shadow: 0 0 16px rgba(255,80,28,0.72);
     }
+    .agent-meter {
+      display: inline-flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 12px;
+      padding-left: 4px;
+    }
+    .agent-meter span {
+      width: 3px;
+      height: 5px;
+      background: var(--accent-hot);
+      opacity: 0.42;
+      transform-origin: bottom;
+      animation: radioBar 980ms ease-in-out infinite;
+    }
+    .agent-meter span:nth-child(2) { animation-delay: 130ms; height: 9px; }
+    .agent-meter span:nth-child(3) { animation-delay: 260ms; height: 7px; }
     .agent-panel {
       width: min(360px, calc(100vw - 28px));
       border: 1px solid rgba(255,116,64,0.22);
       background:
+        repeating-linear-gradient(90deg, rgba(245,241,232,0.035) 0 1px, transparent 1px 36px),
         radial-gradient(80% 70% at 100% 0%, rgba(206,17,38,0.18), transparent 72%),
         rgba(8,5,4,0.88);
       color: var(--paper);
@@ -2330,6 +2726,23 @@
       font-size: 14px;
       color: rgba(245,241,232,0.76);
       margin: -6px 0 2px;
+    }
+    .agent-patches {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+    .agent-patches span {
+      min-height: 30px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(245,241,232,0.10);
+      background: rgba(245,241,232,0.035);
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(245,241,232,0.56);
     }
     .agent-row {
       display: grid;
@@ -3400,6 +3813,12 @@
       opacity: 0.24;
       pointer-events: none;
     }
+    body.book-section-active .booking-agent,
+    body.in-book-section .booking-agent {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(14px);
+    }
     html[data-theme="light"] .sound-switch button {
       background: rgba(18,9,7,0.70);
       border-color: rgba(255,241,223,0.18);
@@ -3557,43 +3976,74 @@
       .hero .frame { padding: 20px; }
       .hero-nav {
         grid-template-columns: minmax(0, 1fr) auto;
-        padding: 9px 10px;
-        gap: 8px;
+        padding: 9px 8px;
+        gap: 6px;
       }
       .hero-spacer { display: none; }
       .hero-nav nav.links {
         display: flex;
         justify-self: stretch;
-        gap: 16px;
-        overflow-x: auto;
-        padding: 8px 4px;
-        font-size: 10px;
+        gap: clamp(9px, 2.8vw, 14px);
+        overflow-x: hidden;
+        padding: 8px 2px;
+        font-size: 9px;
         white-space: nowrap;
         scrollbar-width: none;
       }
       .hero-nav nav.links::-webkit-scrollbar { display: none; }
-      .hero-actions { gap: 8px; }
-      .theme-toggle { min-width: 50px; padding: 9px 10px; font-size: 9px; }
-      .book-pill { padding: 9px 14px; font-size: 12px; }
+      .hero-actions { gap: 6px; }
+      .theme-toggle { min-width: 46px; padding: 8px 8px; font-size: 8px; }
+      .hero-actions .book-pill { padding: 8px 12px; font-size: 11px; }
       .video-badge { display: none; }
       .wordmark { font-size: 22px; }
       .flag-copy,
       .flag-arrow { display: none; }
       .flag-bio { max-width: 74px; }
       .flag-bubbles span { width: 30px; height: 30px; }
-      .hero h1 { font-size: 96px; }
-      .hero .subtitle { font-size: 17px; }
+      .hero h1 { font-size: clamp(74px, 24vw, 96px); max-width: 100%; }
+      .hero .subtitle {
+        width: min(100%, 330px);
+        max-width: calc(100vw - 40px);
+        padding: 0;
+        border-left: 0;
+        background: none;
+        box-shadow: none;
+        font-size: 16px;
+        overflow-wrap: anywhere;
+      }
       .hero .category { margin-top: -6px; font-size: 10px; }
       .scroll-cue { display: none; }
+      .hero-signal-rail { display: none; }
       .hero-center { gap: 22px; max-width: 100%; }
       .sound-switch {
-        right: 10px;
+        right: 12px;
         top: auto;
         bottom: 18px;
+        max-width: calc(100vw - 24px);
         transform: translate3d(var(--creep-x), var(--creep-y), 0);
       }
+      body.book-section-active .sound-switch:not(.dragged),
+      body.in-book-section .sound-switch:not(.dragged) {
+        right: 12px;
+        bottom: 16px;
+      }
+      body.book-section-active .sound-switch:not(.dragged) button,
+      body.in-book-section .sound-switch:not(.dragged) button {
+        min-width: 56px;
+        width: 56px;
+        padding: 6px;
+        gap: 0;
+      }
+      body.book-section-active .sound-switch:not(.dragged) .sound-status,
+      body.in-book-section .sound-switch:not(.dragged) .sound-status {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+      }
       .sound-switch button {
-        min-width: 134px;
+        min-width: 124px;
         padding: 6px 10px 6px 6px;
         gap: 7px;
         font-size: 8px;
@@ -3685,7 +4135,36 @@
       }
       .flow-note { min-height: 180px; gap: 28px; }
       .flow-card { min-height: 280px; }
+      .sound-desk {
+        grid-template-columns: 1fr;
+        margin-top: 12px;
+      }
+      .console-face,
+      .taste-card {
+        min-height: 0;
+      }
+      .console-copy {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+      .console-title {
+        font-size: clamp(48px, 18vw, 82px);
+      }
+      .console-strips {
+        min-height: 210px;
+      }
+      .desk-channel .rail {
+        min-height: 138px;
+      }
       .taste-grid { grid-template-columns: 1fr; gap: 22px; }
+      .route-board { grid-template-columns: 1fr 1fr; }
+      .route-card {
+        min-height: 104px;
+        padding: 14px;
+      }
+      .route-card:nth-child(2n) { border-right: 0; }
+      .route-card:nth-child(-n+2) { border-bottom: 1px solid rgba(245,241,232,0.08); }
+      .route-card strong { font-size: 28px; }
       .chill-zone { grid-template-columns: 1fr; gap: 18px; }
       .dance-pet { min-height: 240px; }
       .movement-layout { grid-template-columns: 1fr; }
@@ -3814,11 +4293,17 @@
   <aside class="booking-agent" data-booking-agent>
     <button class="agent-trigger" type="button" data-agent-toggle aria-expanded="false">
       <span class="agent-dot" aria-hidden="true"></span>
-      booking agent
+      booth line
+      <span class="agent-meter" aria-hidden="true"><span></span><span></span><span></span></span>
     </button>
     <div class="agent-panel" data-agent-panel hidden>
-      <div class="eyebrow">enquiry</div>
-      <div class="line">drop the date, room, and contact. i'll tee it up.</div>
+      <div class="eyebrow">resident booking desk</div>
+      <div class="line">send the date, room, and contact. no bot pretending to know the room.</div>
+      <div class="agent-patches" aria-hidden="true">
+        <span>date</span>
+        <span>room</span>
+        <span>reply</span>
+      </div>
       <form data-agent-form>
         <div class="agent-row">
           <label>date
@@ -3885,7 +4370,12 @@
       </div>
 
       <div class="hero-bottom">
-        <div></div>
+        <div class="hero-signal-rail" data-signal-rail aria-label="quick signal">
+          <button type="button" data-signal-cue data-scroll-to="gigs" data-signal-step="0"><span class="k">now</span><span class="v">dates</span></button>
+          <button type="button" class="active" data-signal-cue data-track-jump="0" data-signal-step="1"><span class="k">listen</span><span class="v">room loop</span></button>
+          <button type="button" data-signal-cue data-scroll-to="portfolio" data-signal-step="2"><span class="k">archive</span><span class="v">stills</span></button>
+          <button type="button" data-signal-cue data-scroll-to="book" data-signal-step="3"><span class="k">book</span><span class="v">send date</span></button>
+        </div>
         <div class="scroll-cue" data-magnet="scroll">
           <span>scroll</span>
           <span class="line"></span>
@@ -4033,6 +4523,66 @@
         <figure class="flow-card"><img src="./public/assets/dj-kuya-01.webp" alt="Sikuya DJing in the room" loading="lazy" decoding="async"><figcaption>still 01</figcaption></figure>
         <figure class="flow-card"><img src="./public/assets/dj-kuya-03.webp" alt="Sikuya room setup from above" loading="lazy" decoding="async"><figcaption>still 02</figcaption></figure>
         <figure class="flow-card"><img src="./public/assets/dj-kuya-06.webp" alt="Sikuya booth moment" loading="lazy" decoding="async"><figcaption>still 03</figcaption></figure>
+      </div>
+
+      <div class="sound-desk" data-sound-desk aria-label="Sikuya sound desk">
+        <div class="console-face">
+          <div class="console-copy">
+            <div>
+              <div class="console-kicker">sound desk / taste layer</div>
+              <h3 class="console-title">warm radio for the room.</h3>
+              <p class="console-sub">not a streaming app. just the signal: r&amp;b edits, afrobeats, opm memory, dancehall, house, hip-hop. press a cue, hear the prototype, then watch or book.</p>
+              <div class="console-actions">
+                <button class="cue-chip active" type="button" data-console-cue data-track-jump="0">listen</button>
+                <button class="cue-chip" type="button" data-console-cue data-track-jump="1">switch tape</button>
+                <button class="cue-chip" type="button" data-scroll-to="clips">watch</button>
+                <button class="cue-chip" type="button" data-scroll-to="book">book</button>
+              </div>
+            </div>
+            <div class="console-strips" aria-hidden="true">
+              <div class="desk-channel" style="--level: 72%;"><div class="rail"></div><div class="knob"></div><span>rnb</span></div>
+              <div class="desk-channel" style="--level: 55%;"><div class="rail"></div><div class="knob"></div><span>afro</span></div>
+              <div class="desk-channel" style="--level: 84%;"><div class="rail"></div><div class="knob"></div><span>opm</span></div>
+              <div class="desk-channel" style="--level: 46%;"><div class="rail"></div><div class="knob"></div><span>club</span></div>
+              <div class="desk-channel" style="--level: 63%;"><div class="rail"></div><div class="knob"></div><span>lift</span></div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="taste-card">
+          <div>
+            <div class="k">archive shelf</div>
+            <p>living references, not fake stats. a small public layer for what the room might feel like before the enquiry.</p>
+          </div>
+          <div class="taste-stack" aria-label="taste cues">
+            <button type="button" class="active" data-console-cue data-track-jump="0"><span class="num">a1</span><strong>velvet r&amp;b liquid</strong><span class="bpm">warm</span></button>
+            <button type="button" data-console-cue data-track-jump="1"><span class="num">b1</span><strong>afro liquid soul</strong><span class="bpm">lift</span></button>
+            <button type="button" data-scroll-to="movement"><span class="num">c1</span><strong>au / ph roots</strong><span class="bpm">code</span></button>
+          </div>
+        </aside>
+
+        <div class="route-board" data-route-board aria-label="quick routes">
+          <button class="route-card active" type="button" data-signal-cue data-scroll-to="gigs" data-signal-step="0">
+            <span class="num">01_now</span>
+            <strong>public dates</strong>
+            <span class="hint">calendar layer</span>
+          </button>
+          <button class="route-card" type="button" data-signal-cue data-track-jump="1" data-signal-step="1">
+            <span class="num">02_listen</span>
+            <strong>switch tape</strong>
+            <span class="hint">site soundtrack</span>
+          </button>
+          <button class="route-card" type="button" data-signal-cue data-scroll-to="portfolio" data-signal-step="2">
+            <span class="num">03_watch</span>
+            <strong>room archive</strong>
+            <span class="hint">clips + stills</span>
+          </button>
+          <button class="route-card" type="button" data-signal-cue data-scroll-to="book" data-signal-step="3">
+            <span class="num">04_book</span>
+            <strong>send the date</strong>
+            <span class="hint">within the day</span>
+          </button>
+        </div>
       </div>
 
       <!-- mix-rows hidden until real mixes wire in. preserved in source for codex to swap later. -->
@@ -4468,6 +5018,14 @@
               <span class="dim">open to travel for the right gig.</span>
             </div>
           </div>
+
+          <div class="resident-card">
+            <div class="top">
+              <span>booking signal</span>
+              <span class="lights" aria-hidden="true"><span></span><span></span><span></span></span>
+            </div>
+            <p>send the practical details: date, venue, timing, crowd, and what the room needs. the floating booth line is the short path; this form is the cleaner one.</p>
+          </div>
         </div>
 
         <form class="book-form" id="bookForm" novalidate>
@@ -4494,9 +5052,18 @@
             <textarea id="bf-message" name="message" rows="3" placeholder="bar night, wedding, party — say a bit about the room."></textarea>
           </div>
 
+          <input type="hidden" name="sourcePlatform" data-source-field="sourcePlatform" />
+          <input type="hidden" name="sourceCampaign" data-source-field="sourceCampaign" />
+          <input type="hidden" name="sourceMedium" data-source-field="sourceMedium" />
+          <input type="hidden" name="landingPath" data-source-field="landingPath" />
+          <input type="hidden" name="sourceUrl" data-source-field="sourceUrl" />
+          <input type="hidden" name="referrer" data-source-field="referrer" />
+          <input type="hidden" name="firstTouchAt" data-source-field="firstTouchAt" />
+          <input type="hidden" name="lastTouchAt" data-source-field="lastTouchAt" />
+
           <div class="form-actions">
             <button type="submit" class="send-btn">send</button>
-            <a class="email-fallback" href="mailto:bookings@djsikuya.com?subject=booking&body=hi%20sikuya%2C%0A%0A">or just email it</a>
+            <a class="email-fallback" data-email-fallback href="mailto:bookings@djsikuya.com?subject=booking&body=hi%20Sikuya%2C%0A%0A">or just email it</a>
           </div>
         </form>
       </div>
@@ -4544,16 +5111,148 @@
   </div>
 
   <script>
+    const LEAD_SOURCE_KEY = 'sikuya-lead-source-v1';
+
     function trackSikuyaEvent(name) {
       if (typeof window.va !== 'function') return;
       window.va('event', { name: name });
     }
 
+    function cleanSourceValue(value, maxLength = 240) {
+      return String(value || '').trim().slice(0, maxLength);
+    }
+
+    function inferSourcePlatform(params, referrer) {
+      const explicit = cleanSourceValue(params.get('src') || params.get('source') || params.get('utm_source'), 80);
+      if (explicit) return explicit.toLowerCase();
+
+      const ref = cleanSourceValue(referrer, 300).toLowerCase();
+      if (!ref) return 'direct';
+      if (ref.includes('instagram.')) return 'instagram';
+      if (ref.includes('tiktok.')) return 'tiktok';
+      if (ref.includes('youtube.') || ref.includes('youtu.be')) return 'youtube';
+      if (ref.includes('facebook.') || ref.includes('fb.')) return 'facebook';
+      if (ref.includes('soundcloud.')) return 'soundcloud';
+      return 'referral';
+    }
+
+    function readStoredLeadSource() {
+      try {
+        return JSON.parse(localStorage.getItem(LEAD_SOURCE_KEY) || '{}') || {};
+      } catch {
+        return {};
+      }
+    }
+
+    function captureLeadSource() {
+      const params = new URLSearchParams(window.location.search);
+      const stored = readStoredLeadSource();
+      const now = new Date().toISOString();
+      const source = {
+        sourcePlatform: inferSourcePlatform(params, document.referrer),
+        sourceCampaign: cleanSourceValue(params.get('campaign') || params.get('utm_campaign'), 120),
+        sourceMedium: cleanSourceValue(params.get('medium') || params.get('utm_medium'), 80),
+        landingPath: cleanSourceValue(window.location.pathname + window.location.search + window.location.hash, 300),
+        sourceUrl: cleanSourceValue(window.location.href, 500),
+        referrer: cleanSourceValue(document.referrer, 500),
+        firstTouchAt: stored.firstTouchAt || now,
+        lastTouchAt: now,
+      };
+
+      try {
+        localStorage.setItem(LEAD_SOURCE_KEY, JSON.stringify(source));
+      } catch {}
+      return source;
+    }
+
+    function getLeadSource() {
+      return readStoredLeadSource();
+    }
+
+    function leadSourceLines(source) {
+      const data = source || getLeadSource();
+      return [
+        'source: ' + (data.sourcePlatform || '-'),
+        'campaign: ' + (data.sourceCampaign || '-'),
+        'medium: ' + (data.sourceMedium || '-'),
+        'landing: ' + (data.landingPath || '-'),
+        'referrer: ' + (data.referrer || '-'),
+        'first touch: ' + (data.firstTouchAt || '-'),
+        'last touch: ' + (data.lastTouchAt || '-'),
+      ].join('\n');
+    }
+
+    function syncLeadSourceFields() {
+      const source = getLeadSource();
+      document.querySelectorAll('[data-source-field]').forEach((field) => {
+        const key = field.dataset.sourceField;
+        field.value = source[key] || '';
+      });
+
+      const fallback = document.querySelector('[data-email-fallback]');
+      if (fallback) {
+        fallback.href = 'mailto:bookings@djsikuya.com?subject=' +
+          encodeURIComponent('booking enquiry') +
+          '&body=' +
+          encodeURIComponent('hi Sikuya,\n\n' + leadSourceLines(source) + '\n\n');
+      }
+    }
+
+    async function submitLeadToPipeline(payload) {
+      try {
+        const response = await fetch('/api/inbox', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: 'InboxItem',
+            source: payload.source || 'djsikuya.com/book',
+            ...payload,
+            submittedAt: new Date().toISOString(),
+          }),
+        });
+        return response.ok;
+      } catch {
+        return false;
+      }
+    }
+
+    function openBookingEmail(subject, body) {
+      const link = document.createElement('a');
+      link.href = 'mailto:bookings@djsikuya.com?subject=' +
+        encodeURIComponent(subject) +
+        '&body=' +
+        encodeURIComponent(body);
+      link.style.display = 'none';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
+
+    captureLeadSource();
+
     document.addEventListener('DOMContentLoaded', () => {
+      syncLeadSourceFields();
       trackSikuyaEvent('page_view_landing');
 
       const bookSection = document.getElementById('book');
       if (bookSection && 'IntersectionObserver' in window) {
+        function updateBookFloatingState() {
+          const rect = bookSection.getBoundingClientRect();
+          const active = rect.top < window.innerHeight * 0.72 && rect.bottom > window.innerHeight * 0.28;
+          document.body.classList.toggle('book-section-active', active);
+        }
+
+        new IntersectionObserver((entries) => {
+          document.body.classList.toggle(
+            'book-section-active',
+            entries.some(entry => entry.isIntersecting && entry.intersectionRatio > 0.12)
+          );
+        }, { threshold: [0, 0.12, 0.45] }).observe(bookSection);
+        window.addEventListener('scroll', updateBookFloatingState, { passive: true });
+        window.addEventListener('resize', updateBookFloatingState);
+        window.setTimeout(updateBookFloatingState, 60);
+        window.setTimeout(updateBookFloatingState, 360);
+
         let trackedBook = false;
         const observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
@@ -4671,6 +5370,36 @@
     document.querySelectorAll('[data-scroll-to]').forEach(el => {
       el.addEventListener('click', () => scrollWithTransition(el.dataset.scrollTo));
     });
+
+    // Inspired route controls: one sound-desk language for dates, listening, archive, and booking.
+    (function initSignalRoutes() {
+      const controls = Array.from(document.querySelectorAll('[data-signal-cue]'));
+      if (!controls.length) return;
+      const rail = document.querySelector('[data-signal-rail]');
+      const board = document.querySelector('[data-route-board]');
+
+      function setSignal(control) {
+        const step = Number(control.dataset.signalStep || 0);
+        controls.forEach(item => item.classList.toggle('active', item.dataset.signalStep === control.dataset.signalStep));
+        if (rail) rail.style.setProperty('--signal-x', String(step));
+        if (board) board.style.setProperty('--route-x', (18 + step * 22) + '%');
+        document.documentElement.style.setProperty('--scroll-heat', '0.34');
+        window.setTimeout(() => document.documentElement.style.setProperty('--scroll-heat', '0.08'), 260);
+      }
+
+      controls.forEach((control) => {
+        control.addEventListener('pointerenter', () => setSignal(control));
+        control.addEventListener('focus', () => setSignal(control));
+        control.addEventListener('click', () => {
+          setSignal(control);
+          const index = Number(control.dataset.trackJump);
+          if (Number.isFinite(index)) {
+            window.dispatchEvent(new CustomEvent('sikuya:site-track', { detail: { index } }));
+            trackSikuyaEvent('signal_route_cue');
+          }
+        });
+      });
+    })();
     // Apply View Transitions to top-nav anchor links too
     document.querySelectorAll('.hero-nav nav.links a').forEach(a => {
       a.addEventListener('click', (e) => {
@@ -5364,6 +6093,34 @@
           player.classList.toggle('footer-aware', entries.some(entry => entry.isIntersecting));
         }, { threshold: 0.18 }).observe(footer);
       }
+
+      window.addEventListener('sikuya:site-track', async (event) => {
+        const nextIndex = Number(event.detail?.index || 0);
+        if (Number.isFinite(nextIndex)) loadTrack(nextIndex);
+        await playAudible();
+      });
+    })();
+
+    // Compact sound-desk cues: the page behaves like a radio console without pretending to be a streaming app.
+    (function initSoundDesk() {
+      const desk = document.querySelector('[data-sound-desk]');
+      if (!desk) return;
+      const cueButtons = Array.from(desk.querySelectorAll('[data-console-cue]'));
+
+      cueButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          cueButtons.forEach(item => item.classList.remove('active'));
+          button.classList.add('active');
+          desk.style.setProperty('--desk-tilt', '-1.8deg');
+          window.setTimeout(() => desk.style.setProperty('--desk-tilt', '0deg'), 360);
+
+          const index = Number(button.dataset.trackJump);
+          if (Number.isFinite(index)) {
+            window.dispatchEvent(new CustomEvent('sikuya:site-track', { detail: { index } }));
+            trackSikuyaEvent('sound_desk_cue');
+          }
+        });
+      });
     })();
 
     // Keep non-critical ambience idle until it is close to the viewport.
@@ -5521,29 +6278,43 @@
         if (event.key === 'Escape') setOpen(false);
       });
 
-      form.addEventListener('submit', (event) => {
+      form.addEventListener('submit', async (event) => {
         event.preventDefault();
         const data = new FormData(form);
         const date = String(data.get('date') || '').trim();
         const room = String(data.get('room') || '').trim();
         const contact = String(data.get('contact') || '').trim();
         const note = String(data.get('note') || '').trim();
-        const subject = encodeURIComponent('booking enquiry' + (date ? ' - ' + date : ''));
-        const body = encodeURIComponent(
+        const source = getLeadSource();
+        const pipelinePayload = {
+          source: 'djsikuya.com/booth-line',
+          name: contact || 'booth line enquiry',
+          email: contact.includes('@') ? contact : '',
+          phoneOrIg: contact && !contact.includes('@') ? contact : '',
+          contact,
+          eventDate: date,
+          venue: room,
+          message: note,
+          attribution: source,
+        };
+        const emailBody =
           'hi Sikuya,\n\n' +
           'date: ' + (date || '-') + '\n' +
           'room: ' + (room || '-') + '\n' +
           'contact: ' + (contact || '-') + '\n' +
           'note: ' + (note || '-') + '\n\n' +
-          'sent from the website booking agent.'
-        );
-        const link = document.createElement('a');
-        link.href = 'mailto:bookings@djsikuya.com?subject=' + subject + '&body=' + body;
-        link.style.display = 'none';
-        document.body.appendChild(link);
+          leadSourceLines(source) + '\n\n' +
+          'sent from the website booking agent.';
+
         trackSikuyaEvent('booking_agent_submit');
-        link.click();
-        link.remove();
+        trackSikuyaEvent('generate_lead');
+        const delivered = await submitLeadToPipeline(pipelinePayload);
+        if (delivered) {
+          document.getElementById('salamat')?.classList.add('visible');
+          form.reset();
+        } else {
+          openBookingEmail('booking enquiry' + (date ? ' - ' + date : ''), emailBody);
+        }
         setOpen(false);
       });
     })();
@@ -5665,6 +6436,7 @@
       const form = document.getElementById('bookForm');
       const salamat = document.getElementById('salamat');
       if (!form || !salamat) return;
+      syncLeadSourceFields();
       let formStarted = false;
 
       form.addEventListener('focusin', () => {
@@ -5674,28 +6446,17 @@
       });
 
       async function trySubmit(payload) {
-        try {
-          await fetch('/api/inbox', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              type: 'InboxItem',
-              source: 'djsikuya.com/book',
-              ...payload,
-              submittedAt: new Date().toISOString(),
-            }),
-          });
-        } catch (err) {
-          const subject = encodeURIComponent('booking — ' + (payload.name || 'enquiry'));
-          const body = encodeURIComponent(
-            'name: ' + payload.name + '\nemail: ' + payload.email + '\ndate: ' + payload.eventDate + '\nvenue: ' + payload.venue + '\nmessage: ' + payload.message + '\n'
+        const delivered = await submitLeadToPipeline({ source: 'djsikuya.com/book', ...payload });
+        if (!delivered) {
+          openBookingEmail(
+            'booking enquiry - ' + (payload.name || 'enquiry'),
+            'name: ' + payload.name + '\n' +
+            'email: ' + payload.email + '\n' +
+            'date: ' + payload.eventDate + '\n' +
+            'venue: ' + payload.venue + '\n' +
+            'message: ' + payload.message + '\n\n' +
+            leadSourceLines(payload.attribution) + '\n'
           );
-          const a = document.createElement('a');
-          a.href = 'mailto:bookings@djsikuya.com?subject=' + subject + '&body=' + body;
-          a.style.display = 'none';
-          document.body.appendChild(a);
-          a.click();
-          a.remove();
         }
       }
 
@@ -5708,15 +6469,18 @@
           eventDate: form.querySelector('[name="date"]').value.trim(),
           venue: form.querySelector('[name="venue"]').value.trim(),
           message: form.querySelector('[name="message"]').value.trim(),
+          attribution: getLeadSource(),
         };
         if (!payload.name || !payload.email) {
           form.reportValidity();
           return;
         }
         salamat.classList.add('visible');
+        trackSikuyaEvent('generate_lead');
         trackSikuyaEvent('form_success');
         trySubmit(payload).finally(() => {
           form.reset();
+          syncLeadSourceFields();
         });
       });
 
