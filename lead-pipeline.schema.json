@@ -4,7 +4,7 @@
   "title": "djsikuya.com public booking lead",
   "type": "object",
   "additionalProperties": true,
-  "required": ["source", "attribution"],
+  "required": ["type", "source", "attribution"],
   "properties": {
     "type": {
       "type": "string",

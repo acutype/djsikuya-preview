@@ -44,7 +44,7 @@
       "https://www.youtube.com/@djsikuya",
       "https://www.facebook.com/ObsessedWithProjectX/"
     ],
-    "location": {"@type": "Place", "name": "Perth, WA, Australia"}
+    "location": {"@type": "Place", "name": "AU / PH"}
   }
   </script>
 
@@ -5092,7 +5092,7 @@
           </label>
         </div>
         <label>contact
-          <input name="contact" type="text" placeholder="email or ig" autocomplete="email">
+          <input name="contact" type="text" placeholder="email, ig, or phone" autocomplete="email" required>
         </label>
         <label>note
           <textarea name="note" placeholder="timeslot, crowd, vibe"></textarea>
@@ -5148,7 +5148,7 @@
       </div>
 
       <div class="hero-bottom">
-        <div class="hero-signal-rail" data-signal-rail aria-label="quick signal">
+        <div class="hero-signal-rail" data-signal-rail role="group" aria-label="quick signal">
           <button type="button" data-signal-cue data-scroll-to="gigs" data-signal-step="0"><span class="k">now</span><span class="v">dates</span></button>
           <button type="button" class="active" data-signal-cue data-track-jump="0" data-signal-step="1"><span class="k">listen</span><span class="v">room loop</span></button>
           <button type="button" data-signal-cue data-scroll-to="portfolio" data-signal-step="2"><span class="k">archive</span><span class="v">stills</span></button>
@@ -5911,6 +5911,7 @@
 
   <script>
     const LEAD_SOURCE_KEY = 'sikuya-lead-source-v1';
+    let memoryLeadSource = {};
 
     function trackSikuyaEvent(name) {
       if (typeof window.va !== 'function') return;
@@ -5971,11 +5972,13 @@
       try {
         localStorage.setItem(LEAD_SOURCE_KEY, JSON.stringify(source));
       } catch {}
+      memoryLeadSource = source;
       return source;
     }
 
     function getLeadSource() {
-      return readStoredLeadSource();
+      const stored = readStoredLeadSource();
+      return Object.keys(stored).length ? stored : memoryLeadSource;
     }
 
     function leadSourceLines(source) {
@@ -6051,12 +6054,6 @@
           document.body.classList.toggle('book-section-active', active);
         }
 
-        new IntersectionObserver((entries) => {
-          document.body.classList.toggle(
-            'book-section-active',
-            entries.some(entry => entry.isIntersecting && entry.intersectionRatio > 0.12)
-          );
-        }, { threshold: [0, 0.12, 0.45] }).observe(bookSection);
         window.addEventListener('scroll', updateBookFloatingState, { passive: true });
         window.addEventListener('resize', updateBookFloatingState);
         window.setTimeout(updateBookFloatingState, 60);
@@ -6187,13 +6184,16 @@
       const rail = document.querySelector('[data-signal-rail]');
       const board = document.querySelector('[data-route-board]');
 
-      function setSignal(control) {
+      function setSignal(control, options = {}) {
+        const pulse = options.pulse !== false;
         const step = Number(control.dataset.signalStep || 0);
         controls.forEach(item => item.classList.toggle('active', item.dataset.signalStep === control.dataset.signalStep));
         if (rail) rail.style.setProperty('--signal-x', String(step));
         if (board) board.style.setProperty('--route-x', (18 + step * 22) + '%');
-        document.documentElement.style.setProperty('--scroll-heat', '0.34');
-        window.setTimeout(() => document.documentElement.style.setProperty('--scroll-heat', '0.08'), 260);
+        if (pulse) {
+          document.documentElement.style.setProperty('--scroll-heat', '0.34');
+          window.setTimeout(() => document.documentElement.style.setProperty('--scroll-heat', '0.08'), 260);
+        }
       }
 
       controls.forEach((control) => {
@@ -6208,6 +6208,8 @@
           }
         });
       });
+      const initial = controls.find(control => control.classList.contains('active')) || controls[0];
+      if (initial) setSignal(initial, { pulse: false });
     })();
     // Apply View Transitions to top-nav anchor links too
     document.querySelectorAll('.hero-nav nav.links a').forEach(a => {
@@ -7234,6 +7236,16 @@
         const room = String(data.get('room') || '').trim();
         const contact = String(data.get('contact') || '').trim();
         const note = String(data.get('note') || '').trim();
+        const contactField = form.querySelector('[name="contact"]');
+        const reachableContact = contact.includes('@') || /\d/.test(contact);
+        if (!reachableContact) {
+          if (contactField) {
+            contactField.setCustomValidity('leave an email, ig, or phone');
+            form.reportValidity();
+            window.setTimeout(() => contactField.setCustomValidity(''), 0);
+          }
+          return;
+        }
         const source = getLeadSource();
         const pipelinePayload = {
           source: 'djsikuya.com/booth-line',
