@@ -410,6 +410,7 @@
       width: 56px;
       transform: translate(-50%, -50%) rotate(calc(var(--tap-angle, -12deg) + 86deg)) scaleX(0.2);
       opacity: 0.6;
+      animation-name: tapScratchCross;
     }
     .is-pressing {
       animation: buttonHeatPress 420ms cubic-bezier(.2, .7, .3, 1);
@@ -425,6 +426,11 @@
       0% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--tap-angle, -12deg)) scaleX(0.15); }
       30% { opacity: 1; }
       100% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--tap-angle, -12deg)) scaleX(1.25); }
+    }
+    @keyframes tapScratchCross {
+      0% { opacity: 0; transform: translate(-50%, -50%) rotate(calc(var(--tap-angle, -12deg) + 86deg)) scaleX(0.15); }
+      30% { opacity: 0.6; }
+      100% { opacity: 0; transform: translate(-50%, -50%) rotate(calc(var(--tap-angle, -12deg) + 86deg)) scaleX(1.25); }
     }
     @keyframes buttonHeatPress {
       0% { filter: brightness(1); transform: translateZ(0) scale(1); }
@@ -1931,7 +1937,7 @@
       border: 1px solid rgba(255,116,64,0.18);
       background:
         linear-gradient(180deg, rgba(245,241,232,0.045), rgba(245,241,232,0.018)),
-        radial-gradient(42% 160% at var(--route-x, 18%) 0%, rgba(255,77,58,0.14), transparent 68%);
+        radial-gradient(42% 160% at var(--route-scroll-x, var(--route-x, 18%)) 0%, rgba(255,77,58,0.14), transparent 68%);
       box-shadow: inset 0 1px 0 rgba(245,241,232,0.07), 0 22px 70px rgba(0,0,0,0.24);
       overflow: hidden;
     }
@@ -5797,6 +5803,16 @@
       return String(value || '').trim().slice(0, maxLength);
     }
 
+    function scrubAttributionUrl(value) {
+      if (!value) return '';
+      try {
+        const url = new URL(value, window.location.origin);
+        return cleanSourceValue(url.origin + url.pathname, 300);
+      } catch {
+        return '';
+      }
+    }
+
     function inferSourcePlatform(params, referrer) {
       const explicit = cleanSourceValue(params.get('src') || params.get('source') || params.get('utm_source'), 80);
       if (explicit) return explicit.toLowerCase();
@@ -5827,9 +5843,9 @@
         sourcePlatform: inferSourcePlatform(params, document.referrer),
         sourceCampaign: cleanSourceValue(params.get('campaign') || params.get('utm_campaign'), 120),
         sourceMedium: cleanSourceValue(params.get('medium') || params.get('utm_medium'), 80),
-        landingPath: cleanSourceValue(window.location.pathname + window.location.search + window.location.hash, 300),
-        sourceUrl: cleanSourceValue(window.location.href, 500),
-        referrer: cleanSourceValue(document.referrer, 500),
+        landingPath: cleanSourceValue(window.location.pathname, 160),
+        sourceUrl: scrubAttributionUrl(window.location.href),
+        referrer: scrubAttributionUrl(document.referrer),
         firstTouchAt: stored.firstTouchAt || now,
         lastTouchAt: now,
       };
@@ -6211,7 +6227,7 @@
         });
 
         if (routeBoard) {
-          routeBoard.style.setProperty('--route-x', (18 + active.progress * 64).toFixed(1) + '%');
+          routeBoard.style.setProperty('--route-scroll-x', (18 + active.progress * 64).toFixed(1) + '%');
         }
       }
 
@@ -7221,12 +7237,13 @@
             'date: ' + payload.eventDate + '\n' +
             'venue: ' + payload.venue + '\n' +
             'message: ' + payload.message + '\n\n' +
-            leadSourceLines(payload.attribution) + '\n'
+              leadSourceLines(payload.attribution) + '\n'
           );
         }
+        return delivered;
       }
 
-      form.addEventListener('submit', (e) => {
+      form.addEventListener('submit', async (e) => {
         e.preventDefault();
         trackSikuyaEvent('form_submit');
         const payload = {
@@ -7241,13 +7258,16 @@
           form.reportValidity();
           return;
         }
+        const delivered = await trySubmit(payload);
+        if (!delivered) {
+          syncLeadSourceFields();
+          return;
+        }
         salamat.classList.add('visible');
         trackSikuyaEvent('generate_lead');
         trackSikuyaEvent('form_success');
-        trySubmit(payload).finally(() => {
-          form.reset();
-          syncLeadSourceFields();
-        });
+        form.reset();
+        syncLeadSourceFields();
       });
 
       salamat.addEventListener('click', () => {
