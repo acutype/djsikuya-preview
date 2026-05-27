@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Sikuya | Perth</title>
-  <meta name="description" content="Sikuya. perth. events, bars, parties. send the date." />
+  <title>Sikuya | AU PH</title>
+  <meta name="description" content="Sikuya. AU / PH. events, bars, parties. send the date." />
   <meta name="theme-color" content="#0E0E0E" />
 
-  <meta property="og:title" content="Sikuya | Perth" />
-  <meta property="og:description" content="Sikuya. perth. events, bars, parties. send the date." />
+  <meta property="og:title" content="Sikuya | AU PH" />
+  <meta property="og:description" content="Sikuya. AU / PH. events, bars, parties. send the date." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://djsikuya.com" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -87,6 +87,11 @@
       --scroll-flow: 0px;
       --scroll-x: 76%;
       --scroll-y: 50%;
+      --trace-progress: 0;
+      --trace-x: 72%;
+      --trace-y: 48%;
+      --ribbon-shift: 0px;
+      --console-heat: 0.26;
 
       --line: rgba(245, 241, 232, 0.10);
     }
@@ -133,6 +138,83 @@
       transform: translate3d(0, var(--scroll-flow), 0) skewY(-2deg);
       transition: opacity 180ms linear;
       will-change: opacity, transform;
+    }
+    .inspo-trace-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 45;
+      pointer-events: none;
+      opacity: 0.78;
+      mix-blend-mode: screen;
+      contain: layout paint;
+    }
+    .inspo-trace-layer::before {
+      content: '';
+      position: absolute;
+      left: calc(var(--trace-x) - 18vw);
+      top: calc(var(--trace-y) - 16vh);
+      width: 36vw;
+      height: 32vh;
+      border: 1px solid rgba(255,116,64, calc(0.04 + var(--scroll-heat) * 0.18));
+      border-radius: 44% 56% 58% 42%;
+      transform:
+        rotate(calc(-11deg + var(--trace-progress) * 18deg))
+        scale(calc(0.82 + var(--scroll-heat) * 0.16));
+      filter: blur(0.2px);
+    }
+    .trace-thread {
+      position: absolute;
+      right: clamp(18px, 4vw, 58px);
+      top: 22vh;
+      width: 112px;
+      height: 48vh;
+      opacity: calc(0.34 + var(--scroll-heat) * 0.28);
+      transform: translate3d(0, calc(var(--scroll-flow) * -0.24), 0);
+    }
+    .trace-thread::before {
+      content: '';
+      position: absolute;
+      inset: 0 54px 0 auto;
+      width: 1px;
+      background:
+        linear-gradient(180deg, transparent, rgba(255,116,64,0.58), rgba(245,241,232,0.20), transparent);
+      box-shadow: 0 0 22px rgba(255,116,64,0.20);
+    }
+    .trace-chip {
+      position: absolute;
+      right: 0;
+      width: 46px;
+      aspect-ratio: 1;
+      border: 1px solid rgba(245,241,232,0.16);
+      background: #090504;
+      overflow: hidden;
+      transform:
+        translate3d(calc((var(--trace-progress) - 0.5) * 18px), calc(var(--trace-progress) * 28px), 0)
+        rotate(var(--spin, -4deg));
+      box-shadow: 0 16px 36px rgba(0,0,0,0.38);
+    }
+    .trace-chip img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.76;
+      filter: saturate(1.12) contrast(1.1);
+    }
+    .trace-chip:nth-child(1) { top: 2%; --spin: -8deg; }
+    .trace-chip:nth-child(2) { top: 31%; right: 28px; --spin: 6deg; }
+    .trace-chip:nth-child(3) { top: 61%; --spin: -3deg; }
+    .trace-tag {
+      position: absolute;
+      right: 62px;
+      bottom: -10px;
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(245,241,232,0.42);
+      transform: rotate(-90deg);
+      transform-origin: right center;
+      white-space: nowrap;
     }
     html[data-theme="light"] body {
       background:
@@ -1408,6 +1490,93 @@
       gap: 10px;
       margin-top: 28px;
     }
+    .console-tape {
+      position: relative;
+      margin-top: 28px;
+      max-width: 520px;
+      min-height: 104px;
+      border: 1px solid rgba(245,241,232,0.13);
+      background:
+        linear-gradient(135deg, rgba(245,241,232,0.075), rgba(245,241,232,0.018)),
+        radial-gradient(90% 120% at calc(18% + var(--console-heat) * 62%) 34%, rgba(255,116,64,0.20), transparent 58%),
+        rgba(4,3,3,0.68);
+      overflow: hidden;
+      transform: perspective(780px) rotateX(4deg) rotateY(-2deg);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.08),
+        inset 0 -18px 36px rgba(0,0,0,0.36),
+        0 18px 52px rgba(0,0,0,0.28);
+    }
+    .console-tape::before {
+      content: '';
+      position: absolute;
+      inset: 13px;
+      border: 1px solid rgba(245,241,232,0.10);
+      background:
+        repeating-linear-gradient(90deg, rgba(245,241,232,0.045) 0 1px, transparent 1px 28px),
+        linear-gradient(90deg, rgba(255,77,58,0.12), transparent 44%, rgba(245,241,232,0.07));
+    }
+    .console-tape::after {
+      content: '';
+      position: absolute;
+      left: -20%;
+      right: -20%;
+      bottom: 18px;
+      height: 34px;
+      background:
+        radial-gradient(50% 120% at calc(20% + var(--console-heat) * 55%) 50%, rgba(255,231,184,0.42), transparent 55%),
+        linear-gradient(90deg, rgba(255,77,58,0.16), rgba(245,241,232,0.34), rgba(255,116,64,0.12));
+      filter: blur(15px);
+      opacity: calc(0.28 + var(--console-heat) * 0.42);
+      transform: translateX(calc((var(--console-heat) - 0.5) * 40px));
+    }
+    .tape-window {
+      position: absolute;
+      left: 22px;
+      right: 128px;
+      top: 24px;
+      bottom: 24px;
+      border: 1px solid rgba(245,241,232,0.14);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.06), transparent 38%),
+        radial-gradient(80% 90% at 20% 50%, rgba(255,77,58,0.30), transparent 64%),
+        radial-gradient(70% 80% at 84% 42%, rgba(255,168,88,0.18), transparent 68%),
+        rgba(0,0,0,0.34);
+      overflow: hidden;
+    }
+    .tape-window span {
+      position: absolute;
+      inset: 10px -40px auto;
+      height: 34px;
+      background:
+        repeating-linear-gradient(90deg, rgba(255,116,64,0.50) 0 8px, rgba(245,241,232,0.22) 8px 12px, transparent 12px 24px);
+      filter: blur(0.4px);
+      transform: translateX(calc(var(--console-heat) * -42px)) skewX(-13deg);
+      opacity: 0.68;
+      animation: tapeSignal 4.8s linear infinite;
+    }
+    .tape-window span:nth-child(2) {
+      inset: auto -40px 12px;
+      height: 16px;
+      opacity: 0.42;
+      animation-duration: 7.2s;
+      animation-direction: reverse;
+    }
+    .console-tape .tape-label {
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.20em;
+      text-transform: uppercase;
+      color: rgba(245,241,232,0.50);
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+    }
+    @keyframes tapeSignal {
+      to { transform: translateX(calc(var(--console-heat) * -42px - 120px)) skewX(-13deg); }
+    }
     .cue-chip {
       display: inline-flex;
       align-items: center;
@@ -1608,6 +1777,12 @@
     .book {
       content-visibility: auto;
       contain-intrinsic-size: 880px;
+    }
+    .portfolio,
+    .movement,
+    .brand {
+      content-visibility: visible;
+      contain-intrinsic-size: none;
     }
     .taste-grid {
       display: grid;
@@ -1856,6 +2031,84 @@
       flex-direction: column;
       gap: 18px;
     }
+    .roots-scope {
+      position: relative;
+      min-height: 220px;
+      overflow: hidden;
+      border: 1px solid rgba(255,116,64,0.16);
+      background:
+        radial-gradient(60% 90% at 30% 34%, rgba(255,116,64,0.12), transparent 64%),
+        radial-gradient(80% 100% at 86% 62%, rgba(206,17,38,0.13), transparent 72%),
+        linear-gradient(135deg, rgba(245,241,232,0.05), rgba(245,241,232,0.015));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), 0 24px 70px rgba(0,0,0,0.24);
+      transform: perspective(900px) rotateX(calc(var(--scroll-heat) * -1deg));
+    }
+    .roots-scope::before {
+      content: '';
+      position: absolute;
+      inset: 22px;
+      border: 1px solid rgba(245,241,232,0.11);
+      transform: rotate(calc(-3deg + var(--trace-progress) * 4deg));
+    }
+    .roots-scope::after {
+      content: '';
+      position: absolute;
+      width: 160px;
+      height: 160px;
+      right: 11%;
+      top: 22px;
+      border: 1px solid rgba(255,116,64,0.22);
+      border-radius: 18px 42px 18px 42px;
+      background:
+        radial-gradient(circle at 38% 36%, rgba(255,222,172,0.22), transparent 18%),
+        conic-gradient(from calc(var(--trace-progress) * 360deg), rgba(255,116,64,0.36), rgba(245,241,232,0.08), rgba(206,17,38,0.28), rgba(255,116,64,0.36));
+      filter: blur(0.2px);
+      opacity: 0.78;
+      box-shadow: 0 0 48px rgba(255,77,58,0.11);
+      transform: rotate(8deg);
+    }
+    .roots-scope .axis {
+      position: absolute;
+      left: 28px;
+      top: 28px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(245,241,232,0.58);
+    }
+    .roots-scope .route {
+      position: absolute;
+      left: clamp(28px, 5vw, 58px);
+      right: clamp(30px, 18vw, 210px);
+      bottom: 36px;
+      height: 46px;
+      display: flex;
+      align-items: end;
+      gap: 8px;
+    }
+    .roots-scope .route span {
+      display: block;
+      width: 16px;
+      height: calc(18px + var(--h) * 1px);
+      background: linear-gradient(180deg, rgba(255,170,98,0.90), rgba(206,17,38,0.80));
+      box-shadow: 0 0 20px rgba(255,116,64,0.18);
+      transform: translateY(calc(var(--scroll-heat) * -18px));
+    }
+    .roots-scope .route span:nth-child(2) { --h: 14; transition-delay: 30ms; }
+    .roots-scope .route span:nth-child(3) { --h: 28; transition-delay: 60ms; }
+    .roots-scope .route span:nth-child(4) { --h: 8; transition-delay: 90ms; }
+    .roots-scope .route span:nth-child(5) { --h: 22; transition-delay: 120ms; }
+    .roots-scope .scope-line {
+      position: absolute;
+      left: 28px;
+      bottom: 22px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(245,241,232,0.42);
+    }
     .movement-board .moodboard {
       border-color: rgba(245,241,232,0.16);
     }
@@ -1915,6 +2168,68 @@
     }
     .portfolio-heading .section-title {
       margin-top: 14px;
+    }
+    .archive-ribbon {
+      position: relative;
+      height: clamp(122px, 18vw, 210px);
+      margin: -4px 0 34px;
+      overflow: hidden;
+      border-top: 1px solid rgba(245,241,232,0.08);
+      border-bottom: 1px solid rgba(245,241,232,0.08);
+      background:
+        radial-gradient(52% 120% at var(--trace-x) 0%, rgba(255,77,58,0.12), transparent 72%),
+        linear-gradient(90deg, rgba(245,241,232,0.035), transparent 24%, rgba(206,17,38,0.06), transparent 82%);
+      mask-image: linear-gradient(90deg, transparent 0%, #000 9%, #000 91%, transparent 100%);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 9%, #000 91%, transparent 100%);
+    }
+    .archive-ribbon::before {
+      content: '';
+      position: absolute;
+      left: -10%;
+      right: -10%;
+      top: 50%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,116,64,0.42), rgba(245,241,232,0.16), transparent);
+      transform: translateY(-50%) rotate(-2deg);
+      box-shadow: 0 0 20px rgba(255,116,64,0.12);
+    }
+    .ribbon-track {
+      position: absolute;
+      left: -10vw;
+      right: -10vw;
+      top: 50%;
+      display: flex;
+      align-items: center;
+      gap: clamp(14px, 2vw, 28px);
+      transform: translate3d(var(--ribbon-shift), -50%, 0) rotate(-2deg);
+      will-change: transform;
+    }
+    .ribbon-shot {
+      position: relative;
+      flex: 0 0 clamp(92px, 12vw, 164px);
+      aspect-ratio: 4 / 5;
+      border: 1px solid rgba(245,241,232,0.13);
+      background: #090504;
+      overflow: hidden;
+      box-shadow: 0 18px 42px rgba(0,0,0,0.36);
+      transform: translateY(var(--lift, 0px)) rotate(var(--tilt, 0deg));
+    }
+    .ribbon-shot:nth-child(2n) { --lift: -18px; --tilt: 4deg; }
+    .ribbon-shot:nth-child(3n) { --lift: 16px; --tilt: -5deg; }
+    .ribbon-shot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(1.08) contrast(1.08) brightness(0.82);
+    }
+    .ribbon-shot::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.08), transparent 32%),
+        radial-gradient(70% 80% at 80% 0%, rgba(255,77,58,0.18), transparent 64%);
+      pointer-events: none;
     }
     .portfolio-scatter {
       display: grid;
@@ -3961,6 +4276,8 @@
         animation: none;
         transform: none;
       }
+      .inspo-trace-layer { opacity: 0.34; }
+      .trace-thread { display: none; }
       .hero .grain { display: none; }
       .hero .subtitle,
       .sound-switch button {
@@ -4139,6 +4456,11 @@
         grid-template-columns: 1fr;
         margin-top: 12px;
       }
+      .console-tape {
+        min-height: 86px;
+        transform: none;
+      }
+      .tape-window { right: 74px; }
       .console-face,
       .taste-card {
         min-height: 0;
@@ -4174,9 +4496,21 @@
         min-height: 0;
       }
       .movement-rail { grid-template-columns: 1fr 1fr; }
+      .roots-scope { min-height: 168px; }
+      .roots-scope::after {
+        width: 112px;
+        height: 112px;
+        right: 8%;
+      }
       .moodboard { grid-template-columns: 1fr; }
       .mood-card { min-height: 128px; }
       .portfolio-heading { grid-template-columns: 1fr; gap: 18px; }
+      .archive-ribbon {
+        height: 120px;
+        margin-bottom: 22px;
+      }
+      .ribbon-track { gap: 12px; }
+      .ribbon-shot { flex-basis: 82px; }
       .portfolio-scatter { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
       .portfolio-card,
       .portfolio-card:nth-child(n) {
@@ -4267,6 +4601,14 @@
 <body>
   <a class="skip-link" href="#book">skip to book</a>
   <div class="scroll-heat-layer" aria-hidden="true"></div>
+  <div class="inspo-trace-layer" aria-hidden="true">
+    <div class="trace-thread">
+      <span class="trace-chip"><img src="./public/assets/dj-kuya-07.webp" alt="" loading="lazy" decoding="async"></span>
+      <span class="trace-chip"><img src="./public/assets/dj-kuya-09.webp" alt="" loading="lazy" decoding="async"></span>
+      <span class="trace-chip"><img src="./public/assets/dj-kuya-13.webp" alt="" loading="lazy" decoding="async"></span>
+      <span class="trace-tag">scroll trace</span>
+    </div>
+  </div>
   <div class="sound-switch" data-site-player>
     <button type="button" data-site-audio-toggle aria-label="turn sound on">
       <span class="sound-orb" aria-hidden="true">
@@ -4531,12 +4873,16 @@
             <div>
               <div class="console-kicker">sound desk / taste layer</div>
               <h3 class="console-title">warm radio for the room.</h3>
-              <p class="console-sub">not a streaming app. just the signal: r&amp;b edits, afrobeats, opm memory, dancehall, house, hip-hop. press a cue, hear the prototype, then watch or book.</p>
+              <p class="console-sub">r&amp;b edits, afrobeats, opm memory, dancehall, house, hip-hop. warm start, late lift.</p>
               <div class="console-actions">
                 <button class="cue-chip active" type="button" data-console-cue data-track-jump="0">listen</button>
                 <button class="cue-chip" type="button" data-console-cue data-track-jump="1">switch tape</button>
                 <button class="cue-chip" type="button" data-scroll-to="clips">watch</button>
                 <button class="cue-chip" type="button" data-scroll-to="book">book</button>
+              </div>
+              <div class="console-tape" data-console-tape aria-hidden="true">
+                <div class="tape-window"><span></span><span></span></div>
+                <div class="tape-label">room signal</div>
               </div>
             </div>
             <div class="console-strips" aria-hidden="true">
@@ -4552,7 +4898,7 @@
         <aside class="taste-card">
           <div>
             <div class="k">archive shelf</div>
-            <p>living references, not fake stats. a small public layer for what the room might feel like before the enquiry.</p>
+            <p>room clips, stills, and the sound cue in one place.</p>
           </div>
           <div class="taste-stack" aria-label="taste cues">
             <button type="button" class="active" data-console-cue data-track-jump="0"><span class="num">a1</span><strong>velvet r&amp;b liquid</strong><span class="bpm">warm</span></button>
@@ -4763,6 +5109,18 @@
         </div>
       </div>
 
+      <div class="archive-ribbon" data-archive-ribbon aria-hidden="true">
+        <div class="ribbon-track">
+          <span class="ribbon-shot"><img src="./public/assets/dj-kuya-06.webp" alt="" loading="lazy" decoding="async"></span>
+          <span class="ribbon-shot"><img src="./public/assets/dj-kuya-07.webp" alt="" loading="lazy" decoding="async"></span>
+          <span class="ribbon-shot"><img src="./public/assets/dj-kuya-09.webp" alt="" loading="lazy" decoding="async"></span>
+          <span class="ribbon-shot"><img src="./public/assets/dj-kuya-13.webp" alt="" loading="lazy" decoding="async"></span>
+          <span class="ribbon-shot"><img src="./public/assets/dj-kuya-01.webp" alt="" loading="lazy" decoding="async"></span>
+          <span class="ribbon-shot"><img src="./public/assets/dj-kuya-03.webp" alt="" loading="lazy" decoding="async"></span>
+          <span class="ribbon-shot"><img src="./public/assets/dj-kuya-11.webp" alt="" loading="lazy" decoding="async"></span>
+        </div>
+      </div>
+
       <div class="portfolio-scatter" aria-label="Sikuya room photos">
         <figure class="portfolio-card p-tall"><img src="./public/assets/dj-kuya-01.webp" alt="Sikuya at a room set 01" loading="lazy" decoding="async"><figcaption>01</figcaption></figure>
         <figure class="portfolio-card p-portrait"><img src="./public/assets/dj-kuya-02.webp" alt="Sikuya at a room set 02" loading="lazy" decoding="async"><figcaption>02</figcaption></figure>
@@ -4804,6 +5162,11 @@
         </div>
 
         <div class="movement-board">
+          <div class="roots-scope" aria-hidden="true">
+            <div class="axis">AU / PH / rooms</div>
+            <div class="route"><span style="--h: 4;"></span><span></span><span></span><span></span><span></span></div>
+            <div class="scope-line">roots signal</div>
+          </div>
           <div class="moodboard" aria-label="Sikuya genre taste">
             <div class="mood-card"><span class="count">01</span><strong>r&amp;b edits</strong></div>
             <div class="mood-card"><span class="count">02</span><strong>afrobeats</strong></div>
@@ -5467,10 +5830,17 @@
       function tick() {
         heat += (targetHeat - heat) * 0.08;
         targetHeat *= 0.94;
+        const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+        const scrollProgress = clamp(window.scrollY / maxScroll, 0, 1);
         root.style.setProperty('--scroll-heat', heat.toFixed(3));
         root.style.setProperty('--scroll-flow', ((lastY % 120) - 60).toFixed(1) + 'px');
         root.style.setProperty('--scroll-x', clamp(lastPointer.x / window.innerWidth * 100, 8, 92).toFixed(1) + '%');
         root.style.setProperty('--scroll-y', clamp(lastPointer.y / window.innerHeight * 100, 8, 92).toFixed(1) + '%');
+        root.style.setProperty('--trace-progress', scrollProgress.toFixed(3));
+        root.style.setProperty('--trace-x', clamp(lastPointer.x / window.innerWidth * 100, 14, 86).toFixed(1) + '%');
+        root.style.setProperty('--trace-y', clamp(lastPointer.y / window.innerHeight * 100, 14, 86).toFixed(1) + '%');
+        root.style.setProperty('--ribbon-shift', (-scrollProgress * 220).toFixed(1) + 'px');
+        root.style.setProperty('--console-heat', clamp(0.24 + heat * 0.72 + scrollProgress * 0.22, 0.24, 1).toFixed(3));
         requestAnimationFrame(tick);
       }
       tick();
@@ -6112,6 +6482,7 @@
           cueButtons.forEach(item => item.classList.remove('active'));
           button.classList.add('active');
           desk.style.setProperty('--desk-tilt', '-1.8deg');
+          document.documentElement.style.setProperty('--console-heat', button.dataset.trackJump === '1' ? '0.74' : '0.58');
           window.setTimeout(() => desk.style.setProperty('--desk-tilt', '0deg'), 360);
 
           const index = Number(button.dataset.trackJump);
