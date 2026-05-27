@@ -92,6 +92,9 @@
       --trace-y: 48%;
       --ribbon-shift: 0px;
       --console-heat: 0.26;
+      --scene-progress: 0;
+      --scene-wake: 0;
+      --desk-scan: 18%;
 
       --line: rgba(245, 241, 232, 0.10);
     }
@@ -139,6 +142,24 @@
       transition: opacity 180ms linear;
       will-change: opacity, transform;
     }
+    .section-wake {
+      position: fixed;
+      inset: -14vh -10vw;
+      z-index: 43;
+      pointer-events: none;
+      opacity: calc(0.10 + var(--scroll-heat) * 0.42 + var(--scene-wake) * 0.16);
+      background:
+        radial-gradient(36vw 26vh at calc(var(--trace-x) - 10%) calc(var(--trace-y) + 6%), rgba(255, 91, 22, 0.16), transparent 72%),
+        conic-gradient(from calc(170deg + var(--scene-progress) * 120deg) at 72% 46%, transparent 0 18%, rgba(255,116,64,0.11) 24%, transparent 32% 100%),
+        repeating-linear-gradient(103deg, transparent 0 28px, rgba(245,241,232,0.035) 29px 30px, transparent 31px 72px);
+      filter: blur(9px) saturate(1.14);
+      mix-blend-mode: screen;
+      transform:
+        translate3d(calc((var(--trace-progress) - 0.5) * -28px), calc(var(--scroll-flow) * -0.16), 0)
+        rotate(calc(-3deg + var(--scene-progress) * 4deg));
+      transition: opacity 160ms linear;
+      will-change: opacity, transform;
+    }
     .inspo-trace-layer {
       position: fixed;
       inset: 0;
@@ -161,6 +182,21 @@
         rotate(calc(-11deg + var(--trace-progress) * 18deg))
         scale(calc(0.82 + var(--scroll-heat) * 0.16));
       filter: blur(0.2px);
+    }
+    .inspo-trace-layer::after {
+      content: '';
+      position: absolute;
+      left: calc(var(--trace-x) - 24vw);
+      top: calc(var(--trace-y) - 24vh);
+      width: 48vw;
+      height: 48vh;
+      border-radius: 999px;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(255,116,64, calc(0.08 + var(--scroll-heat) * 0.20)), transparent 22%),
+        radial-gradient(circle at 50% 50%, transparent 48%, rgba(245,241,232, calc(0.018 + var(--scroll-heat) * 0.045)) 49% 50%, transparent 51%);
+      opacity: calc(0.20 + var(--scene-wake) * 0.22);
+      transform: scale(calc(0.72 + var(--scroll-heat) * 0.18)) rotate(calc(var(--trace-progress) * 22deg));
+      filter: blur(0.6px);
     }
     .trace-thread {
       position: absolute;
@@ -242,8 +278,8 @@
       position: fixed;
       left: 0;
       top: 0;
-      width: 15px;
-      height: 15px;
+      width: 18px;
+      height: 18px;
       z-index: 92;
       border-radius: 999px;
       pointer-events: none;
@@ -252,6 +288,24 @@
       mix-blend-mode: screen;
       transform: translate3d(-50%, -50%, 0) scale(0.62);
       animation: tapEmber 560ms cubic-bezier(.2, .7, .3, 1) forwards;
+    }
+    .tap-ember::before,
+    .tap-ember::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 92px;
+      height: 1px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, transparent, rgba(255,116,64,0.72), rgba(245,241,232,0.24), transparent);
+      transform: translate(-50%, -50%) rotate(var(--tap-angle, -12deg)) scaleX(0.2);
+      animation: tapScratch 520ms cubic-bezier(.2, .7, .3, 1) forwards;
+    }
+    .tap-ember::after {
+      width: 56px;
+      transform: translate(-50%, -50%) rotate(calc(var(--tap-angle, -12deg) + 86deg)) scaleX(0.2);
+      opacity: 0.6;
     }
     .is-pressing {
       animation: buttonHeatPress 420ms cubic-bezier(.2, .7, .3, 1);
@@ -262,6 +316,11 @@
         transform: translate3d(-50%, -50%, 0) scale(8.4);
         filter: blur(7px);
       }
+    }
+    @keyframes tapScratch {
+      0% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--tap-angle, -12deg)) scaleX(0.15); }
+      30% { opacity: 1; }
+      100% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--tap-angle, -12deg)) scaleX(1.25); }
     }
     @keyframes buttonHeatPress {
       0% { filter: brightness(1); }
@@ -831,6 +890,7 @@
       display: flex; align-items: flex-end; justify-content: space-between; gap: 16px;
     }
     .hero-signal-rail {
+      position: relative;
       display: grid;
       grid-template-columns: repeat(4, minmax(104px, 1fr));
       width: min(720px, 64vw);
@@ -841,9 +901,37 @@
       box-shadow: 0 22px 80px rgba(0,0,0,0.28), inset 0 1px 0 rgba(245,241,232,0.08);
       backdrop-filter: blur(14px) saturate(1.12);
       overflow: hidden;
+      transform: translate3d(0, calc(var(--scroll-heat) * -5px), 0);
+      transition: transform 180ms var(--ease), border-color 180ms var(--ease);
+    }
+    .hero-signal-rail::before {
+      content: '';
+      position: absolute;
+      left: calc(var(--signal-x, 0) * 25%);
+      top: 0;
+      bottom: 0;
+      width: 25%;
+      background:
+        linear-gradient(90deg, transparent, rgba(255,116,64,0.12), transparent),
+        radial-gradient(90% 140% at 50% 20%, rgba(245,241,232,0.08), transparent 70%);
+      pointer-events: none;
+      transition: left 260ms var(--ease);
+    }
+    .hero-signal-rail::after {
+      content: '';
+      position: absolute;
+      left: calc(var(--signal-x, 0) * 25% + 14px);
+      bottom: 0;
+      width: calc(25% - 28px);
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent-hot), rgba(245,241,232,0.62), transparent);
+      box-shadow: 0 0 18px rgba(255,116,64,0.42);
+      pointer-events: none;
+      transition: left 260ms var(--ease);
     }
     .hero-signal-rail button {
       position: relative;
+      z-index: 1;
       display: grid;
       gap: 4px;
       min-height: 68px;
@@ -1368,6 +1456,10 @@
       overflow: hidden;
       border: 1px solid var(--line);
       background: #090504;
+      transform: translate3d(0, var(--card-y, 0px), 0) rotate(var(--card-r, 0deg));
+      transform-origin: 50% 70%;
+      transition: transform 360ms var(--ease), border-color 240ms var(--ease);
+      will-change: transform;
     }
     .flow-card img {
       width: 100%;
@@ -1377,6 +1469,13 @@
       transition: transform 700ms var(--ease);
     }
     .flow-card:hover img { transform: scale(1.045); }
+    .flow-card-table-cut img {
+      object-position: 50% 74%;
+      transform: scale(1.16);
+    }
+    .flow-card-table-cut:hover img {
+      transform: scale(1.20);
+    }
     .flow-card::after {
       content: '';
       position: absolute;
@@ -1418,6 +1517,7 @@
       overflow: hidden;
       border: 1px solid rgba(255,116,64,0.20);
       background:
+        radial-gradient(42% 60% at var(--desk-scan, 18%) 22%, rgba(255,116,64, calc(0.05 + var(--console-heat) * 0.13)), transparent 68%),
         linear-gradient(180deg, rgba(245,241,232,0.07), rgba(245,241,232,0.025)),
         radial-gradient(52% 72% at 20% 10%, rgba(255,77,58,0.16), transparent 68%),
         #080504;
@@ -1432,7 +1532,8 @@
       inset: 0;
       background:
         repeating-linear-gradient(90deg, rgba(245,241,232,0.055) 0 1px, transparent 1px 9.4%),
-        linear-gradient(180deg, transparent 0 18%, rgba(255,116,64,0.08) 18.2% 18.8%, transparent 19% 100%);
+        linear-gradient(180deg, transparent 0 18%, rgba(255,116,64,0.08) 18.2% 18.8%, transparent 19% 100%),
+        linear-gradient(90deg, transparent 0 calc(var(--desk-scan, 18%) - 6%), rgba(255,116,64,0.14) var(--desk-scan, 18%), transparent calc(var(--desk-scan, 18%) + 6%) 100%);
       opacity: 0.54;
       pointer-events: none;
     }
@@ -1715,6 +1816,7 @@
     }
     .route-board {
       grid-column: 1 / -1;
+      position: relative;
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       border: 1px solid rgba(255,116,64,0.18);
@@ -1724,7 +1826,21 @@
       box-shadow: inset 0 1px 0 rgba(245,241,232,0.07), 0 22px 70px rgba(0,0,0,0.24);
       overflow: hidden;
     }
+    .route-board::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: calc(var(--route-x, 18%) - 14%);
+      width: 28%;
+      background:
+        linear-gradient(90deg, transparent, rgba(255,116,64,0.10), rgba(245,241,232,0.04), transparent);
+      pointer-events: none;
+      transition: left 280ms var(--ease);
+    }
     .route-card {
+      position: relative;
+      z-index: 1;
       min-height: 128px;
       border: 0;
       border-right: 1px solid rgba(245,241,232,0.08);
@@ -1737,6 +1853,17 @@
       gap: 18px;
       transition: color 180ms var(--ease), background 180ms var(--ease), transform 180ms var(--ease);
     }
+    .route-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(90% 80% at 50% 8%, rgba(255,116,64,0.12), transparent 70%),
+        linear-gradient(180deg, rgba(245,241,232,0.04), transparent);
+      opacity: 0;
+      transition: opacity 180ms var(--ease);
+      pointer-events: none;
+    }
     .route-card:last-child { border-right: 0; }
     .route-card:hover,
     .route-card.active {
@@ -1744,6 +1871,8 @@
       background: rgba(255,77,58,0.08);
       transform: translateY(-2px);
     }
+    .route-card:hover::before,
+    .route-card.active::before { opacity: 1; }
     .route-card .num,
     .route-card .hint {
       font-family: var(--mono);
@@ -2246,6 +2375,10 @@
       background: #080504;
       overflow: hidden;
       grid-column: span 3;
+      transform: translate3d(0, var(--card-y, 0px), 0) rotate(var(--card-r, 0deg));
+      transform-origin: 50% 70%;
+      transition: transform 420ms var(--ease), border-color 240ms var(--ease), box-shadow 240ms var(--ease);
+      will-change: transform;
     }
     .portfolio-card img {
       width: 100%;
@@ -2258,6 +2391,10 @@
     .portfolio-card:hover img {
       transform: scale(1.045);
       filter: saturate(1.12) contrast(1.08);
+    }
+    .portfolio-card:hover {
+      border-color: rgba(255,116,64,0.28);
+      box-shadow: 0 24px 58px rgba(0,0,0,0.32), 0 0 34px rgba(255,77,58,0.06);
     }
     .portfolio-card::after {
       content: '';
@@ -3739,14 +3876,17 @@
     }
     .section-title {
       background:
-        radial-gradient(140% 130% at var(--title-light-x, 42%) 18%, rgba(255,255,255,0.96) 0 11%, transparent 33%),
-        linear-gradient(105deg, #fff9ed 0%, #efd6c0 34%, #fff4df 52%, #c98d69 76%, #fff8e8 100%);
-      background-size: 280% 100%, 240% 100%;
+        radial-gradient(150% 130% at var(--title-light-x, 42%) 12%, rgba(255,255,255,0.94) 0 7%, rgba(255,244,221,0.52) 18%, transparent 42%),
+        linear-gradient(112deg, #fffaf0 0%, #f7e2cd 26%, #fdf2df 44%, #dda684 65%, #f6ddc8 82%, #fff8e8 100%);
+      background-size: 360% 100%, 320% 100%;
       background-position: var(--title-light-x, 42%) 0, var(--title-sheen-x, 34%) 0;
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      filter: drop-shadow(0 14px 20px rgba(48, 15, 8, 0.48)) drop-shadow(0 28px 52px rgba(206, 17, 38, 0.18));
+      filter:
+        drop-shadow(0 1px 0 rgba(255,255,255,0.18))
+        drop-shadow(0 14px 20px rgba(48, 15, 8, 0.48))
+        drop-shadow(0 28px 52px rgba(206, 17, 38, 0.18));
       animation: textSheen 8.5s ease-in-out infinite;
     }
     .hero h1 .letter:not(.ember-period) {
@@ -4255,6 +4395,18 @@
 
     /* ── Mobile (≤ 768px) ──────────────────────────────────────────── */
     @media (max-width: 768px) {
+      .section-wake {
+        opacity: calc(0.06 + var(--scroll-heat) * 0.20);
+        filter: blur(13px) saturate(1.02);
+      }
+      .trace-thread {
+        display: none;
+      }
+      .flow-card,
+      .portfolio-card {
+        transform: none !important;
+        transition: border-color 240ms var(--ease), box-shadow 240ms var(--ease);
+      }
       section { padding: 64px 20px 80px; }
       .hero {
         background:
@@ -4603,6 +4755,7 @@
 <body>
   <a class="skip-link" href="#book">skip to book</a>
   <div class="scroll-heat-layer" aria-hidden="true"></div>
+  <div class="section-wake" aria-hidden="true"></div>
   <div class="inspo-trace-layer" aria-hidden="true">
     <div class="trace-thread">
       <span class="trace-chip"><img src="./public/assets/dj-kuya-07.webp" alt="" loading="lazy" decoding="async"></span>
@@ -4865,7 +5018,7 @@
           <div class="v">clips, smoke, stills.</div>
         </div>
         <figure class="flow-card"><img src="./public/assets/dj-kuya-01.webp" alt="Sikuya DJing in the room" loading="lazy" decoding="async"><figcaption>still 01</figcaption></figure>
-        <figure class="flow-card"><img src="./public/assets/dj-kuya-03.webp" alt="Sikuya room setup from above" loading="lazy" decoding="async"><figcaption>still 02</figcaption></figure>
+        <figure class="flow-card flow-card-table-cut"><img src="./public/assets/dj-kuya-03.webp" alt="Sikuya room setup from above" loading="lazy" decoding="async"><figcaption>still 02</figcaption></figure>
         <figure class="flow-card"><img src="./public/assets/dj-kuya-06.webp" alt="Sikuya booth moment" loading="lazy" decoding="async"><figcaption>still 03</figcaption></figure>
       </div>
 
@@ -5642,9 +5795,9 @@
         const date = new Date(value);
         if (Number.isNaN(date.getTime())) return '';
         return date.toLocaleDateString('en-AU', {
-          weekday: 'short',
           day: '2-digit',
-          month: 'short',
+          month: 'long',
+          year: 'numeric',
           timeZone: 'Australia/Perth'
         }).toLowerCase();
       }
@@ -5791,6 +5944,7 @@
         ember.className = 'tap-ember';
         ember.style.left = event.clientX + 'px';
         ember.style.top = event.clientY + 'px';
+        ember.style.setProperty('--tap-angle', ((event.clientX / Math.max(1, window.innerWidth)) * 46 - 23).toFixed(1) + 'deg');
         document.body.appendChild(ember);
         window.setTimeout(() => ember.remove(), 620);
       }, { passive: true });
@@ -5849,6 +6003,71 @@
     })();
 
     // Easter egg — click the ember period mark to fire a full-screen ember flash
+    // Version B inspired motion: section wake, photo parallax, and console scan.
+    (function initInspiredMotionPass() {
+      const root = document.documentElement;
+      const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const compact = window.matchMedia && window.matchMedia('(max-width: 768px)').matches;
+      if (reduceMotion) return;
+
+      const sections = Array.from(document.querySelectorAll('section[id]'));
+      const cards = compact ? [] : Array.from(document.querySelectorAll('.portfolio-card, .flow-card'));
+      const routeBoard = document.querySelector('[data-route-board]');
+      let frame = 0;
+
+      const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+
+      function nearestSection() {
+        const probe = window.innerHeight * 0.48;
+        let best = { section: sections[0], distance: Infinity, progress: 0 };
+        sections.forEach(section => {
+          const rect = section.getBoundingClientRect();
+          const distance = Math.abs(rect.top + rect.height * 0.28 - probe);
+          if (distance < best.distance) {
+            best = {
+              section,
+              distance,
+              progress: clamp((probe - rect.top) / Math.max(1, rect.height), 0, 1),
+            };
+          }
+        });
+        return best;
+      }
+
+      function sync() {
+        frame = 0;
+        const active = nearestSection();
+        const globalRange = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+        const globalProgress = clamp(window.scrollY / globalRange, 0, 1);
+        root.style.setProperty('--scene-progress', globalProgress.toFixed(3));
+        root.style.setProperty('--scene-wake', active.progress.toFixed(3));
+        root.style.setProperty('--desk-scan', (12 + globalProgress * 76).toFixed(1) + '%');
+
+        cards.forEach((card, index) => {
+          const rect = card.getBoundingClientRect();
+          if (rect.bottom < -160 || rect.top > window.innerHeight + 160) return;
+          const center = rect.top + rect.height / 2;
+          const p = clamp((center / window.innerHeight - 0.5) * 2, -1, 1);
+          const depth = index % 3 === 0 ? 20 : (index % 3 === 1 ? 12 : 16);
+          card.style.setProperty('--card-y', (-p * depth).toFixed(1) + 'px');
+          card.style.setProperty('--card-r', (p * (index % 2 ? -1.2 : 1.2)).toFixed(2) + 'deg');
+        });
+
+        if (routeBoard) {
+          routeBoard.style.setProperty('--route-x', (18 + active.progress * 64).toFixed(1) + '%');
+        }
+      }
+
+      function requestSync() {
+        if (frame) return;
+        frame = requestAnimationFrame(sync);
+      }
+
+      window.addEventListener('scroll', requestSync, { passive: true });
+      window.addEventListener('resize', requestSync);
+      requestSync();
+    })();
+
     // Persistent nav: keep the current section visible without making it feel clickable.
     (function initPersistentNav() {
       const nav = document.querySelector('.hero-nav');
