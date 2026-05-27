@@ -4301,11 +4301,13 @@
         display: flex;
         justify-self: stretch;
         gap: clamp(9px, 2.8vw, 14px);
-        overflow-x: hidden;
+        overflow-x: auto;
+        overflow-y: hidden;
         padding: 8px 2px;
         font-size: 9px;
         white-space: nowrap;
         scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
       }
       .hero-nav nav.links::-webkit-scrollbar { display: none; }
       .hero-actions { gap: 6px; }
