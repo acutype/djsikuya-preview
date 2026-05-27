@@ -1,4 +1,5 @@
 const DEFAULT_TIMEOUT_MS = 8000;
+const DEFAULT_GIGOPS_PUBLIC_LEAD_URL = 'https://app.djsikuya.com/api/public/djsikuya-leads';
 
 function sendJson(response, statusCode, body) {
   response.statusCode = statusCode;
@@ -28,7 +29,10 @@ module.exports = async function inboxProxy(request, response) {
     return;
   }
 
-  const endpoint = process.env.GIGOPS_PUBLIC_LEAD_URL || process.env.DJSIKUYA_PUBLIC_LEAD_ENDPOINT;
+  const endpoint =
+    process.env.GIGOPS_PUBLIC_LEAD_URL ||
+    process.env.DJSIKUYA_PUBLIC_LEAD_ENDPOINT ||
+    DEFAULT_GIGOPS_PUBLIC_LEAD_URL;
   if (!endpoint) {
     sendJson(response, 503, { error: 'Lead endpoint is not configured.' });
     return;
