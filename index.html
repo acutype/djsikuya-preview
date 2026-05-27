@@ -5932,9 +5932,31 @@
       }
     }
 
-    function inferSourcePlatform(params, referrer) {
+    const SOCIAL_ROUTE_ATTRIBUTION = {
+      ig: { sourcePlatform: 'instagram', sourceCampaign: 'ig-bio', sourceMedium: 'social' },
+      instagram: { sourcePlatform: 'instagram', sourceCampaign: 'ig-bio', sourceMedium: 'social' },
+      tiktok: { sourcePlatform: 'tiktok', sourceCampaign: 'tiktok-bio', sourceMedium: 'social' },
+      youtube: { sourcePlatform: 'youtube', sourceCampaign: 'youtube-channel', sourceMedium: 'social' },
+      soundcloud: { sourcePlatform: 'soundcloud', sourceCampaign: 'soundcloud-profile', sourceMedium: 'social' },
+      facebook: { sourcePlatform: 'facebook', sourceCampaign: 'facebook-page', sourceMedium: 'social' },
+      siargao: { sourcePlatform: 'direct', sourceCampaign: 'siargao', sourceMedium: 'campaign' },
+      philippines: { sourcePlatform: 'direct', sourceCampaign: 'philippines', sourceMedium: 'campaign' },
+      ph: { sourcePlatform: 'direct', sourceCampaign: 'ph', sourceMedium: 'campaign' },
+      book: { sourcePlatform: 'direct', sourceCampaign: 'book-direct', sourceMedium: 'site' },
+    };
+
+    function inferRouteAttribution(pathname) {
+      const route = cleanSourceValue(pathname || '/', 120)
+        .replace(/^\/+|\/+$/g, '')
+        .split('/')[0]
+        .toLowerCase();
+      return SOCIAL_ROUTE_ATTRIBUTION[route] || {};
+    }
+
+    function inferSourcePlatform(params, referrer, routeAttribution = {}) {
       const explicit = cleanSourceValue(params.get('src') || params.get('source') || params.get('utm_source'), 80);
       if (explicit) return explicit.toLowerCase();
+      if (routeAttribution.sourcePlatform) return routeAttribution.sourcePlatform;
 
       const ref = cleanSourceValue(referrer, 300).toLowerCase();
       if (!ref) return 'direct';
@@ -5958,10 +5980,21 @@
       const params = new URLSearchParams(window.location.search);
       const stored = readStoredLeadSource();
       const now = new Date().toISOString();
+      const routeAttribution = inferRouteAttribution(window.location.pathname);
+      const sourcePlatform = inferSourcePlatform(params, document.referrer, routeAttribution);
+      const sourceCampaign = cleanSourceValue(
+        params.get('campaign') || params.get('utm_campaign') || routeAttribution.sourceCampaign,
+        120
+      );
+      const sourceMedium = cleanSourceValue(
+        params.get('medium') || params.get('utm_medium') || routeAttribution.sourceMedium,
+        80
+      );
+      const shouldKeepStoredSource = stored.sourcePlatform && sourcePlatform === 'direct' && !sourceCampaign;
       const source = {
-        sourcePlatform: inferSourcePlatform(params, document.referrer),
-        sourceCampaign: cleanSourceValue(params.get('campaign') || params.get('utm_campaign'), 120),
-        sourceMedium: cleanSourceValue(params.get('medium') || params.get('utm_medium'), 80),
+        sourcePlatform: shouldKeepStoredSource ? stored.sourcePlatform : sourcePlatform,
+        sourceCampaign: shouldKeepStoredSource ? stored.sourceCampaign : sourceCampaign,
+        sourceMedium: shouldKeepStoredSource ? stored.sourceMedium : sourceMedium,
         landingPath: cleanSourceValue(window.location.pathname, 160),
         sourceUrl: scrubAttributionUrl(window.location.href),
         referrer: scrubAttributionUrl(document.referrer),

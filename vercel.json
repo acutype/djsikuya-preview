@@ -18,6 +18,15 @@
     {"source": "/brand", "destination": "/index.html"},
     {"source": "/voices", "destination": "/index.html"},
     {"source": "/press", "destination": "/index.html"},
+    {"source": "/ig", "destination": "/index.html"},
+    {"source": "/instagram", "destination": "/index.html"},
+    {"source": "/tiktok", "destination": "/index.html"},
+    {"source": "/youtube", "destination": "/index.html"},
+    {"source": "/soundcloud", "destination": "/index.html"},
+    {"source": "/facebook", "destination": "/index.html"},
+    {"source": "/siargao", "destination": "/index.html"},
+    {"source": "/philippines", "destination": "/index.html"},
+    {"source": "/ph", "destination": "/index.html"},
     {"source": "/book", "destination": "/index.html"}
   ]
 }
