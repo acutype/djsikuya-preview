@@ -5083,6 +5083,7 @@
         <span>reply</span>
       </div>
       <form data-agent-form>
+        <input name="website" type="text" autocomplete="off" tabindex="-1" aria-hidden="true" hidden>
         <div class="agent-row">
           <label>date
             <input name="date" type="text" placeholder="12 July 2026" autocomplete="off">
@@ -5828,6 +5829,7 @@
         </div>
 
         <form class="book-form" id="bookForm" novalidate>
+          <input name="website" type="text" autocomplete="off" tabindex="-1" aria-hidden="true" hidden />
           <div class="field">
             <label for="bf-name">your name</label>
             <input id="bf-name" name="name" type="text" placeholder="your name" required />
@@ -7290,6 +7292,7 @@
           venue: room,
           message: note,
           attribution: source,
+          website: { honeypot: String(data.get('website') || '').trim() },
         };
         const emailBody =
           'hi Sikuya,\n\n' +
@@ -7465,6 +7468,7 @@
           venue: form.querySelector('[name="venue"]').value.trim(),
           message: form.querySelector('[name="message"]').value.trim(),
           attribution: getLeadSource(),
+          website: { honeypot: form.querySelector('[name="website"]').value.trim() },
         };
         if (!payload.name || !payload.email) {
           form.reportValidity();
